@@ -1,0 +1,103 @@
+﻿@using BonsaiShop.Ultilities;
+@model IList<User>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1 class="text-center">Danh sách người dùng</h1>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+
+    <div class="action-box d-flex align-items-end justify-content-between">
+        <div class="filter-box d-flex">
+            <div class="list-filter">
+                <span class="form-label d-block mb-1 mt-3">Lọc theo quyền người dùng</span>
+                <select class="form-control" style="width: 250px" name="states">
+                    <option value="0">Chọn tất cả</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Customer</option>
+                </select>
+            </div>
+            <div class="list-filter mx-3">
+                <span class="form-label d-block mb-1 mt-3">Lọc theo trạng thái</span>
+                <select class="form-control" style="width: 250px" name="states">
+                    <option value="0">Chọn tất cả</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Customer</option>
+                </select>
+            </div>
+        </div>
+        <div class="addnew-box ">
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Create" asp-area="Admin">Thêm mới</a>
+        </div>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Họ và tên</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Email</th>
+                <th scope="col">Điện thoại</th>
+                <th scope="col">Phân quyền</th>
+                <th scope="col">Hoạt động</th>
+                <th scope="col">Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+            }
+            @foreach(var item in Model)
+            {
+                i++;
+                <tr class="text-center">
+                    <th scope="row">@i</th>
+                    <td>@item.FullName</td>
+                    <td>@item.UserName</td>
+                    <td>@Functions.FormatDate(item.Birthday.ToString())</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+
+                    @if (item.RoleId == 1)
+                    {
+                        <td> Admin </td>
+                    } else
+                    {
+                        <td> Customer </td>
+                    }
+                    @if (item.IsActive == true)
+                    {
+                        <td> Đang hoạt động </td>
+                    } else
+                    {
+                        <td> Đã bị khóa </td>
+                    }
+                    <td>
+                        <a class="btn btn-primary"><i class="bi bi-lock-fill"></i></a>
+                        <a class="btn btn-warning" asp-action="Edit" asp-controller="Account" asp-route-id="@item.UserId"><i class="bi bi-pencil-fill"></i></a>
+                        <a class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+@section Scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".statesSelect").select2();
+        });
+    </script>
+}
+

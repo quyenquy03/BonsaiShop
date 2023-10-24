@@ -1,0 +1,1512 @@
+
+/* ---------------------------------------------------------
+	 
+1	 pageWrapper
+2	 bgCover
+3	 headingII
+4	 headingIII
+5	 headingIV
+6	 headingV
+7	 headingVI
+8	 headingVII
+9	 mainHeader
+10	 introBlock
+11	 bannerBlockHolder
+12	 heroBlockHolder
+13	 introBannerHolder
+14	 breadCrumbs
+15	 chooseUs-sec
+16	 chooseList
+17	 featureCol
+18	 contactListColumn
+19	 comming-timer
+20	 dealSlider
+21	 subscribeSecBlock
+22	 quotationBlock
+23	 masonryHolder
+24	 itemCol
+25	 testimonailSlider
+26	 newsPostColumn
+27	 newsBlogColumn
+28	 discoverSecHolder
+29	 partnerSlider
+30	 widget
+31	 show-head
+32	 pagination
+33	 productTextHolder
+34	 tabSetList
+35	 socialNetworkList
+36	 commentsBlock
+37	 commentform
+38	 cartHolder
+39	 footerHolder
+40	 copyRightHolder
+39	 abtSecHolder
+40	 progressCounter
+41	 accordionList
+42	 teamBlock
+43	 stepCol
+44	 contactListHolder
+45	 mapHolder
+46	 contactForm
+
+---------------------------------------------------------*/
+
+
+
+html{
+	background-color: $dark;
+}
+
+body{
+	-ms-overlfow-style: scrollbar;
+	min-width: 320px;
+}
+
+/* ---------------------------------------------------------
+1	 pageWrapper
+---------------------------------------------------------*/
+#pageWrapper{
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+.js-tab-hidden {
+    display: block !important;
+    left: -9999px !important;
+    position: absolute !important;
+    top: -9999px !important;
+}
+a{ transition: all 0.25s linear; }
+/* ---------------------------------------------------------
+2	 bgCover
+--------------------------------------------------------*/
+.bgCover{
+	background-size: cover;
+	background-position: 50% 50%;
+}
+.playfair{ font-family: $font-family-serif; }
+.fwEbold{ font-weight: bold; }
+.btnTheme{ @extend %colorBg; }
+.btn{
+	@include font(16px, 18px);
+	.fas{ font-size: 14px; }
+	&:hover{ opacity: 0.7; }
+	&.btnShop{ min-width: 140px; }
+	&.btnCart{ min-width: 200px; }
+}
+.md-round{ border-radius: 40px; }
+.sm-round{ border-radius: 10px; }
+.bg-lightGray{ background: $gray-1006; }
+.bg-dark{ background: $gray-1004; }
+.bgCover{
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+/* ---------------------------------------------------------
+3	 headingII
+---------------------------------------------------------*/
+.headingII{
+	@include font(25px, 27px);
+	color: $gray-200;
+	@include pseudo(before, auto, auto, 0, 0);
+	&:before{
+		@include size(60px, 3px);
+		background: $green;
+	}
+}
+/* ---------------------------------------------------------
+4	 headingIII
+---------------------------------------------------------*/
+.headingIII{
+	@include font(20px, 22px);
+	color: $gray-300;
+}
+/* ---------------------------------------------------------
+5	 headingIV
+---------------------------------------------------------*/
+.headingIV{
+	@include font(25px, 27px);
+	color: $gray-200;
+}
+/* ---------------------------------------------------------
+6	 headingV
+---------------------------------------------------------*/
+.headingV{
+	@include font(15px, 18px);
+	color: $gray-300;
+}
+/* ---------------------------------------------------------
+7	 headingVI
+---------------------------------------------------------*/
+.headingVI{
+	@include font(16px, 18px);
+	color: $gray-300;
+	letter-spacing: 1px;
+}
+/* ---------------------------------------------------------
+8	 headingVII
+---------------------------------------------------------*/
+.headingVII{
+	@include font(15px, 17px);
+	color: $gray-300;
+	letter-spacing: 1px;
+}
+/* ---------------------------------------------------------
+9	 mainHeader
+---------------------------------------------------------*/
+.mainHeader{
+	.headerBorder{
+		min-width: 100%;
+		.img-bdr{
+			width: 270px;
+		}
+	}
+}
+/* ---------------------------------------------------------
+10	 introBlock
+---------------------------------------------------------*/
+.introBlock{
+	@include font(16px, 20px);
+	color: $gray-100;
+	.align{ min-height: 390px; }
+	.holder{ z-index: 2; }
+	h1{
+		@include font(25px, 30px);
+		color: $gray-200;
+		font-family: $font-family-serif;
+		@include pseudo(before, auto, auto, 0, 0);
+		&:before{
+			@include width(100px, 5px);
+			background: $gray-200;
+		}
+	}
+	h2{
+		@include font(25px, 30px);
+		color: $gray-200;
+		font-family: $font-family-serif;
+	}
+	.title{
+		@include font(14px, 16px);
+		color: $gray-1005;
+		letter-spacing: 2px;
+		@include pseudo(before, 2px, auto, auto, 0);
+		&:before{ @include width(5px, 12px); }
+	}
+	br{ display: none; }
+	.slick-prev,
+	.slick-next{
+		@include font(17px, 22px);
+		color: $gray-300;
+	}
+	.slick-next{ margin-left: 109px; }
+	.slickNavigatorsWrap,
+	.slickNums{
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		display: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.slickNums{
+		@include font(20px, 28px);
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		pointer-events: none;
+		counter-reset: item;
+		li{
+			pointer-events: auto;
+			text-indent: -99999px;
+			position: relative;
+			&:first-child{ margin-left: 58px; }
+			&:last-child{
+				display: block;
+				padding-left: 22px;
+				text-indent: 0;
+			}
+			&:before{
+				position: absolute;
+				left: 0;
+				opacity: 0;
+				visibility: hidden;
+				text-indent: 0;
+				counter-increment: item;
+				content: counters(item, ". ", decimal) "/";
+			}
+			&.slick-active{
+				&:before{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		button{
+			padding: 0;
+			background-color: transparent;
+			border: 0;
+		}
+	}
+}
+/* ---------------------------------------------------------
+11	 bannerBlockHolder
+---------------------------------------------------------*/
+.bannerBlockHolder{
+	@include font(16px, 20px);
+	color: $gray-100;
+	.align{ min-height: 380px; }
+	.holder{ z-index: 2; }
+	h1{
+		@include font(30px, 35px);
+		color: $gray-200;
+		font-family: $font-family-serif;
+	}
+	.title{
+		@include font(16px, 20px);
+		color: $gray-1005;
+		letter-spacing: 2px;
+		@include pseudo(before, 2px, auto, auto, 0);
+		&:before{ @include width(5px, 16px); }
+	}
+	.year{
+		@include font(40px, 45px);
+		color: $gray-1005;
+	}
+	.sub-title{
+		@include font(20px, 24px);
+		color: $gray-300;
+		letter-spacing: 2px;
+		font-weight: 500;
+	}
+	br{ display: block; }
+	.slick-prev,
+	.slick-next{
+		@include font(17px, 22px);
+		color: $gray-300;
+	}
+	.slick-next{ margin-left: 109px; }
+	.slickNavigatorsWrap,
+	.slickNums{
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		display: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.slickNums{
+		@include font(20px, 28px);
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		pointer-events: none;
+		counter-reset: item;
+		li{
+			pointer-events: auto;
+			text-indent: -99999px;
+			position: relative;
+			&:first-child{ margin-left: 58px; }
+			&:last-child{
+				display: block;
+				padding-left: 22px;
+				text-indent: 0;
+			}
+			&:before{
+				position: absolute;
+				left: 0;
+				opacity: 0;
+				visibility: hidden;
+				text-indent: 0;
+				counter-increment: item;
+				content: counters(item, ". ", decimal) "/";
+			}
+			&.slick-active{
+				&:before{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		button{
+			padding: 0;
+			background-color: transparent;
+			border: 0;
+		}
+	}
+}
+/* ---------------------------------------------------------
+12	 heroBlockHolder
+---------------------------------------------------------*/
+.heroBlockHolder{
+	.containerHolder{
+		max-width: 1390px;
+		.coll-6{
+			width: 100%;
+			&:first-child{
+				width: 45%;
+				z-index: 2;
+				padding: 0;
+				display: none;
+			}
+		}
+	}
+	.title{
+		@include font(16px, 21px);
+		color: $gray-300;
+		@include pseudo(before, 0, auto, auto, 0);
+		&:before{ @include width(100px, 3px); }
+	}
+	.txtwrap{ z-index: 1; }
+	.subTitle{
+		@include font(16px, 20px);
+		font-weight: 600;
+		color: $gray-1002;
+	}
+	h1{
+		@include font(35px, 40px);
+		color: $gray-200;
+	}
+	.slick-prev,
+	.slick-next{
+		@include font(17px, 22px);
+		color: $gray-300;
+	}
+	.slick-next{ margin-left: 109px; }
+	.slickNavigatorsWrap,
+	.slickNums{
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		display: none !important;
+		margin-left: auto;
+	}
+	.slickNums{
+		@include font(20px, 28px);
+		list-style: none;
+		margin: 0 0 0 auto;
+		padding: 0;
+		pointer-events: none;
+		counter-reset: item;
+		li{
+			pointer-events: auto;
+			text-indent: -99999px;
+			position: relative;
+			&:first-child{ margin-left: 58px; }
+			&:last-child{
+				display: block;
+				padding-left: 22px;
+				text-indent: 0;
+			}
+			&:before{
+				position: absolute;
+				left: 0;
+				opacity: 0;
+				visibility: hidden;
+				text-indent: 0;
+				counter-increment: item;
+				content: counters(item, ". ", decimal) "/";
+			}
+			&.slick-active{
+				&:before{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		button{
+			padding: 0;
+			background-color: transparent;
+			border: 0;
+		}
+	}
+}
+/* ---------------------------------------------------------
+13	 introBannerHolder
+---------------------------------------------------------*/
+.introBannerHolder{ min-height: 130px; }
+/* ---------------------------------------------------------
+14	 breadCrumbs
+---------------------------------------------------------*/
+.breadCrumbs{
+	@include font(15px, 20px);
+	font-weight: 600;
+	a{
+		color: $gray-500;
+		display: block;
+	}
+}
+/* ---------------------------------------------------------
+15	 chooseUs-sec
+---------------------------------------------------------*/
+.chooseUs-sec{ .btnMore{ color: $green; } }
+/* ---------------------------------------------------------
+16	 chooseList
+---------------------------------------------------------*/
+.chooseList{
+	color: $gray-600;
+	margin: 0 0 0 -10px;
+	.icon{
+		@include font(70px, 75px);
+		color: $green;
+	}
+}
+/* ---------------------------------------------------------
+17	 featureCol
+---------------------------------------------------------*/
+.featureCol{
+	width: 100%;
+	&:hover{ .postHoverLinskList{ bottom: 20px; } }
+	.title{
+		font-size: 13px;
+		a{
+			color: $gray-500;
+			transition: color 0.3s ease;
+		}
+	}
+	.price{
+		@include font(16px, 18px);
+		font-weight: 900;
+		color: $gray-300;
+		del{
+			@include font(14px, 16px);
+			color: $gray-1001;
+			font-weight: 400;
+			margin: 0 10px 0 0;
+		}
+	}
+	.hotOffer{
+		@include font(14px, 16px);
+		top: 11px;
+		left: 4px;
+		min-width: 50px;
+		padding: 4px 5px 7px 2px;
+		border-radius: 0 15px 15px 0;
+		background: $orange;
+		transform: rotate(90deg);
+		&.green{ background: $green; }
+	}
+	.postHoverLinskList{
+		@include font(16px, 20px);
+		position: absolute;
+		bottom: -50px;
+		left: 0;
+		right: 0;
+		transition: all 0.25s linear;
+		li{
+			box-shadow: 0 1px 19px 6px rgba(0, 0, 0, 0.1);
+			&:first-child{ border-radius: 20px 0 0 20px; }
+			&:last-child{ border-radius: 0 20px 20px 0; }
+		}
+		a{
+			padding: 8px;
+			color: $gray-300;
+			background: $white;
+			transition: color 0.3s ease;
+			&:hover{ color: $white; }
+		}
+	}
+}
+/* ---------------------------------------------------------
+18	 contactListColumn
+---------------------------------------------------------*/
+.contactListColumn{
+	border-radius: 50px;
+	.icon{
+		@include font(30px, 40px);
+		color: $green;
+	}
+}
+/* ---------------------------------------------------------
+19	 comming-timer
+---------------------------------------------------------*/
+.comming-timer{
+	.countdown-row{
+		display: flex;
+		justify-content: center;
+		.countdown-section{
+			min-width: 30px;
+			margin: 0 20px 0 0;
+			position: relative;
+			@include pseudo(before, 0, -14px, auto, auto);
+			&:before{
+				content: ":";
+				@include font(30px, 35px);
+				color: $green;
+			}
+			&:last-child{ &:before{ display: none; } }
+			.countdown-amount{
+				@include font(25px, 27px);
+				color: $green;
+				font-weight: 700;
+				background: none;
+				border-top: none;
+				display: block;
+				padding: 0;
+				border-bottom: none;
+				&:before{ display: none; }
+			}
+			.countdown-period{
+				@include font(12px, 14px);
+				color: $gray-700;
+			}
+		}
+	}
+}
+/* ---------------------------------------------------------
+20	 dealSlider
+---------------------------------------------------------*/
+.dealSlider{
+	.slick-dots{
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		li{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 13px 0 0;
+		}
+		.slick-active{
+			button{
+				&:before{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		button{
+			background: none;
+			border-radius: 100%;
+			outline: none;
+			text-indent: -9999px;
+			@include width(10px, 10px);
+			padding: 5px;
+			position: relative;
+			display: block;
+			background: $gray-800;
+			border: none;
+			@include pseudo(before, -5px, auto, auto, -5px);
+			&:before{
+				@include width(20px, 20px);
+				border-width: 1px;
+				border-style: solid;
+				border-color: $wpThemeColor;
+				padding: 5px;
+				border-radius: 100%;
+				opacity: 0;
+				visibility: hidden;
+			}
+		}
+	}
+}
+/* ---------------------------------------------------------
+21	 subscribeSecBlock
+---------------------------------------------------------*/
+.subscribeSecBlock{
+	min-height: 330px;
+	.emailForm1{
+		width: 100%;
+		@include font(14px, 16px);
+		color: $gray-1001;
+		.form-control{
+			@include width(100%, 50px);
+			background: $white;
+			margin: 0 0 20px;
+			border-radius: 40px;
+			@include placeholder{ color: $gray-1001; }
+		}
+		.btn{
+			border-radius: 40px !important;
+		}
+	}
+}
+/* ---------------------------------------------------------
+22	 quotationBlock
+---------------------------------------------------------*/
+.quotationBlock{
+	@include font(16px, 26px);
+	color: $gray-500;
+	q{
+		padding: 0 20px;
+		font-style: italic;
+		&:after,
+		&:before{ display: none; }
+	}
+	cite{
+		font-style: normal;
+		strong{
+			@include font(20px, 22px);
+			color: $gray-300;
+		}
+		span{
+			@include font(14px, 16px);
+			color: $gray-500;
+		}
+	}
+}
+/* ---------------------------------------------------------
+23	 masonryHolder
+---------------------------------------------------------*/
+.masonryHolder{
+	.grid-item{
+		width: 100%;
+		float: left;
+		&.grid-item2{ width: 100%; }
+	}
+}
+/* ---------------------------------------------------------
+24	 itemCol
+---------------------------------------------------------*/
+.itemCol{
+	.hoverTextBlock{
+		left: 20px;
+		top: 20px;
+		.txt{
+			@include font(16px, 18px);
+			color: $gray-500;
+			word-spacing: 1px;
+		}
+	}
+	.headingIV{
+		@include font(25px, 30px);
+		color: $gray-1007;
+		a{ color: $gray-1007; }
+	}
+}
+/* ---------------------------------------------------------
+25	 testimonailSlider
+---------------------------------------------------------*/
+.testimonailSlider{
+	&.slick2{ .slick-dots{ display: none !important; } }
+	.slide{ padding: 0 20px; }
+	.icon-qoute{
+		@include font(20px, 22px);
+		color: $gray-500;
+	}
+	.title{
+		@include font(20px, 22px);
+		color: $gray-1002;
+	}
+	.desnation{
+		@include font(14px, 16px);
+		color: $gray-1008;
+	}
+	.slick-dots{
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		li{
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 13px 0 0;
+		}
+		.slick-active{
+			button{
+				&:before{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		button{
+			background: none;
+			border-radius: 100%;
+			outline: none;
+			text-indent: -9999px;
+			@include width(10px, 10px);
+			padding: 5px;
+			position: relative;
+			display: block;
+			background: $gray-800;
+			border: none;
+			@include pseudo(before, -5px, auto, auto, -5px);
+			&:before{
+				@include width(20px, 20px);
+				border-width: 1px;
+				border-style: solid;
+				border-color: $wpThemeColor;
+				padding: 5px;
+				border-radius: 100%;
+				opacity: 0;
+				visibility: hidden;
+			}
+		}
+	}
+}
+/* ---------------------------------------------------------
+26	 newsPostColumn
+---------------------------------------------------------*/
+.newsPostColumn{
+	transition: all 0.25s linear;
+	&:hover{ box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.06); }
+	.imgHolder{
+		margin: 0 -10px;
+		.time{
+			@include width(50px, 50px);
+			@include font(12px, 14px);
+			color: $white;
+			left: 10px;
+			top: 11px;
+			strong{ @include font(16px, 18px); }
+		}
+	}
+	.postBy{
+		@include font(12px, 14px);
+		color: $gray-1009;
+		word-spacing: 2px;
+		a{ color: $gray-1009; }
+	}
+	.headingV{ a{ color: $gray-300; } }
+}
+/* ---------------------------------------------------------
+27	 newsBlogColumn
+---------------------------------------------------------*/
+.newsBlogColumn{
+	.time{
+		@include width(110px, 50px);
+		@include font(12px, 14px);
+		color: $white;
+		strong{ @include font(16px, 18px); }
+	}
+	.postBy{
+		@include font(12px, 14px);
+		color: $gray-1009;
+		word-spacing: 2px;
+		border-bottom: 1px solid $gray-1000;
+		a{ color: $gray-1009; }
+	}
+	.headingV{ a{ color: $gray-300; } }
+}
+/* ---------------------------------------------------------
+28	 discoverSecHolder
+---------------------------------------------------------*/
+.discoverSecHolder{
+	.rightAlign{
+		.title{
+			&:before{
+				right: auto;
+				left: 0;
+			}
+		}
+		.imgHolder{
+			.bdr{
+				left: -40px;
+				top: -30px;
+			}
+		}
+	}
+	.title{
+		@include font(18px, 20px);
+		font-weight: 600;
+		color: $gray-1005;
+		letter-spacing: 1px;
+		@include pseudo(before, auto, 0, 2px, auto);
+		&:before{ @include width(30px, 1px); }
+	}
+	.headingIV{ color: $gray-300; }
+	.btn{
+		border: 1px solid;
+		&:hover{ color: $white; }
+	}
+	.imgHolder{
+		box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.06);
+		z-index: 1;
+		.bdr{
+			right: -40px;
+			top: -30px;
+			z-index: -1;
+		}
+	}
+}
+/* ---------------------------------------------------------
+29	 partnerSlider
+---------------------------------------------------------*/
+.partnerSlider{
+	.logoColumn{
+		width: 155px;
+	}
+}
+/* ---------------------------------------------------------
+30	 widget
+---------------------------------------------------------*/
+.widget{
+	.searchForm{
+		@include width(100%, 40px);
+		.form-control{
+			@include font(14px, 16px);
+			color: $gray-1010;
+			height: 40px;
+			background: none;
+			border-radius: 0;
+			padding: 0 40px 5px 11px;
+			box-shadow: none;
+			border: 1px solid $gray-1000;
+			@include placeholder{ color: $gray-1010; }
+		}
+		button{
+			@include font(18px, 20px);
+			color: $gray-1011;
+			right: 1px;
+			top: 10px;
+			background: none;
+			border: none;
+		}
+	}
+	.categoryList{
+		line-height: 20px;
+		a{ color: $gray-500; }
+		.num{
+			border-radius: 5px;
+			padding: 0 13px;
+		}
+	}
+	.filter-ranger-form{
+		.get-results-wrap{ padding-top: 24px; }
+		#demo{
+			font-size: 12px;
+			line-height: (16/12);
+		}
+		.btn{
+			@include font(14px, 16px);
+			color: $white;
+			letter-spacing: 1px;
+			vertical-align: top;
+			min-width: 100px;
+		}
+		#amount{
+			@include font(14px, 16px);
+			color: $gray-500;
+		}
+	}
+	.recentListHolder{
+		.alignleft{ width: 27%; }
+		.description-wrap{ width: 73%; }
+		.headingVII{
+			font-weight: 400;
+			a{
+				color: $gray-500;
+				display: block;
+			}
+		}
+		.price{
+			@include font(15px, 17px);
+			color: $gray-1013;
+		}
+	}
+	.tagNavList{
+		@include font(14px, 16px);
+		li{ margin: 0 8px 10px 0; }
+		a{
+			color: $gray-500;
+			letter-spacing: 1px;
+			padding: 7px 14px 9px 17px;
+			border: 1px solid $gray-1000;
+			transition: all 0.25s linear;
+			&:hover{ color: $white; }
+		}
+	}
+	.recentPostList{
+		a{
+			color: $gray-500;
+			letter-spacing: 1px;
+			border-bottom: 1px solid $gray-1000;
+		}
+	}
+	.archiveList{
+		a{
+			color: $gray-500;
+			letter-spacing: 1px;
+		}
+	}
+}
+/* ---------------------------------------------------------
+31	 show-head
+---------------------------------------------------------*/
+.show-head{
+	.viewFilterLinks{
+		@include font(15px, 17px);
+		color: $gray-500;
+		width: 100%;
+		li{ letter-spacing: 1px; }
+		a{
+			@include width(40px, 40px);
+			color: $gray-500;
+			display: block;
+			padding: 8px;
+			border: 1px solid $gray-1000;
+			&:hover{ color: $white; }
+		}
+		.fas{ @include font(20px, 22px); }
+	}
+	.groupTitle{
+		@include font(14px, 17px);
+		color: $gray-1010;
+	}
+	.dropdown{
+		@include width(170px, 40px);
+		.dropdown-toggle{
+			@include font(14px, 16px);
+			color: $gray-500;
+			@include width(100%, 40px);
+			text-align: left;
+			border: 1px solid $gray-1000;
+			padding: 0 0 3px 8px;
+			letter-spacing: 1px;
+			background: none;
+			&:after{
+				margin: 8px 8px 0 0;
+				float: right;
+			}
+		}
+		.dropdown-menu{
+			margin: 0 0 0 -10px;
+			padding: 0;
+			width: 100%;
+			a{
+				padding: 5px 8px;
+				color: $gray-500;
+				display: block;
+				&:hover{ color: $white; }
+			}
+		}
+	}
+}
+/* ---------------------------------------------------------
+32	 pagination
+---------------------------------------------------------*/
+.pagination{
+	@include font(16px, 18px);
+	color: $gray-1014;
+	li{
+		margin: 0 10px 0 0;
+		font-weight: 700;
+	}
+	.active{ a{ color: $white; } }
+	a{
+		border: 1px solid $gray-1000;
+		display: block;
+		border-radius: 5px;
+		padding: 5px 9px;
+		color: $gray-1014;
+		&:hover{ color: $white; }
+	}
+}
+/* ---------------------------------------------------------
+33	 productTextHolder
+---------------------------------------------------------*/
+.productTextHolder{
+	h2{
+		@include font(30px, 33px);
+		color: $gray-200;
+		letter-spacing: 2px;
+	}
+	.ratingList{
+		@include font(15px, 17px);
+		color: $gray-1014;
+		letter-spacing: 1px;
+		a{
+			color: $orange;
+			display: block;
+		}
+	}
+	.price{ @include font(28px, 30px); }
+	.productInfoDetail{
+		@include font(14px, 16px);
+		color: $gray-500;
+		letter-spacing: 1px;
+		span{
+			font-weight: 600;
+			color: $gray-400;
+		}
+		a{
+			color: $gray-500;
+			word-spacing: -3px;
+		}
+	}
+	.sizeList{
+		@include font(15px, 17px);
+		color: $gray-300;
+		font-weight: 600;
+		letter-spacing: 1px;
+		[type="checkbox"]{
+			position:fixed;
+			left:0;
+			top:0;
+			opacity:0;
+			z-index: -1;
+		}
+		.fake-label{ @include font(14px, 16px); }
+		.fake-input,
+		label {
+			display:inline-block;
+			vertical-align: middle;
+		}
+		label{padding-right: 5px;}
+		.fake-input{
+			@include width(20px, 20px);
+			background: $gray-1015;
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			margin-right: 1px;
+			border-radius: 100%;
+		}
+		[type="checkbox"] + .fake-input:before{
+			content:'';
+			@include width(10px, 6px);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			border: 3px solid $white;
+			border-width: 0 0 3px 3px;
+			opacity: 0;
+			transform: rotate(-45deg);
+			margin: -4px 0 0 -5px;
+		}
+		[type="checkbox"]:checked + .fake-input:before{opacity:1;}
+		input:disabled + .fake-input,
+		input:disabled ~ .fake-label{opacity: .5;}
+	}
+	.colorList{
+		@include font(15px, 17px);
+		color: $gray-300;
+		font-weight: 600;
+		letter-spacing: 1px;
+		a{
+			@include width(20px, 20px);
+			display: block;
+		}
+		.red{ background: $red; }
+		.yellow{ background: $yellow; }
+		.purple{ background: $purple; }
+	}
+    .jcf-number{
+        overflow: hidden;
+        width: 100%;
+        height:50px;
+        margin: 0 0 20px;
+        input{
+            @include font(18px, 20px);
+            color: $gray-500;
+            text-align: center;
+            padding: 0;
+            width: 100%;
+        	border-radius: 40px;
+            border: 1px solid $wpThemeColor;
+        }
+        .jcf-btn-inc,
+        .jcf-btn-dec{
+        	@include width(50px, 50px);
+            background: none;
+            top: 0;
+            @include font(10px, 12px);
+            text-indent: -9999px; 
+            &:before{
+                top: 18px;
+                left: 19px;
+                background: none;
+                border:none;
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                margin: 0;
+                text-indent: 0;
+            }
+        }
+        .jcf-btn-dec{
+            left: 0;
+            border-right: 1px solid $wpThemeColor;
+            &:before{
+                content:"\f068";
+                display: block;
+            }
+        }
+        .jcf-btn-inc{
+            right: 0;
+            border-left: 1px solid $wpThemeColor;
+            &:before{
+                content:"\f067";
+                display: block;
+            }
+        }
+    }
+    .socialNetwork{
+		@include font(14px, 16px);
+		color: $gray-500;
+		letter-spacing: 1px;
+		a{
+			@include font(16px, 18px);
+			color: $gray-500;
+		}
+	}
+}
+/* ---------------------------------------------------------
+34	 tabSetList
+---------------------------------------------------------*/
+.tabSetList{
+	@include font(20px, 25px);
+	color: $gray-1016;
+	a{
+		color: $gray-1016;
+		position: relative;
+		@include pseudo(after, auto, 0, 0, 0);
+		&:after{
+			transition: all 0.25s linear;
+			border-bottom: 2px solid;
+			transform: scaleX(0);
+			transform-origin: 50% 100% 0;
+		}
+		&:hover{ &:after { transform: scaleX(1); } }
+		&.active{
+			&:after{ transform: scaleX(1); }
+		}
+	}
+}
+/* ---------------------------------------------------------
+35	 socialNetworkList
+---------------------------------------------------------*/
+.socialNetworkList{
+	@include font(14px, 16px);
+	color: $gray-500;
+	letter-spacing: 1px;
+	a{
+		@include font(16px, 18px);
+		color: $gray-500;
+	}
+}
+/* ---------------------------------------------------------
+36	 commentsBlock
+---------------------------------------------------------*/
+.commentsBlock{
+	.commentArea{
+		.img{ width: 23%; }
+		.txtHolder{ width: 77%; }
+		.commentDate{
+			color: $gray-1017;
+			word-spacing: 2px;
+			a{ color: $gray-300; }
+		}
+	}
+}
+/* ---------------------------------------------------------
+37	 commentform
+---------------------------------------------------------*/
+.commentform{
+	.row1{ margin: 0 -15px; }
+	.coll{
+		width: 100%;
+		padding: 0 15px;
+	}
+	.form-control{
+		@include width(100%, 50px);
+		@include font(15px, 17px);
+		color: $gray-1017;
+		background: $gray-1018;
+		border: none;
+		box-shadow: none;
+		border-radius: 0;
+		padding: 9px 7px;
+	}
+	textarea{
+		resize: none;
+		&.form-control{ @include width(100%, 200px); }
+	}
+}
+/* ---------------------------------------------------------
+38	 cartHolder
+---------------------------------------------------------*/
+.cartHolder{
+	.cartTable{
+		min-width: 930px;
+		th{
+			@include font(15px, 17px);
+			color: $gray-300;
+			padding: 10px 0;
+			letter-spacing: 1px;
+		}
+		td{
+			vertical-align: middle;
+			letter-spacing: 1px;
+		}
+	    .jcf-number{
+	        overflow: hidden;
+	        height:50px;
+	        margin: 0 20px 0 0;
+	        input{
+	            @include font(20px, 22px);
+	            color: $gray-500;
+	            text-align: center;
+	            padding: 0;
+	            width: 150px;
+	            border: 1px solid $gray-1019;
+	        }
+	        .jcf-btn-inc,
+	        .jcf-btn-dec{
+	        	@include width(50px, 50px);
+	            background: none;
+	            top: 0;
+	            @include font(10px, 12px);
+	            text-indent: -9999px; 
+	            &:before{
+	                top: 18px;
+	                left: 19px;
+	                background: none;
+	                border:none;
+	                font-family: 'Font Awesome 5 Free';
+	                font-weight: 900;
+	                margin: 0;
+	                text-indent: 0;
+	            }
+	        }
+	        .jcf-btn-dec{
+	            left: 0;
+	            border-right: 1px solid $gray-1019;
+	            &:before{
+	                content:"\f068";
+	                display: block;
+	            }
+	            &:hover{ &:before{ color: $white; } }
+	        }
+	        .jcf-btn-inc{
+	            right: 0;
+	            border-left: 1px solid $gray-1019;
+	            &:before{
+	                content:"\f067";
+	                display: block;
+	            }
+	            &:hover{ &:before{ color: $white; } }
+	        }
+	    }
+	    .imgHolder{ width: 70px; }
+	    .title{
+	    	a{ color: $gray-500; }
+	    }
+	    .fas{ color: $gray-1002; }
+	}
+	.cartForm{
+		label{
+			color: $gray-300;
+			letter-spacing: 1px;
+		}
+		.form-control{
+			@include width(100%, 200px);
+			color: $gray-500;
+			border: 1px solid $gray-1000;
+			background: none;
+			box-shadow: none;
+			border-radius: 0;
+		}
+	}
+	.couponForm{
+		.mt-holder{
+			width: 100%;
+		}
+		label{
+			color: $gray-300;
+			letter-spacing: 1px;
+		}
+		.form-control{
+			@include width(100%, 50px);
+			color: $gray-500;
+			border: 1px solid $gray-1000;
+			background: none;
+			box-shadow: none;
+			border-radius: 0;
+		}
+	}
+}
+/* ---------------------------------------------------------
+39	 abtSecHolder
+---------------------------------------------------------*/
+.abtSecHolder{
+	h2{
+		@include font(30px, 30px);
+		color: $gray-200;
+		@include pseudo(before, auto, auto, 0, 0);
+		&:before{
+			@include size(70px, 1px);
+			background: $green;
+		}
+	}
+}
+/* ---------------------------------------------------------
+40	 progressCounter
+---------------------------------------------------------*/
+.progressCounter{
+	li{
+		min-width: 100%;
+	}
+	.counter{
+		@include font(50px, 52px);
+		color: $gray-200;
+	}
+	.txtWrap{
+		@include font(14px, 16px);
+		color: $gray-1020;
+		font-weight: 500;
+		letter-spacing: 1px;
+	}
+}
+/* ---------------------------------------------------------
+41	 accordionList
+---------------------------------------------------------*/
+.accordionList{
+	.card{ border: 1px solid $gray-1022; }
+	.card-header{
+		border: none;
+		background: $white;
+		border-radius: 0;
+	}
+	.btn-link{
+		@include font(14px, 16px);
+		color: $gray-200;
+	}
+}
+/* ---------------------------------------------------------
+42	 teamBlock
+---------------------------------------------------------*/
+.teamBlock{
+	&:hover{
+		.imgWrap:before,
+		.socialNetworks{
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+	.imgWrap{
+		@include pseudo(before, 0, 0, 0, 0);
+		&:before{
+			opacity: 0;
+			visibility: hidden;
+			background: rgba($gray-200, 0.8);
+			transition: opacity 0.35s linear, visibility 0.35s linear;
+		}
+	}
+	.socialNetworks{
+		font-size: 14px;
+		line-height: 26px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.35s linear, visibility 0.35s linear, transform 0.35s linear;
+		li{
+			margin-right: 17px;
+			margin-left: 17px;
+		}
+		a{
+			color: $white;
+			transition: color 0.35s ease;
+			&:hover{
+				color: $green;
+			}
+		}
+	}
+	.name{
+		@include font(15px, 17px);
+		color: $gray-200;
+		a{
+			color: $gray-200;
+			transition: color 0.35s ease;
+			&:hover{
+				color: $green;
+			}
+		}
+	}
+	.desination{
+		@include font(14px, 16px);
+		color: $gray-500;
+		font-weight: 400;
+	}
+}
+/* ---------------------------------------------------------
+43	 stepCol
+---------------------------------------------------------*/
+.stepCol{
+	width: 100%;
+	.mainTitle{
+		@include font(14px, 19px);
+		color: $white;
+		max-width: 109px;
+		background: $green;
+		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+	}
+}
+/* ---------------------------------------------------------
+44	 contactListHolder
+---------------------------------------------------------*/
+.contactListHolder{
+	@include font(14px, 23px);
+	color: $gray-500;
+	li{ min-width: 100%; }
+	a{
+		color: $gray-500;
+	}
+	.icon{
+		@include font(20px, 22px);
+		color: $gray-200;
+		@include size(70px, 70px);
+		border-radius: 100%;
+		border: 1px solid $gray-1021;
+	}
+	.title{
+		@include font(14px, 16px);
+		color: $gray-200;
+	}
+}
+/* ---------------------------------------------------------
+45	 mapHolder
+---------------------------------------------------------*/
+.mapHolder{
+	height: 260px;
+	@include media-breakpoint-up(sm){
+		height: 320px;
+	}
+	@include media-breakpoint-up(md){
+		height: 370px;
+	}
+	@include media-breakpoint-up(lg){
+		height: 420px;
+	}
+	@include media-breakpoint-up(xl){
+		height: 500px;
+	}
+	iframe{
+		width: 100%;
+		height: 100%;
+	}
+}
+/* ---------------------------------------------------------
+46	 contactForm
+---------------------------------------------------------*/
+.contactForm{
+	.row1{ margin: 0 -15px; }
+	.coll{
+		width: 100%;
+		padding: 0 15px;
+	}
+	.form-control{
+		@include width(100%, 50px);
+		@include font(13px, 15px);
+		color: $gray-1023;
+		background: none;
+		border: 1px solid $gray-1021;
+		box-shadow: none;
+		border-radius: 0;
+		padding: 9px 14px;
+	}
+	textarea{
+		resize: none;
+		&.form-control{
+			@include width(100%, 227px);
+			padding: 17px 14px;
+		}
+	}
+}

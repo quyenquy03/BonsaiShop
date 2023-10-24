@@ -1,0 +1,48 @@
+@mixin pseudo($pseudo, $top, $right, $bottom, $left){
+
+	&:#{$pseudo}{
+		content: '';
+		position: absolute;
+		top: $top;
+		right: $right;
+		bottom: $bottom;
+		left: $left;
+	}
+}
+
+
+@mixin font($font-size, $line-height) {
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+@mixin width($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &::-moz-placeholder {opacity: 1; @content}
+  &:-moz-placeholder {@content}
+  &:-ms-input-placeholder {@content}
+  &.placeholder {@content}
+}
+
+%colorBg{
+	background-color: $wpThemeColor;
+}
+%colorClr{
+	color: $wpThemeColor;
+}
+%colorBdr{
+	border-color: $wpThemeColor;
+}
+
+%clearfix{
+	&:after{
+		content: "";
+		display: block;
+		clear: both;
+	}
+}

@@ -1,0 +1,61 @@
+
+/* ---------------------------------------------------------
+39	 footerHolder
+---------------------------------------------------------*/
+.footerHolder{
+	.coll-1{
+		width: 100%;
+	}
+	.coll-2{
+		width: 100%;
+	}
+	.coll-3{
+		width: 100%;
+	}
+	.coll-4{
+		width: 100%;
+	}
+	.footerContactList{
+		@include font(15px, 17px);
+		color: $gray-500;
+		.pr30{
+			padding-right: 0;
+		}
+		address{ color: $gray-300; }
+		a{ color: $gray-500; }
+		.icon{ color: $gray-300; }
+		.email{ .icon{ font-size: 12px; } }
+	}
+	.followSocailNetwork{
+		@include font(15px, 18px);
+		color: $gray-300;
+		a{ color: $gray-900; }
+	}
+	.footerNavList{
+		a{ color: $gray-500; }
+	}
+	.tagNavList{
+		@include font(14px, 16px);
+		li{
+			&.mr2{ margin: 0 2px 0 0; }
+		}
+		a{
+			color: $gray-1002;
+			min-width: 100px;
+			border: 1px solid $gray-1003;
+			transition: all 0.25s linear;
+			&:hover{ color: $white; }
+		}
+	}
+}
+/* ---------------------------------------------------------
+40	 copyRightHolder
+---------------------------------------------------------*/
+.copyRightHolder{
+	border-top: 1px solid $gray-800;
+	&.v-II{
+		color: $white;
+		border-top: none;
+		p{ a{ color: $white; } }
+	}
+}

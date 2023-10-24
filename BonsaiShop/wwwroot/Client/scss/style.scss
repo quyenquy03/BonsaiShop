@@ -1,0 +1,50 @@
+ /*
+Theme Name: Botanical - HTML5 Ecommerce Template
+Author: Htmlbeans
+Author URI: https://themeforest.net/user/htmlbeans
+Version: 1
+Description: Base theme for HTML5
+Text Domain: base
+Tags: one-column, two-columns, three-columns
+Theme URI: http://www.htmlbeans.com/html/botanical/
+*/
+
+
+
+// devices viewport width starts at:
+$breakpoints: (
+	'xs-phone': 480px,
+	'phone': 576px,
+	'tablet': 768px,
+	'desktop': 992px,
+	'desktop2': 1024px,
+	'desktop3': 1170px,
+	'widescreen': 1300px,
+	'widescreen2': 1550px
+);
+  
+// keywords
+$media-expressions: (
+    'screen': 'screen',
+	'print': 'print',
+	'handheld': 'handheld',
+	'landscape': '(orientation: landscape)',
+	'portrait': '(orientation: portrait)',
+	'retina2x': '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)',
+	'retina3x': '(-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 240dpi)'
+);
+
+@import 'vendor/include-media';
+
+@import "vendor/bootstrap/functions";
+@import "vendor/bootstrap/variables";
+
+@import "customVariables";
+
+@import "vendor/bootstrap/mixins";
+@import "base/customMixinx";
+
+
+@import "layout/common";
+@import "layout/header";
+@import "layout/footer";

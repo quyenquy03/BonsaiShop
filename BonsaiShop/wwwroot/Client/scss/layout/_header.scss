@@ -1,0 +1,553 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+#header {
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 2;
+
+	.headerHolderCol {
+		background: rgb(94,220,160);
+		background: linear-gradient(115deg, rgba(94,220,160,1) 0%, rgba(57,223,181,1) 48%, rgba(16,226,56,0.8) 100%);
+
+		.tel {
+			@include font(13px, 15px);
+			color: $white;
+			font-weight: 500;
+
+			.icon-call {
+				@include font( 15px, 17px);
+			}
+		}
+
+		.txt {
+			@include font(13px, 15px);
+			font-family: 'Great Vibes', cursive;
+			font-size: 25px;
+			color: $white;
+		}
+	}
+
+	.header-fixed {
+		background-color: white;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		box-shadow: 0 0 15px #7b927c;
+	}
+
+	.mainHolder {
+		.logo {
+			width: 115px;
+		}
+	}
+
+	.h-logo {
+		width: 100px;
+	}
+}
+
+.static-block {
+	position: static;
+}
+
+.langList {
+	font-size: 13px;
+	line-height: (16/14);
+
+	> li {
+		margin: 0 0 0 13px;
+
+		&:first-child {
+			margin: 0;
+		}
+
+		> a {
+			color: $gray-200;
+			border: none;
+			padding: 0;
+			transition: color 0.3s ease;
+
+			&:after {
+				// font-size: 15px;
+				// margin: 0 -2px 2px 3px;
+				// vertical-align: bottom;
+				// transition: color 0.3s ease;
+			}
+
+			&:hover {
+				border: none;
+			}
+		}
+	}
+
+	.icon-menu {
+		font-size: 18px;
+		line-height: (20/18);
+	}
+
+	.dropdown-menu {
+		min-width: 120px;
+		top: 30px !important;
+		border-radius: 0;
+		padding: 0;
+		box-shadow: -4px 1px 18px 3px rgba(0, 0, 0, 0.2);
+
+		.dropdown-item {
+			font-size: 12px;
+			line-height: (14/12);
+			color: $gray-300;
+			font-weight: 400;
+			padding: 8px 0;
+			border-bottom: 1px solid $gray-1000;
+			background: none;
+			transition: color 0.3s ease;
+
+			a {
+				color: $gray-300;
+			}
+		}
+
+		.dropdown-toggle {
+			&:after {
+				display: none;
+			}
+		}
+	}
+}
+
+.langListII {
+	@include font(13px, 15px);
+	font-weight: 400;
+	color: $white;
+
+	li {
+		margin: 0 16px 0 0;
+
+		&.show {
+			a {
+				background: none;
+				border: none;
+			}
+		}
+	}
+
+	a {
+		color: $white;
+		border: none;
+		padding: 0;
+		font-weight: 700;
+		transition: color 0.3s ease;
+		// &:after{
+		// 	font-size: 13px;
+		// 	margin: 0 0 2px 5px;
+		// 	vertical-align: bottom;
+		// 	transition: color 0.3s ease;
+		// }
+		&:hover {
+			border: none;
+		}
+	}
+
+	.dropdown-menu {
+		min-width: 120px;
+		top: 3px !important;
+		border-radius: 5px;
+		padding: 0;
+		box-shadow: -4px 1px 18px 3px rgba(0, 0, 0, 0.2);
+
+		.dropdown-item {
+			font-size: 12px;
+			line-height: (14/12);
+			color: $gray-300;
+			font-weight: 400;
+			padding: 8px 0;
+			border-bottom: 1px solid $gray-1000;
+			background: none;
+			transition: color 0.3s ease;
+		}
+	}
+}
+
+.pageNav1 {
+	@include font(14px, 16px);
+	color: $gray-200;
+	font-weight: 700;
+	float: left;
+
+	.navbar-nav {
+		li {
+			&.dropdown {
+				&.show {
+					> .dropdown-menu {
+						opacity: 1;
+						visibility: visible;
+					}
+				}
+			}
+		}
+
+		.nLogo {
+			display: none;
+		}
+
+		a {
+			color: $gray-200;
+			padding: 10px 15px;
+			background: none;
+			cursor: pointer;
+			transition: color 0.3s ease;
+
+			&:after {
+				display: none;
+			}
+		}
+
+		.dropdown-menu {
+			@include font(16px, 18px);
+			opacity: 0;
+			visibility: hidden;
+			left: 0;
+			top: 100%;
+			min-width: 234px;
+			font-weight: 600;
+			border-radius: 0;
+			border-top: 2px solid $wpThemeColor;
+			box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.06);
+
+			a {
+				color: $gray-300;
+				display: block;
+				padding: 10px 15px;
+				margin: 0;
+
+				&:hover {
+					color: $white;
+				}
+			}
+		}
+	}
+
+	.navbar-toggle {
+		padding: 8px;
+		background: none;
+		border: 1px solid $gray-200;
+		border-radius: 0;
+		margin: 15px 0 0;
+		transition: all 0.25s linear;
+
+		&:focus {
+			outline: 0;
+		}
+
+		&:hover {
+			.icon-bar {
+				background: $white;
+			}
+		}
+
+		.icon-bar {
+			display: block;
+			width: 22px;
+			height: 2px;
+			background: $gray-200;
+			;
+			border-radius: 1px;
+
+			+ .icon-bar {
+				margin-top: 4px;
+			}
+		}
+	}
+
+	.navbar-collapse {
+		position: absolute;
+		left: 0;
+		top: 100%;
+		right: 0;
+		background: $white;
+	}
+}
+
+.language-box {
+	.language-option {
+		font-size: 15px;
+		font-weight: 500;
+		cursor: pointer;
+
+		&:hover {
+			color: #5f67be;
+		}
+	}
+
+	.language-bar {
+		font-size: 16px;
+	}
+}
+
+.account-menu-box {
+	.account-box {
+		width: 200px;
+		display: block;
+
+		.account-name {
+			display: flex;
+			align-items: center;
+			border: 1px solid #ccc;
+			background: rgb(94,218,220);
+			background: linear-gradient(115deg, rgba(94,218,220,1) 0%, rgba(138,253,45,0.9484244381346288) 100%);
+			border-radius: 30px;
+			padding-right: 15px;
+			cursor: pointer;
+
+			.user-avatar {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+			}
+
+			.user-name {
+				font-size: 14px !important;
+				margin-left: 10px;
+				font-weight: 500;
+			}
+		}
+	}
+
+	.account-menu {
+		width: 200px;
+	}
+}
+
+.pageNav2 {
+	font-size: 14px;
+	line-height: (14/16);
+	color: $gray-200;
+	font-weight: 700;
+	float: right;
+
+	.navbar-nav {
+		li {
+			&.dropdown {
+				&.show {
+					> .dropdown-menu {
+						opacity: 1;
+						visibility: visible;
+					}
+				}
+			}
+		}
+
+		.dropdown-menu {
+			@include font(16px, 18px);
+			opacity: 0;
+			visibility: hidden;
+			left: 0;
+			top: 60%;
+			min-width: 234px;
+			font-weight: 600;
+			margin: 0;
+			border-radius: 0;
+			border-top: 2px solid $wpThemeColor;
+			box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.06);
+
+			a {
+				color: $gray-300;
+				display: block;
+				padding: 10px 15px;
+				margin: 0;
+
+				&:after {
+					display: none;
+				}
+
+				&:hover {
+					color: $white;
+				}
+			}
+		}
+
+		.active {
+			> a {
+				&:after {
+					transform: scaleX(1);
+				}
+			}
+		}
+
+		a {
+			color: $gray-200;
+			padding: 10px 15px;
+			transition: color 0.3s ease;
+			position: relative;
+			cursor: pointer;
+			@include pseudo(after, auto, 0, 0, 0);
+
+			&:after {
+				transition: all 0.25s linear;
+				border: none;
+				border-bottom: 2px solid;
+				transform: scaleX(0);
+				transform-origin: 50% 100% 0;
+			}
+
+			&:hover {
+				&:after {
+					transform: scaleX(1);
+				}
+			}
+		}
+	}
+
+	.navbar-toggle {
+		padding: 8px;
+		background: none;
+		border: 1px solid $gray-200;
+		border-radius: 0;
+		transition: all 0.25s linear;
+
+		&:focus {
+			outline: 0;
+		}
+
+		&:hover {
+			.icon-bar {
+				background: $white;
+			}
+		}
+
+		.icon-bar {
+			display: block;
+			width: 22px;
+			height: 2px;
+			background: $gray-200;
+			;
+			border-radius: 1px;
+
+			+ .icon-bar {
+				margin-top: 4px;
+			}
+		}
+	}
+
+	.navbar-collapse {
+		position: absolute;
+		left: 0;
+		top: 100%;
+		right: 0;
+		background: $white;
+	}
+}
+
+.wishList {
+	font-size: 18px;
+	line-height: (20/18);
+	padding: 0 15px 0 0;
+
+	li {
+		margin: 0 0 0 20px;
+
+		&:first-child {
+			margin: 0;
+		}
+	}
+
+	a {
+		color: $gray-200;
+		border: none !important;
+		padding: 0;
+		transition: color 0.3s ease;
+
+		.num {
+			position: absolute;
+			top: -6px;
+			right: -15px;
+			width: 15px;
+			height: 15px;
+			font-size: 12px;
+			line-height: (12px/16);
+			color: $white;
+			background: $green;
+			padding: 7px 0 0 5px;
+		}
+	}
+
+	.dropdown-menu {
+		min-width: 120px;
+		top: 10px !important;
+		border-radius: 0;
+		padding: 0;
+		box-shadow: -4px 1px 18px 3px rgba(0, 0, 0, 0.2);
+
+		.dropdown-item {
+			font-size: 12px;
+			line-height: (14/12);
+			color: $gray-300;
+			font-weight: 400;
+			padding: 8px 0;
+			border-bottom: 1px solid $gray-1000;
+		}
+	}
+}
+
+.space-bar::after {
+	content: "";
+	position: absolute;
+	border: 1px solid #3b3a3a;
+	width: 2px;
+	top: 0px;
+	bottom: 0;
+	right: 67px;
+}
+
+.wishListII {
+	@include font(19px, 21px);
+	padding: 4px 0;
+
+	li {
+		margin: 0 0 0 21px;
+	}
+
+	.icon-box {
+		font-size: 35px;
+	}
+
+	a {
+		color: $gray-200;
+		border: none !important;
+		padding: 0;
+		transition: color 0.3s ease;
+
+		.num {
+			position: absolute;
+			top: -6px;
+			right: -15px;
+			width: 15px;
+			height: 15px;
+			font-size: 12px;
+			line-height: (12px/16);
+			color: $white;
+			background: $green;
+			padding: 7px 0 0 5px;
+		}
+	}
+
+	.dropdown-menu {
+		min-width: 120px;
+		top: 10px !important;
+		border-radius: 0;
+		padding: 0;
+		box-shadow: -4px 1px 18px 3px rgba(0, 0, 0, 0.2);
+
+		.dropdown-item {
+			font-size: 12px;
+			line-height: (14/12);
+			color: $gray-300;
+			font-weight: 400;
+			padding: 8px 0;
+			border-bottom: 1px solid $gray-1000;
+		}
+	}
+}

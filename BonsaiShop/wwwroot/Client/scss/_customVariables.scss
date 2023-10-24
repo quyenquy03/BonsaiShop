@@ -1,0 +1,319 @@
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Color system
+
+$white:    #fff !default;
+$gray-100: #6e6e6e;
+$gray-200: #333333;
+$gray-300: #444444;
+$gray-400: #1d1d1d;
+$gray-500: #707070;
+$gray-600: #838383;
+$gray-700: #b2b2b2;
+$gray-800: #d1d1d1;
+$gray-900: #808080;
+$black:    #000 !default;
+
+$gray-1000: #ebebeb;
+$gray-1001: #bebebe;
+$gray-1002: #666666;
+$gray-1003: #e0e0e0;
+$gray-1004: #313538;
+$gray-1005: #555555;
+$gray-1006: #f6f6f6;
+$gray-1007: #353535;
+$gray-1008: #9f9f9f;
+$gray-1009: #afafaf;
+$gray-1010: #b3b3b3;
+$gray-1011: #656565;
+$gray-1012: #a8a8b3;
+$gray-1013: #27272f;
+$gray-1014: #808086;
+$gray-1015: #e4e4e4;
+$gray-1016: #444454;
+$gray-1017: #b8b8b8;
+$gray-1018: #f5f5f5;
+$gray-1019: #e1e1e1;
+$gray-1020: #999999;
+$gray-1021: #eaeaea;
+$gray-1022: #dddddd;
+$gray-1023: #c8c8c8;
+
+$grays: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$grays: map-merge(
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+$blue:    #007bff !default;
+$indigo:  #6610f2 !default;
+$purple:  #9a2f81;
+$pink:    #e83e8c !default;
+$red:     #ec2026;
+$orange:  #f9861f;
+$yellow:  #fdc135;
+$green:   #5ba515;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+$colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$colors: map-merge(
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "teal":       $teal,
+    "cyan":       $cyan,
+    "white":      $white,
+    "gray":       $gray-600,
+    "gray-dark":  $gray-800
+  ),
+  $colors
+);
+
+$primary:       $green;
+$secondary:     $gray-500 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+
+$theme-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: map-merge(
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+  ),
+  $theme-colors
+);
+
+
+$wpThemeColor: $green;
+
+// Options
+$enable-shadows:  true;
+$enable-validation-icons: false;
+$enable-deprecation-messages: false;
+
+
+// Spacing
+$spacer: 5px;
+$spacers: ();
+$spacers: map-merge(
+  (
+    0: 0,
+    1: $spacer,
+    2: ($spacer * 2),
+    3: ($spacer * 3.2),
+    4: ($spacer * 4),
+    5: ($spacer * 5),
+    6: ($spacer * 6),
+    7: ($spacer * 7),
+    8: ($spacer * 8),
+    9: ($spacer * 9),
+    10: ($spacer * 10),
+    11: ($spacer * 11),
+    12: ($spacer * 12),
+    13: ($spacer * 13),
+    14: ($spacer * 14),
+    15: ($spacer * 15),
+    16: ($spacer * 16),
+    17: ($spacer * 17),
+    18: ($spacer * 18),
+    19: ($spacer * 19),
+    20: ($spacer * 20),
+    21: ($spacer * 21),
+    22: ($spacer * 22),
+    23: ($spacer * 23),
+    24: ($spacer * 24),
+    25: ($spacer * 25),
+    26: ($spacer * 26),
+    27: ($spacer * 27),
+    28: ($spacer * 28),
+    29: ($spacer * 29),
+    30: ($spacer * 30),
+    31: ($spacer * 31),
+    32: ($spacer * 32),
+    33: ($spacer * 33),
+    34: ($spacer * 34),
+    35: ($spacer * 35)
+  ),
+  $spacers
+);
+$sizes: ();
+$sizes: map-merge(
+  (
+    20: 20%,
+    25: 25%,
+    33: 33.333%,
+    50: 50%,
+    66: 66.667%,
+    80: 80%,
+    100: 100%,
+    auto: auto
+  ),
+  $sizes
+);
+
+
+// Body
+$body-color:  $gray-500;
+
+// Links
+$link-color:  theme-color("primary");
+$link-hover-decoration: none;
+
+// Grid breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  lgwd: 1025px,
+  xl: 1170px,
+  xlwd: 1350px,
+  xlwdf: 1920px
+);
+
+// Grid containers
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px
+);
+
+// Components
+$border-radius: 10px;
+$border-radius-lg:  15px;
+$border-radius-sm:  1px;
+$box-shadow-sm: 0 .125rem .25rem rgba($gray-800, .2);
+$box-shadow:  0 .5rem 1rem rgba($gray-800, .2);
+$box-shadow-lg: 0 18px 70px rgba($gray-800, .2);
+$component-active-color:  $white;
+$component-active-bg: $primary;
+$transition-base: all .3s ease;
+$transition-fade: opacity .3s ease;
+$transition-collapse: height .3s ease;
+
+
+// Typography
+$font-family-sans-serif:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-serif:    'Playfair Display', serif;
+$font-family-base:  $font-family-sans-serif;
+$font-size-base:  (15);
+$font-size-lg:  $font-size-base * 0.938;
+$font-size-sm:  $font-size-base * .875;
+$font-weight-normal:          400;
+$font-weight-bold:  700 !default;
+$line-height-base:  (24/15);
+$h1-font-size:  (30);
+$h2-font-size:  $h1-font-size;
+$h3-font-size:  (26);
+$h4-font-size:  (22);
+$h5-font-size:  (18);
+$h6-font-size:  (18);
+$headings-margin-bottom:  $spacer * 3;
+$headings-font-weight:  $font-weight-bold;
+$blockquote-small-color:      $gray-500;
+$blockquote-font-size:        (14);
+
+// Buttons + Forms
+$input-btn-padding-y: $spacer;
+$input-btn-padding-x: $spacer * 3;
+$input-btn-font-size: $font-size-base;
+$input-btn-line-height: 1;
+$input-btn-focus-width: 0;
+$input-btn-focus-color: rgba($component-active-bg, 0);
+$input-btn-focus-box-shadow:  none;
+$input-btn-border-width:  $border-width;
+$input-btn-padding-y-lg:  0.56rem;
+$input-btn-padding-x-lg:  1rem;
+$input-btn-font-size-lg:  $font-size-base;
+$input-btn-line-height-lg:  $line-height-base;
+
+// Buttons
+$btn-padding-y: $input-btn-padding-y;
+$btn-padding-x: $input-btn-padding-x;
+$btn-font-family: $input-btn-font-family;
+$btn-font-size: $input-btn-font-size;
+$btn-line-height: $input-btn-line-height;
+$btn-border-width:  $input-btn-border-width;
+$btn-font-weight: $font-weight-bold;
+$btn-box-shadow:  none;
+$btn-focus-width: $input-btn-focus-width;
+$btn-focus-box-shadow:  $input-btn-focus-box-shadow;
+$btn-border-radius: $border-radius;
+$btn-border-radius-lg:  $border-radius;
+$btn-border-radius-sm:  $border-radius-sm;
+$btn-transition:  color .3s ease, background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+$btn-padding-y-lg:  $input-btn-padding-y-lg;
+$btn-padding-x-lg:  $input-btn-padding-x-lg;
+$btn-font-size-lg:  $input-btn-font-size-lg;
+$btn-line-height-lg:  $input-btn-line-height-lg;
+
+// Forms
+$input-padding-y: $input-btn-padding-y;
+$input-padding-x: $input-btn-padding-x;
+$input-font-family: $input-btn-font-family;
+$input-font-size: $input-btn-font-size;
+$input-line-height: $input-btn-line-height;
+$input-bg:  $gray-400;
+$input-color: $dark;
+$input-border-color:  $input-bg;
+$input-border-width:  $input-btn-border-width;
+$input-box-shadow:  none;
+$input-border-radius: $border-radius;
+$input-border-radius-lg:  $border-radius-lg;
+$input-border-radius-sm:  $border-radius-sm;
+$input-focus-bg:  $input-bg;
+$input-focus-border-color:  lighten($component-active-bg, 25%);
+$input-focus-color: $input-color;
+$input-focus-width: $input-btn-focus-width;
+$input-focus-box-shadow:  $input-btn-focus-box-shadow;
+$input-placeholder-color: $gray-600;
+$input-height:  60px;
+$input-transition:  border-color .3s ease, box-shadow .3s ease;
+
+// Navbar
+$navbar-padding-y:  $spacer * 3;
+$navbar-padding-x:  $spacer * 3;
+$navbar-nav-link-padding-x: $spacer * 3;
+$navbar-toggler-padding-y:  3px;
+$navbar-toggler-padding-x:  $spacer;
+$navbar-toggler-font-size:  0.95rem;
+$navbar-toggler-border-radius:  $border-radius;
+$navbar-dark-color: $white;
+$navbar-dark-toggler-icon-bg: str-replace(url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='#{$navbar-dark-color}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"), "#", "%23");
+$navbar-dark-toggler-border-color:  $white;
+$navbar-light-color: $gray-200;
+$nav-tabs-border-width: none;
