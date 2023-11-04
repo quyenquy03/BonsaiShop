@@ -5,7 +5,7 @@ namespace BonsaiShop.Models;
 
 public partial class AllCode
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     public string? Type { get; set; }
 
@@ -13,7 +13,11 @@ public partial class AllCode
 
     public string? Value { get; set; }
 
+    public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
+
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
-    public virtual ICollection<Menu> Menus { get; set; } = new List<Menu>();
+    public virtual ICollection<User> UserIsActiveNavigations { get; set; } = new List<User>();
+
+    public virtual ICollection<User> UserRoles { get; set; } = new List<User>();
 }

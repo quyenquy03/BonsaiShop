@@ -15,11 +15,13 @@ public partial class BlogComment
 
     public long? ParrentId { get; set; }
 
-    public bool? IsActive { get; set; }
+    public int? IsActive { get; set; }
 
     public int? Levels { get; set; }
 
     public virtual Blog? Blog { get; set; }
+
+    public virtual AllCode? IsActiveNavigation { get; set; }
 
     public virtual User? User { get; set; }
 }

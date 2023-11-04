@@ -1,0 +1,124 @@
+﻿<header id="header" class="position-relative">
+	<!-- headerHolderCol -->
+	<div class="headerHolderCol py-2">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-12 col-sm-4">
+					<a href="javascript:void(0);" class="tel d-flex align-items-end"><i class="icon-call mr-2"></i>  Hotline: (602) 462 8889</a>
+				</div>
+				<div class="col-12 col-sm-4 text-center">
+					<span class="txt d-block">Wellcome To BonsaiShop</span>
+				</div>
+				<div class="col-12 col-sm-4">
+					<!-- langListII -->
+					<ul class="nav nav-tabs langListII align-items-center justify-content-end border-bottom-0">
+						<li class="language-box">
+							<span class="language-option">VI</span>
+							<span class="language-bar">|</span>
+							<span class="language-option">EN</span>
+						</li>
+						@if(ViewBag.FullName != null)
+						{
+							<li class="m-0 account-menu-box">
+								<a class="account-box" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" aria-expanded="false">
+									<div class="account-name">
+										<img class="user-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhTerIDLYs9-VCb8Qnu9zYClaPokcFDtmiqQ&usqp=CAU" alt="">
+										<div class="user-name">
+											<span>@ViewBag.FullName</span>
+										</div>
+									</div>
+								</a>
+								<div class="dropdown-menu account-menu pl-4 pr-4 border-0">
+									<a class="dropdown-item" href="javascript:void(0);">Thông tin cá nhân</a>
+									<a class="dropdown-item" href="javascript:void(0);">Cài đặt tài khoản</a>
+									<a class="dropdown-item" asp-action="Logout" asp-controller="Account">Đăng xuất</a>
+								</div>
+							</li>
+						} else
+						{
+							<li class="language-box">
+								<a asp-action="Login" asp-controller="Account" class="language-option">Đăng nhập</a>
+							</li>
+						}
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- headerHolder -->
+	<div class="headerHolder">
+		<div class="container py-1">
+			<div class="row align-items-center">
+				<div class="col-6 col-sm-2">
+					<!-- mainLogo -->
+					<div class="logo">
+						<a href="home.html"><img src="~/Client/images/LogoBonsaiShop.jpg" alt="Botanical" class="img-fluid"></a>
+					</div>
+				</div>
+				<div class="col-6 col-sm-7 col-lg-8 static-block">
+					<!-- mainHolder -->
+					<div class="mainHolder pt-lg-5 pt-3 justify-content-center">
+						<!-- pageNav2 -->
+						<nav class="navbar navbar-expand-lg navbar-light p-0 pageNav2 position-static">
+							<button type="button" class="navbar-toggle collapsed position-relative" data-toggle="collapse" data-target="#navbarNav" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<div class="collapse navbar-collapse" id="navbarNav">
+								<ul class="navbar-nav mx-auto  d-inline-block">
+									<li class="nav-item active dropdown">
+										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">home</a>
+										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
+											<li class="d-block mx-0"><a href="home.html">Home 1</a></li>
+											<li class="d-block mx-0"><a href="home2.html">Home 2</a></li>
+											<li class="d-block mx-0"><a href="home3.html">Home 3</a></li>
+										</ul>
+									</li>
+									<li class="nav-item dropdown">
+										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Store</a>
+										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
+											<li class="d-block mx-0"><a href="shop.html">Shop Left Sidebar</a></li>
+											<li class="d-block mx-0"><a href="shop-detail.html">Single Product</a></li>
+										</ul>
+									</li>
+									<li class="nav-item">
+										<a class="d-block" href="about-us.html">About</a>
+									</li>
+									<li class="nav-item dropdown">
+										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
+											<li class="d-block mx-0"><a href="blog.html">Blog Left Sidebar</a></li>
+											<li class="d-block mx-0"><a href="blog-detail.html">Blog Detail</a></li>
+										</ul>
+									</li>
+									<li class="nav-item dropdown">
+										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
+											<li class="d-block mx-0"><a href="cart-page.html">Cart Page</a></li>
+										</ul>
+									</li>
+									<li class="nav-item">
+										<a class="d-block" href="contact-us.html">contact</a>
+									</li>
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+				<div class="col-sm-2 col-lg-2">
+					<!-- wishListII -->
+					<ul class="nav nav-tabs wishListII  justify-content-end border-bottom-0">
+						<li class="nav-item space-bar ml-0 mr-3"><a class="nav-link icon-box  icon-heart" href="javascript:void(0);"></a></li>
+
+						<li class="nav-item ml-3"><a class="nav-link icon-box position-relative icon-cart" href="javascript:void(0);"><span class="num rounded d-block">2</span></a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</header>

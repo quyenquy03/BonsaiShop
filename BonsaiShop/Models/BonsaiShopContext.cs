@@ -45,7 +45,7 @@ public partial class BonsaiShopContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=BonsaiShop;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=BonsaiShop;Trusted_Connection=True;TrustServerCertificate=True; Connection Timeout=3600");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -56,7 +56,7 @@ public partial class BonsaiShopContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.Type).HasMaxLength(10);
+            entity.Property(e => e.Type).HasMaxLength(50);
             entity.Property(e => e.Value).HasMaxLength(50);
         });
 
@@ -95,6 +95,10 @@ public partial class BonsaiShopContext : DbContext
                 .HasForeignKey(d => d.BlogId)
                 .HasConstraintName("FK_BlogComments_Blogs");
 
+            entity.HasOne(d => d.IsActiveNavigation).WithMany(p => p.BlogComments)
+                .HasForeignKey(d => d.IsActive)
+                .HasConstraintName("FK_BlogComments_AllCodes");
+
             entity.HasOne(d => d.User).WithMany(p => p.BlogComments)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_BlogComments_Users");
@@ -109,6 +113,7 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(150);
             entity.Property(e => e.Detail).HasColumnType("ntext");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.ParentCateId).HasColumnName("ParentCateID");
             entity.Property(e => e.SeoDescription).HasMaxLength(150);
             entity.Property(e => e.SeoKeyword).HasMaxLength(150);
             entity.Property(e => e.SeoTitle).HasMaxLength(150);
@@ -168,10 +173,6 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.MenuName).HasMaxLength(50);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.ParrentId).HasColumnName("ParrentID");
-
-            entity.HasOne(d => d.PositionNavigation).WithMany(p => p.Menus)
-                .HasForeignKey(d => d.Position)
-                .HasConstraintName("FK_Menus_AllCodes");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -278,6 +279,14 @@ public partial class BonsaiShopContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.UserName).HasMaxLength(50);
+
+            entity.HasOne(d => d.IsActiveNavigation).WithMany(p => p.UserIsActiveNavigations)
+                .HasForeignKey(d => d.IsActive)
+                .HasConstraintName("FK_Users_AllCodes");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.UserRoles)
+                .HasForeignKey(d => d.RoleId)
+                .HasConstraintName("FK_Users_AllCodes1");
         });
 
         OnModelCreatingPartial(modelBuilder);

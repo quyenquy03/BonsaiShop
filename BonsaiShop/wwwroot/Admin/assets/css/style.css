@@ -1259,3 +1259,36 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+.table-body .nav-link:not(.collapsed) .bi-chevron-right {
+    transform: rotate(90deg);
+}
+.table-nav-icon {
+    display: block;
+    width: 24px;
+    margin: auto;
+    text-align: center;
+}
+.nav-content .table-item,
+.nav-content .table-item div
+{
+    padding: 0;
+}
+.nav-content .table-item .table-cell {
+    padding: 0.5rem 0.5rem;
+}
+.table-custom {
+    margin-top: 10px;
+    padding: 0 20px;
+}
+.table-custom .table-item {
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.table-custom .table-header {
+    border: 1px solid #ccc;
+    background-color: #ccc;
+}
+body::-webkit-scrollbar {
+    display: none;
+}

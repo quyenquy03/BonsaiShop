@@ -1,93 +1,161 @@
-﻿@using BonsaiShop.Ultilities;
-@model IList<User>
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<BonsaiShop.Models.User>
 @{
-    ViewData["Title"] = "Index";
+    int currentPage = ViewBag.currentPage;
+    ViewData["Title"] = "Danh sach nguoi dung " + currentPage;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+@using BonsaiShop.Ultilities;
+
 
 <div class="pagetitle">
     <h1 class="text-center">Danh sách người dùng</h1>
 </div><!-- End Page Title -->
 
-<section class="section dashboard">
+<div class="card mt-3">
+    <div class="card-body">
+        <div class="action-box d-flex align-items-end justify-content-between">
+            <div class="filter-box d-flex">
+                <div class="list-filter">
+                    <span class="form-label d-block mb-1 mt-3">Lọc theo quyền người dùng</span>
+                    <select class="form-control" id="ChooseRoles" asp-items="@ViewBag.listRoles" style="width: 250px" name="RoleID">
+                        <option value="0">Chọn tất cả</option>
+                    </select>
 
-    <div class="action-box d-flex align-items-end justify-content-between">
-        <div class="filter-box d-flex">
-            <div class="list-filter">
-                <span class="form-label d-block mb-1 mt-3">Lọc theo quyền người dùng</span>
-                <select class="form-control" style="width: 250px" name="states">
-                    <option value="0">Chọn tất cả</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Customer</option>
-                </select>
+                </div>
+                <div class="list-filter mx-3">
+                    <span class="form-label d-block mb-1 mt-3">Lọc theo trạng thái</span>
+                    <select class="form-control" id="ChooseIsAcctive" asp-items="@ViewBag.listActiveStatus" style="width: 250px" name="states">
+                        <option value="0">Chọn tất cả</option>
+
+                    </select>
+                </div>
             </div>
-            <div class="list-filter mx-3">
-                <span class="form-label d-block mb-1 mt-3">Lọc theo trạng thái</span>
-                <select class="form-control" style="width: 250px" name="states">
-                    <option value="0">Chọn tất cả</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Customer</option>
-                </select>
+            <div class="addnew-box ">
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Create" asp-area="Admin">Thêm mới</a>
             </div>
-        </div>
-        <div class="addnew-box ">
-            <a class="btn btn-primary" asp-controller="Account" asp-action="Create" asp-area="Admin">Thêm mới</a>
         </div>
     </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <section class="section dashboard">
+            
 
-    <table class="table mt-4">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">#</th>
-                <th scope="col">Họ và tên</th>
-                <th scope="col">UserName</th>
-                <th scope="col">Ngày sinh</th>
-                <th scope="col">Email</th>
-                <th scope="col">Điện thoại</th>
-                <th scope="col">Phân quyền</th>
-                <th scope="col">Hoạt động</th>
-                <th scope="col">Chức năng</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                int i = 0;
-            }
-            @foreach(var item in Model)
-            {
-                i++;
-                <tr class="text-center">
-                    <th scope="row">@i</th>
-                    <td>@item.FullName</td>
-                    <td>@item.UserName</td>
-                    <td>@Functions.FormatDate(item.Birthday.ToString())</td>
-                    <td>@item.Email</td>
-                    <td>@item.Phone</td>
+            <table class="table mt-4">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">Họ và tên</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">Ngày sinh</th>
+                        <th scope="col">Email</th>
+                        @*<th scope="col">Điện thoại</th>*@
+                        <th scope="col">Phân quyền</th>
+                        <th scope="col">Hoạt động</th>
+                        <th scope="col">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 0;
+                    }
+                    @foreach(var item in Model)
+                    {
+                        i++;
+                        <tr class="text-center tbl-row">
+                            <th scope="row">
+                                <div class="table-cell-center">@i</div>
+                            </th>
+                            <td class="tbl-collum">@item.FullName</td>
+                            <td class="tbl-collum">@item.UserName</td>
+                            <td class="tbl-collum">@Functions.FormatDate(item.Birthday.ToString())</td>
+                            <td class="tbl-collum">@item.Email</td>
+                            @*<td>@item.Phone</td>*@
+                            <td> @item.Role.Value </td>
+                            <td> @item.IsActiveNavigation.Value </td>
+                            <td>
+                                @if(item.IsActive == 5)
+                                {
+                                    <a class="btn btn-primary" onclick="DisplayUnBlockModal(@item.UserId)"><i class="bi bi-unlock-fill"></i></a>
+                                } else
+                                {
+                                    <a class="btn btn-info" onclick="DisplayBlockModal(@item.UserId)"><i class="bi bi-lock-fill"></i></a>
+                                }
+                                <a class="btn btn-warning" asp-action="Edit" asp-controller="Account" asp-route-id="@item.UserId"><i class="bi bi-pencil-fill"></i></a>
+                                <button class="btn btn-danger" onclick="DisplayDeleteModal(@item.UserId)"><i class="bi bi-trash-fill"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="modal fade" id="deleteModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Xác nhận xóa người dùng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="UserIdToDelete" />
+                            Bạn có chắc chắn muốn xóa người dùng này không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                            <button type="button" id="btnConfirmDelete" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="BlockAccModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="UserIdToBlock" />
+                            Bạn có chắc chắn muốn khóa tài khoản người dùng này không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                            <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="UnBlockAccModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="UserIdToBlock" />
+                            Bạn có chắc chắn muốn mở khóa cho tài khoản này không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                            <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    @if (item.RoleId == 1)
-                    {
-                        <td> Admin </td>
-                    } else
-                    {
-                        <td> Customer </td>
-                    }
-                    @if (item.IsActive == true)
-                    {
-                        <td> Đang hoạt động </td>
-                    } else
-                    {
-                        <td> Đã bị khóa </td>
-                    }
-                    <td>
-                        <a class="btn btn-primary"><i class="bi bi-lock-fill"></i></a>
-                        <a class="btn btn-warning" asp-action="Edit" asp-controller="Account" asp-route-id="@item.UserId"><i class="bi bi-pencil-fill"></i></a>
-                        <a class="btn btn-danger"><i class="bi bi-trash-fill"></i></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</section>
+        <div aria-label="Page navigation example" class="text-center align-items-center">
+            <ul class="pagination text-center d-inline-block">
+                <pager class="pager-container" list="@Model" asp-route-RoleID="@ViewBag.RoleID" asp-area="Admin" asp-controller="Account" asp-action="Index" />
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('[rel="prev"]')[0].innerHTML = "<"
+    document.querySelectorAll('[rel="next"]')[0].innerHTML = ">"
+</script>
 
 @section Scripts {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
@@ -97,7 +165,107 @@
     <script>
         $(document).ready(function () {
             $(".statesSelect").select2();
+
+            $("#btnConfirmDelete").on("click", function() {
+                let UserID = $("#UserIdToDelete").val();
+                let UrlHandle = "/Admin/Account/Delete";
+
+                $.ajax({
+                    url : UrlHandle,
+                    type : "GET",
+                    data : {
+                        UserID : UserID,
+                    },
+                    success : function (data) {
+                        if(data.status == 0) {
+                            $("#deleteModal").modal("hide");
+                            window.location.reload();
+                        } else {
+                            // $("#deleteModal").modal("hide");
+                            // window.location.reload();
+                        }
+                    },
+
+                })
+            });
+            $(".btnConfirmBlock").on("click", function () {
+                let UserID = $("#UserIdToBlock").val();
+                let UrlHandle = "/Admin/Account/Block";
+
+                $.ajax({
+                    url: UrlHandle,
+                    type: "GET",
+                    data: {
+                        UserID: UserID,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            $("#BlockAccModal").modal("hide");
+                            $("#UnBlockAccModal").modal("hide");
+                            window.location.reload();
+                        } else {
+                            // $("#deleteModal").modal("hide");
+                            // window.location.reload();
+                        }
+                    },
+
+                })
+            })
+            $("#ChooseRoles").on("change", function () {
+                roleId = $("#ChooseRoles").children(":selected").attr("value");
+                ActiveStatus = $("#ChooseIsAcctive").children(":selected").attr("value");
+                roleId = parseFloat(roleId);
+                SelectChangeHandle(roleId, ActiveStatus);
+            })
+            $("#ChooseIsAcctive").on("change", function () {
+                roleId = $("#ChooseRoles").children(":selected").attr("value");
+                ActiveStatus = $("#ChooseIsAcctive").children(":selected").attr("value");
+                roleId = parseFloat(roleId);
+                SelectChangeHandle(roleId, ActiveStatus);
+            })
+            function SelectChangeHandle(roleId, ActiveStatus) {
+                $("#ChooseRoles option").removeAttr("selected");
+                $("#ChooseRoles > [value=" + roleId + "]").attr("selected", "true");
+
+                $("#ChooseIsAcctive option").removeAttr("selected");
+                $("#ChooseIsAcctive > [value=" + ActiveStatus + "]").attr("selected", "true");
+
+                $.ajax({
+                    url: "/Admin/Account/Filter",
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        "RoleID": roleId,
+                        "ActiveStatus" : ActiveStatus
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == 1) {
+                            window.location.href = results.linkURL;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert("error")
+                    }
+                })
+            }
+            
         });
+        
+    </script>
+    <script type="text/javascript">
+        function DisplayDeleteModal(id) {
+            $("#UserIdToDelete").val(id);
+            $("#deleteModal").modal("show");
+        }
+        function DisplayBlockModal(id) {
+            $("#UserIdToBlock").val(id);
+            $("#BlockAccModal").modal("show");
+        }
+        function DisplayUnBlockModal(id) {
+            $("#UserIdToBlock").val(id);
+            $("#UnBlockAccModal").modal("show");
+        }
     </script>
 }
 

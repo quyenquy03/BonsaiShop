@@ -1,4 +1,6 @@
 ﻿using BonsaiShop.Models;
+using BonsaiShop.Models.Authentication;
+using BonsaiShop.SessionSystem;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -13,6 +15,7 @@ namespace BonsaiShop.Controllers
             _logger = logger;
         }
 
+        [CustomerAuthentication]
         public IActionResult Index()
         {
             return View();

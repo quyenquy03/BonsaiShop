@@ -1,0 +1,141 @@
+﻿@model BonsaiShop.Models.Category;
+@{
+    ViewData["Title"] = "EditCate";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="pagetitle">
+    <h1 class="text-center">Chỉnh sửa thông tin danh mục</h1>
+</div><!-- End Page Title -->
+
+<section class="section mt-4">
+
+    <div class="form-addnew d-flex">
+        <div class="col-md-12">
+            <form asp-action="EditCate" asp-area="Admin" asp-controller="Category" class="row" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="text" asp-for="CategoryId" value="@Model.CategoryId" id="CategoryId" name="CategoryId" hidden class="form-control">
+                <input type="text" id="ParentCateId" value="@Model.ParentCateId" hidden class="form-control">
+                <input type="text" asp-for="CreatedBy" value="@Model.CreatedBy" name="CreatedBy" hidden class="form-control">
+                <input type="text"  asp-for="CreatedDate" value="@Model.CreatedDate" name="CreatedDate" hidden class="form-control">
+                <input type="text"  asp-for="IsActive" value="@Model.IsActive" name="IsActive" hidden class="form-control">
+                <div class="col-md-6">
+                    <label for="inputEmail5" class="form-label">Tên danh mục</label>
+                    <input type="text" asp-for="CategoryName" placeholder="Nhập tên danh mục..." class="form-control">
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputName5" class="form-label">Mô tả</label>
+                    <input type="text" asp-for="Description" placeholder="Nhập mô tả danh mục" ... class="form-control">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="inputAddress5" class="form-label">SeoTitle</label>
+                    <input type="text" class="form-control" asp-for="SeoTitle" placeholder="Nhập Title Seo của danh mục...">
+                    <span asp-validation-for="SeoTitle" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputAddress2" class="form-label">SeoKeyword</label>
+                    <input type="text" class="form-control" asp-for="SeoKeyword" placeholder="Nhập từ khóa SEO cho danh mục...">
+                    <span asp-validation-for="SeoKeyword" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputAddress2" class="form-label">SeoDescription</label>
+                    <input type="text" class="form-control" asp-for="SeoDescription" placeholder="Nhập mô tả SEO cho danh mục...">
+                    <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label for="inputCity" class="form-label">Loại danh mục</label>
+                    <select class="form-control" id="ChooseCateType" asp-for="TypeId" asp-items="@ViewBag.ListTypeCategory">
+                    </select>
+                    <span asp-validation-for="TypeId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <label for="inputCity" class="form-label">Danh mục cha</label>
+                    <select class="form-control" id="ChooseCateParent" asp-for="ParentCateId" asp-items="@ViewBag.ListParentCategories">
+                    
+                    </select>
+                    <span asp-validation-for="ParentCateId" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label for="inputAddress2" class="form-label">Mô tả chi tiết</label>
+                    <input type="text" class="form-control" asp-for="Detail" placeholder="0867168266">
+                    <span asp-validation-for="Detail" class="text-danger"></span>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                    <a class="btn mx-3 btn-secondary" asp-action="ListCatePost" asp-controller="Account" asp-area="Admin">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#ChooseCateType").on("change", function () {
+                cateTypeId = $("#ChooseCateType").children(":selected").attr("value");
+                LoadCateParent(cateTypeId);
+            })
+            $("#ChooseCateParent").on("change", function () {
+                parrentId = $("#ChooseCateParent").children(":selected").attr("value");
+                $("#ChooseCateParent option").removeAttr("selected");
+                $("#ChooseCateParent > [value=" + parrentId + "]").attr("selected", "true");
+            })
+
+            cateTypeId = $("#ChooseCateType").children(":selected").attr("value");
+            function LoadCateParent(cateTypeId) {
+
+                $.ajax({
+                    url: "/Admin/Category/LoadCateParent",
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        "CateTypeID": cateTypeId,
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#ChooseCateParent").html(results.content)
+                    },
+                    error: function (xhr) {
+                        alert("error")
+                    }
+                })
+            }
+            function CurrentParrentId(cateTypeId) {
+                parentCateID = $("#ParentCateId").val();
+                console.log(parentCateID);
+                $.ajax({
+                    url: "/Admin/Category/LoadCateParent",
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        "CateTypeID": cateTypeId,
+                        "ParentCateID": parentCateID
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#ChooseCateParent").html(results.content)
+                    },
+                    error: function (xhr) {
+                        alert("error")
+                    }
+                })
+            }
+            CurrentParrentId(cateTypeId);
+        });
+
+    </script>
+
+}
+

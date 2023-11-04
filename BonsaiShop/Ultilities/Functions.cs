@@ -1,10 +1,19 @@
-﻿namespace BonsaiShop.Ultilities
+﻿using System.Security.Cryptography;
+using System.Text;
+
+namespace BonsaiShop.Ultilities
 {
     public class Functions
     {
         public static string TitleSlugGeneration(string type, string title, long id)
         {
             string sTitle = type + "-" + SlugGenerator.SlugGenerator.GenerateSlug(title) + "-" + id.ToString() + ".html";
+            return sTitle;
+        }
+        public static string AliasLink(string tilte)
+        {
+            Random rnd = new Random();
+            string sTitle = SlugGenerator.SlugGenerator.GenerateSlug(tilte)+"-"+rnd.Next(10000);
             return sTitle;
         }
         public static string FormatDate(string d)
@@ -51,6 +60,27 @@
             {
                 return null;
             }
+        }
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+            byte[] result = md5.Hash;
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<result.Length; i++)
+            {
+                sb.Append(result[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+        public static string MD5Password(string? text)
+        {
+            string str = MD5Hash(text);
+            for(int i=0;i<5; i++)
+            {
+                str += MD5Hash(str + "_" + str);
+            }
+            return str;
         }
     }
 }

@@ -7,15 +7,15 @@ public partial class Category
 {
     public long CategoryId { get; set; }
 
-    public string? CategoryName { get; set; }
+    public string CategoryName { get; set; } = null!;
 
     public string? Alias { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; } = null!;
 
-    public string? Detail { get; set; }
+    public string Detail { get; set; } = null!;
 
-    public long? TypeId { get; set; }
+    public int? TypeId { get; set; }
 
     public string? SeoTitle { get; set; }
 
@@ -32,6 +32,10 @@ public partial class Category
     public DateTime? ModifiedDate { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public long? ParentCateId { get; set; }
+
+    public int? Levels { get; set; }
 
     public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
 

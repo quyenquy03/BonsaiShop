@@ -1,0 +1,167 @@
+﻿@model IList<BonsaiShop.Models.Category>;
+@{
+    ViewData["Title"] = "Danh sách danh mục sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1 class="text-center">Quản lý danh mục sản phẩm</h1>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="action-box text-end px-2 mt-3">
+                <a class="btn btn-primary" asp-controller="Category" asp-action="CreateNewCate" asp-area="Admin">Thêm mới</a>
+            </div>
+            <div class="col-md-12 table-custom table">
+
+                <div class="table-body">
+                    <div class="row table-header align-items-center">
+                        <div class="col-1">
+                            <div class="table-cell"></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="table-cell"><span>Tên danh mục</span></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="table-cell"><span>Mô tả danh mục</span></div>
+                        </div>
+                        <div class="col-2">
+                            <div class="table-cell text-center"><span>Danh mục con</span></div>
+                        </div>
+                        <div class="col-1">
+                            <div class="table-cell text-center"><span>Hiển thị</span></div>
+                        </div>
+                        <div class="col-2">
+                            <div class="table-cell text-center"><span>Chức năng</span></div>
+                        </div>
+                    </div>
+                    @foreach (var item in Model.Where(m => m.Levels == 1))
+                    {
+                        var target = "#" + item.Alias;
+                        var subitem = Model.Where(m => m.ParentCateId == item.CategoryId).ToList();
+                        <div class="row table-item align-items-center">
+                            <div class="col-1">
+                                <div class="table-cell">
+                                    <a class="nav-link collapsed" data-bs-target="@target" data-bs-toggle="collapse" href="#">
+                                        <i class="bi bi-chevron-right table-nav-icon ms-auto"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="table-cell"><span>@item.CategoryName</span></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="table-cell"><span>@item.Description</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="table-cell text-center"><span>@subitem.Count</span></div>
+                            </div>
+                            <div class="col-1">
+                                <div class="table-cell text-center"><span>@item.IsActive</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="table-cell text-center">
+                                    <a class="btn btn-warning" asp-action="EditCate" asp-controller="Category" asp-route-id="@item.CategoryId"><i class="bi bi-pencil-fill"></i></a>
+                                    <button class="btn btn-danger" onclick="DisplayDeleteModal(@item.CategoryId)"><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="@item.Alias" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                            @if (subitem.Count > 0)
+                            {
+                                @foreach (var SItem in subitem)
+                                {
+                                    <div class="row table-item align-items-center">
+                                        <div class="col-1 ">
+                                            <div class="table-cell">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="table-cell"><span>@SItem.CategoryName</span></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="table-cell"><span>@SItem.Description</span></div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="table-cell text-center"><span>0</span></div>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="table-cell text-center"><span>@SItem.IsActive</span></div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="table-cell text-center">
+                                                <a class="btn btn-warning" asp-action="EditCate" asp-controller="Category" asp-route-id="@SItem.CategoryId"><i class="bi bi-pencil-fill"></i></a>
+                                                <button class="btn btn-danger" onclick="DisplayDeleteModal(@SItem.CategoryId)"><i class="bi bi-trash-fill"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToDelete" />
+                    Bạn có chắc chắn muốn xóa người dùng này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="BlockAccModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToBlock" />
+                    Bạn có chắc chắn muốn khóa tài khoản người dùng này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="UnBlockAccModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToBlock" />
+                    Bạn có chắc chắn muốn mở khóa cho tài khoản này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

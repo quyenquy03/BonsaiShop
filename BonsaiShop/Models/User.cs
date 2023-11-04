@@ -21,13 +21,17 @@ public partial class User
 
     public string? Avatar { get; set; }
 
-    public long? RoleId { get; set; }
+    public int? RoleId { get; set; }
 
     public DateTime? LastLogin { get; set; }
 
-    public bool? IsActive { get; set; }
+    public int? IsActive { get; set; }
 
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
+    public virtual AllCode? IsActiveNavigation { get; set; }
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual AllCode? Role { get; set; }
 }

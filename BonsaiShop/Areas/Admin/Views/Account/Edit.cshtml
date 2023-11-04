@@ -13,13 +13,13 @@
 
     <div class="form-addnew d-flex">
         <div class="col-md-9">
-            <form asp-action="Create" class="row" enctype="multipart/form-data" method="post">
+            <form asp-action="Edit" class="row" enctype="multipart/form-data" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="text" hidden asp-for="UserId" value="@Model.UserId" class="form-control">
                 <input type="text" hidden asp-for="Password" value="@Model.Password" class="form-control">
                 <input type="text" hidden asp-for="IsActive" value="@Model.IsActive" class="form-control">
                 <input type="text" hidden asp-for="LastLogin" value="@Model.LastLogin" class="form-control">
-                <input type="text" hidden asp-for="Avatar" value="@Model.Avatar" class="form-control">
+                <input type="text" hidden name="OldAvatar" value="@Model.Avatar" class="form-control">
 
                 <div class="col-md-6">
                     <label for="inputEmail5" class="form-label">Tên tài khoản</label>
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-
+    
 </section>
 
 
