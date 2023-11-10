@@ -29,6 +29,8 @@ public partial class User
 
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
+    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+
     public virtual AllCode? IsActiveNavigation { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

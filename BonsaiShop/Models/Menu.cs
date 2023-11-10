@@ -13,8 +13,6 @@ public partial class Menu
 
     public string? Description { get; set; }
 
-    public int? Position { get; set; }
-
     public int? Levels { get; set; }
 
     public long? ParrentId { get; set; }
@@ -27,5 +25,5 @@ public partial class Menu
 
     public DateTime? ModifiedDate { get; set; }
 
-    public int? IsShow { get; set; }
+    public bool? IsActive { get; set; }
 }

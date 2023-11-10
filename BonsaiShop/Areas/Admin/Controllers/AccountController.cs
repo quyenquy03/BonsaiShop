@@ -17,7 +17,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
 		{
 			_context = context;
 		}
-		[AdminAuthentication]
+		/*[AdminAuthentication]*/
 		public IActionResult Index(int? page, int? RoleID = 0, int? ActiveStatus = 0)
 		{
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
@@ -191,7 +191,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
 				if(user == null)
 				{
 					return new JsonResult(new {
-						message = "Error",
+						message = "",
 						status = 1
 					});
 				} else

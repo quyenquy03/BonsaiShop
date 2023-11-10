@@ -63,5 +63,41 @@ namespace BonsaiShop.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Register(User user, string AgainPass)
+        {
+            if(user == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var checkUserName = _context.Users.Where(m => m.UserName == user.UserName).FirstOrDefault();
+                if (user.UserName == null) { TempData["UserNameRequired"] = "Vui lòng nhập tài khoản của bạn"; }
+                if(user.FullName == null) { TempData["FullNameRequired"] = "Vui lòng nhập họ và tên của bạn"; }
+                if(user.Password == null) { TempData["PasswordRequired"] = "Vui lòng nhập mật khẩu của bạn"; }
+                if(user.Email == null) { TempData["EmailRequired"] = "Vui lòng nhập Email của bạn"; }
+                if(AgainPass == null) { TempData["AgainPassRequired"] = "Trường này không được để trống"; }
+                if (checkUserName != null) { TempData["UserNameExists"] = "Tài khoản này đã được sử dụng";}
+                if(user.Password.Trim() != AgainPass.Trim()) { TempData["AgainPassError"] = "Mật khẩu nhập lại không trùng khớp"; }
+
+                if (user.UserName == null || checkUserName != null || user.FullName == null || user.Password == null || user.Email == null || AgainPass == null || user.Password.Trim() != AgainPass.Trim()) {
+                    return View(user);
+                }
+
+                user.IsActive = 5;
+                user.RoleId = _context.AllCodes.Where(m => m.Type == "ROLES" && m.KeyCode == "customer").Select(m => m.Id).FirstOrDefault();
+                user.Avatar = "avatar-default.jpg";
+                user.Password = HashPassword.MD5Password("123123");
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Login");
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
     }
 }

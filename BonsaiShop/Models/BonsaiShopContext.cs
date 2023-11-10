@@ -21,6 +21,10 @@ public partial class BonsaiShopContext : DbContext
 
     public virtual DbSet<BlogComment> BlogComments { get; set; }
 
+    public virtual DbSet<Cart> Carts { get; set; }
+
+    public virtual DbSet<CartDetail> CartDetails { get; set; }
+
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Commune> Communes { get; set; }
@@ -51,7 +55,9 @@ public partial class BonsaiShopContext : DbContext
     {
         modelBuilder.Entity<AllCode>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("ID");
             entity.Property(e => e.KeyCode)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -102,6 +108,37 @@ public partial class BonsaiShopContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.BlogComments)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_BlogComments_Users");
+        });
+
+        modelBuilder.Entity<Cart>(entity =>
+        {
+            entity.Property(e => e.CartId).HasColumnName("CartID");
+            entity.Property(e => e.CreateAt).HasColumnType("datetime");
+            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Carts)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_Carts_Users");
+        });
+
+        modelBuilder.Entity<CartDetail>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.CartId).HasColumnName("CartID");
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+            entity.HasOne(d => d.Cart).WithMany()
+                .HasForeignKey(d => d.CartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CartDetails_Carts");
+
+            entity.HasOne(d => d.Product).WithMany()
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CartDetails_Products");
         });
 
         modelBuilder.Entity<Category>(entity =>

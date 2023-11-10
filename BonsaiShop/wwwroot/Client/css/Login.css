@@ -1,178 +1,198 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Quicksand', sans-serif;
-}
+﻿@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #000;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-section {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    flex-wrap: wrap;
+.limiter {
+    width: 100%;
+    margin: 0 auto;
     overflow: hidden;
 }
 
-    section::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(#000,#0f0,#000);
-        animation: animate 5s linear infinite;
-    }
-
-@keyframes animate {
-    0% {
-        transform: translateY(-100%);
-    }
-
-    100% {
-        transform: translateY(100%);
-    }
-}
-
-section span {
-    position: relative;
-    display: block;
-    width: calc(3.125vw - 2px);
-    height: calc(3.125vw - 2px);
-    background: #181818;
-    z-index: 2;
-    transition: 1.5s;
-}
-
-section span:hover {
-    background: #0f0;
-    transition: 0s;
-}
-
-section .signin {
-    position: absolute;
-    width: 400px;
-    background: #222;
-    z-index: 1000;
+.login-session {
+    /* font-family: 'Great Vibes', cursive;
+    font-size: 20px; */
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 40px;
-    border-radius: 4px;
-    box-shadow: 0 15px 35px rgba(0,0,0,9);
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
-section .signin .content {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 40px;
+.login-container {
+    width: 500px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-section .signin .content h2 {
-    font-size: 2em;
-    color: #0f0;
-    text-transform: uppercase;
+.register-container {
+    width: 1000px;
 }
 
-section .signin .content .form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.login-header {
+    font-family: 'Great Vibes', cursive;
+    font-size: 40px;
 }
 
-section .signin .content .form .inputBox {
-    position: relative;
-    width: 100%;
-}
-
-section .signin .content .form .inputBox input {
-    position: relative;
-    width: 100%;
-    background: #333;
-    border: none;
-    outline: none;
-    padding: 25px 10px 7.5px;
-    border-radius: 4px;
+.other-login-item {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     color: #fff;
-    font-weight: 500;
-    font-size: 1em;
-}
-
-section .signin .content .form .inputBox i {
-    position: absolute;
-    left: 0;
-    padding: 15px 10px;
-    font-style: normal;
-    color: #aaa;
-    transition: 0.5s;
-    pointer-events: none;
-}
-
-.signin .content .form .inputBox input:focus ~ i,
-.signin .content .form .inputBox input:valid ~ i {
-    transform: translateY(-7.5px);
-    font-size: 0.8em;
-    color: #fff;
-}
-
-.signin .content .form .links {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.signin .content .form .links a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.signin .content .form .links a:nth-child(2) {
-    color: #0f0;
-    font-weight: 600;
-}
-
-.signin .content .form .inputBox input[type="submit"] {
-    padding: 10px;
-    background: #0f0;
-    color: #000;
-    font-weight: 600;
-    font-size: 1.35em;
-    letter-spacing: 0.05em;
     cursor: pointer;
+    font-size: 20px;
+    display: inline-flex;
+    background-color: #35ace4;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
 }
 
-input[type="submit"]:active {
-    opacity: 0.6;
+.other-login-label {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 25px;
 }
 
-@media (max-width: 900px) {
-    section span {
-        width: calc(10vw - 2px);
-        height: calc(10vw - 2px);
+.other-login-item:hover {
+    opacity: 0.8;
+}
+
+.facebook-icon {
+    background-color: #3b5998;
+}
+
+.google-icon {
+    background-color: #ea4335;
+}
+
+.login-box {
+    width: 100%;
+    padding: 5% 50px;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.input-label {
+    position: absolute;
+    top: 50%;
+    left: 45px;
+    transform: translateY(-50%);
+}
+
+.error-message {
+    position: absolute;
+    bottom: -24px;
+    left: 16px;
+    color: red;
+}
+
+.calendar-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+    .calendar-icon img {
+        width: 100%;
     }
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
 }
 
-@media (max-width: 600px) {
-    section span {
-        width: calc(20vw - 2px);
-        height: calc(20vw - 2px);
+    .input-icon i {
+        color: #7e6e80;
     }
+
+.remember-checkbox {
+    width: 10px;
+    height: 10px;
 }
+
+.input-text {
+    width: 100%;
+    padding: 10px 40px;
+    padding-right: 20px;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border: 1px solid #35ace4;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+    .input-text:focus-visible {
+        outline: none;
+        border: 2px solid #c718e1;
+    }
+
+.date-input-text {
+    padding: 30px 20px 10px 40px;
+}
+
+.date-input-label {
+    top: 30%;
+    font-size: 13px;
+}
+
+.form-button .form-submit-btn {
+    background: rgb(94,218,220);
+    background: linear-gradient(69deg, rgba(94,218,220,1) 0%, rgba(128,189,222,1) 28%, rgba(103,224,134,0.9) 68%, rgba(215,16,226,0.8) 100%);
+    font-weight: 400;
+    font-size: 20px;
+    padding: 5px 50px;
+    margin-top: 20px;
+    transition: all 1s ease-in;
+}
+
+.form-submit-btn:hover {
+    background: rgb(161,220,94);
+    background: linear-gradient(49deg, rgba(161,220,94,1) 0%, rgba(94,218,220,1) 35%, rgba(128,189,222,0.95) 68%, rgba(103,224,134,0.9) 100%);
+    transition: all 1s ease-in;
+}
+
+.form-submit-btn:focus-visible {
+    outline: none;
+}
+
+.change-action {
+    font-family: 'Great Vibes', cursive;
+    font-size: 20px;
+}
+
+    .change-action .change-action-link {
+        font-size: 25px;
+        padding-left: 10px;
+        color: #c718e1;
+        text-decoration: none;
+    }

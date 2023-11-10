@@ -13,7 +13,7 @@ namespace BonsaiShop.Ultilities
         public static string AliasLink(string tilte)
         {
             Random rnd = new Random();
-            string sTitle = SlugGenerator.SlugGenerator.GenerateSlug(tilte)+"-"+rnd.Next(10000);
+            string sTitle = SlugGenerator.SlugGenerator.GenerateSlug(tilte);
             return sTitle;
         }
         public static string FormatDate(string d)

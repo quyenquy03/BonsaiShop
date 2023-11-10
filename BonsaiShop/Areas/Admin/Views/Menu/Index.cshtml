@@ -1,0 +1,353 @@
+﻿@model IList<BonsaiShop.Models.Menu>;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1 class="text-center">Quản lý Menu khách hàng</h1>
+</div><!-- End Page Title -->
+
+
+<div class="card mt-3 input-box" style="display: none">
+    <div class="card-body">
+        <div class="form-addnew d-flex mt-3">
+            <div class="col-md-12">
+                <form class="row" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="number" name="MenuId" id="MenuId" hidden class="form-control">
+                    <input type="text" name="IsActive" id="IsActive" hidden class="form-control">
+                    <input type="number" name="CreateBy" id="CreateBy" hidden class="form-control">
+                    <input type="text" name="CreateDate" id="CreateDate" hidden class="form-control">
+                    <div class="col-md-4">
+                        <label for="inputEmail5" class="form-label">Tên danh mục</label>
+                        <input type="text" name="MenuName" id="MenuName" placeholder="Nhập tên Menu..." class="form-control">
+                        <span class="text-danger MenuNameRequired hide">Bạn phải nhập tên menu</span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputName5" class="form-label">Mô tả</label>
+                        <input type="text" name="Description" id="Description" placeholder="Nhập mô tả Menu" ... class="form-control">
+                        <span class="text-danger DescriptionRequired hide">Bạn phải nhập mô tả</span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="inputCity" class="form-label">Danh mục cha</label>
+                        <select class="form-control" id="ParrentId" name="ParrentId" asp-items="@ViewBag.ListParentMenu">
+                            <option value="0">Không có danh mục cha</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-3 text-end">
+                        <button type="button" class="btn mx-3 btn-save btn-primary">Lưu lại</button>
+                        <button type="button" class="btn mx-3 btn-update btn-primary">Lưu lại</button>
+                        <button type="button" class="btn btn-cancel btn-danger" >Hủy bỏ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section dashboard">
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="action-box text-end px-2 mt-3">
+                <button class="btn btn-addnew btn-primary" asp-controller="Menu" asp-action="CreateNewCate" asp-area="Admin">Thêm mới</button>
+            </div>
+            <div class="col-md-12 table-custom table">
+
+                <div class="table-body">
+                    <div class="row table-header align-items-center">
+                        <div class="col-1">
+                            <div class="table-cell"></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="table-cell"><span>Tên Menu</span></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="table-cell"><span>Mô tả Menu</span></div>
+                        </div>
+                        <div class="col-2">
+                            <div class="table-cell text-center"><span>Menu con</span></div>
+                        </div>
+                        <div class="col-1">
+                            <div class="table-cell text-center"><span>Hiển thị</span></div>
+                        </div>
+                        <div class="col-2">
+                            <div class="table-cell text-center"><span>Chức năng</span></div>
+                        </div>
+                    </div>
+                    @foreach (var item in Model.Where(m => m.Levels == 1))
+                    {
+                        var target = "#" + item.Alias;
+                        var subitem = Model.Where(m => m.ParrentId == item.MenuId).ToList();
+                        <div class="row table-item align-items-center">
+                            <div class="col-1">
+                                <div class="table-cell">
+                                    <a class="nav-link collapsed" data-bs-target="@target" data-bs-toggle="collapse" href="#">
+                                        <i class="bi bi-chevron-right table-nav-icon ms-auto"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="table-cell"><span>@item.MenuName</span></div>
+                            </div>
+                            <div class="col-3">
+                                <div class="table-cell"><span>@item.Description</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="table-cell text-center"><span>@subitem.Count</span></div>
+                            </div>
+                            <div class="col-1">
+                                <div class="table-cell text-center">
+                                    <div class="switch m-r-10">
+                                        @if (item.IsActive == true)
+                                        {
+                                            <input type="checkbox" id="switch-@item.MenuId" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="switch-1">
+                                        }
+                                        <label for="switch-@item.MenuId"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-2">
+                                <div class="table-cell text-center">
+                                    
+                                    <button class="btn btn-edit btn-warning" data-MenuId="@item.MenuId"><i class="bi bi-pencil-fill"></i></button>
+                                    <button class="btn btn-danger" onclick="DisplayDeleteModal(@item.MenuId)"><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="@item.Alias" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                            @if (subitem.Count > 0)
+                            {
+                                @foreach (var SItem in subitem)
+                                {
+                                    <div class="row table-item align-items-center">
+                                        <div class="col-1 ">
+                                            <div class="table-cell">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="table-cell"><span>@SItem.MenuName</span></div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="table-cell"><span>@SItem.Description</span></div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="table-cell text-center"><span>0</span></div>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="table-cell text-center">
+                                                <div class="switch m-r-10">
+                                                    @if (SItem.IsActive == true)
+                                                    {
+                                                        <input type="checkbox" id="switch-@SItem.MenuId" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="switch-1">
+                                                    }
+                                                    <label for="switch-@SItem.MenuId"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="table-cell text-center">
+                                                <button class="btn btn-edit btn-warning" data-MenuId="@SItem.MenuId"><i class="bi bi-pencil-fill"></i></button>
+                                                <button class="btn btn-danger" onclick="DisplayDeleteModal(@SItem.MenuId)"><i class="bi bi-trash-fill"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToDelete" />
+                    Bạn có chắc chắn muốn xóa người dùng này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="BlockAccModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToBlock" />
+                    Bạn có chắc chắn muốn khóa tài khoản người dùng này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="UnBlockAccModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToBlock" />
+                    Bạn có chắc chắn muốn mở khóa cho tài khoản này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".MenuNameRequired").hide();
+            $(".DescriptionRequired").hide();
+            $(".btn-addnew").click(function(){
+                $(".btn-update").hide();
+                $(".btn-save").show();
+                $(".input-box").show(500);
+                $(".btn-addnew").removeAttr('disabled');
+                $(".btn-edit").attr('disabled', 'disabled');
+            });
+
+            $(".btn-cancel").on("click", function() {
+                $(".input-box").hide(500);
+                $("#MenuName").val("");
+                $("#Description").val("");
+                $("#ParrentId").val(0);
+                $(".btn-edit").removeAttr('disabled');
+                $(".btn-addnew").removeAttr('disabled');
+            })
+
+            $(".btn-edit").on("click", function () {
+                var MenuId = $(this).data("menuid");
+                $.ajax({
+                    url: "/Admin/Menu/GetMenuById",
+                    type: "GET",
+                    data: {
+                        MenuId: MenuId
+                    },
+                    success: function (data) {
+                        if (data.status == 0 && data.menuEdit != null) {
+                            console.log(data.menuEdit);
+                            $("#MenuId").val(data.menuEdit.menuId);
+                            $("#MenuName").val(data.menuEdit.menuName);
+                            $("#Description").val(data.menuEdit.description);
+                            $("#ParrentId").val(data.menuEdit.parrentId);
+                            $("#CreateDate").val(data.menuEdit.createdDate);
+                            $("#CreateBy").val(data.menuEdit.createdBy);
+                            $("#IsActive").val(data.menuEdit.isActive);
+
+                            $(".btn-update").show();
+                            $(".btn-save").hide();
+                            $(".input-box").show(500);
+                            $(".btn-edit").attr('disabled', 'disabled');
+                            $(".btn-addnew").attr('disabled', 'disabled');
+                        } else {
+                            alert("Addnew Error");
+                        }
+                    },
+                });
+
+                
+            })
+
+            $('.btn-save').on("click", function () {
+                var MenuName = $("#MenuName").val();
+                var Description = $("#Description").val();
+                var ParrentId = $("#ParrentId").val();
+                if (MenuName.trim() == "") $(".MenuNameRequired").show(100);
+                if (Description.trim() == "") $(".DescriptionRequired").show(100);
+                if (MenuName.trim() != "" && Description.trim() != "") {
+                    $.ajax({
+                        url: "/Admin/Menu/Create",
+                        type: "Post",
+                        data: {
+                            MenuName: MenuName,
+                            Description: Description,
+                            ParrentId: ParrentId
+                        },
+                        success: function (data) {
+                            if (data.status == 0) {
+                                location.reload();
+                            } else {
+                                alert("Addnew Error");
+                            }
+                        },
+                    });
+                }
+            })
+
+            $('.btn-update').on("click", function () {
+                var MenuName = $("#MenuName").val();
+                var Description = $("#Description").val();
+                var ParrentId = $("#ParrentId").val();
+                var MenuId = $("#MenuId").val();
+                var CreatedBy = $("#CreateBy").val();
+                var CreatedDate = $("#CreateDate").val();
+                var IsActive = $("#IsActive").val();
+                if (MenuName.trim() == "") $(".MenuNameRequired").show(100);
+                if (Description.trim() == "") $(".DescriptionRequired").show(100);
+               
+                if (MenuName.trim() != "" && Description.trim() != "") {
+                    $.ajax({
+                        url: "/Admin/Menu/Update",
+                        type: "Post",
+                        data: {
+                            MenuName: MenuName,
+                            Description: Description,
+                            ParrentId: ParrentId,
+                            MenuId : MenuId,
+                            CreatedBy: CreatedBy,
+                            CreatedDate: CreatedDate,
+                            IsActive: IsActive
+                        },
+                        success: function (data) {
+                            if (data.status == 0) {
+                                location.reload();
+                            } else {
+                                alert("Addnew Error");
+                            }
+                        },
+                    });
+                }
+            })
+        });
+    </script>
+}

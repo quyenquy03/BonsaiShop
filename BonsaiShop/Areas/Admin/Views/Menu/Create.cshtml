@@ -1,0 +1,51 @@
+﻿
+@model BonsaiShop.Models.Menu;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1 class="text-center">Thêm mới danh mục</h1>
+</div><!-- End Page Title -->
+
+<section class="section mt-4">
+
+    <div class="form-addnew d-flex">
+        <div class="col-md-12">
+            <form asp-action="Create" asp-area="Admin" asp-controller="Menu" class="row" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6">
+                    <label for="inputEmail5" class="form-label">Tên danh mục</label>
+                    <input type="text" asp-for="MenuName" placeholder="Nhập tên Menu..." class="form-control">
+                    <span asp-validation-for="MenuName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputName5" class="form-label">Mô tả</label>
+                    <input type="text" asp-for="Description" placeholder="Nhập mô tả Menu" ... class="form-control">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputName5" class="form-label">Tên đường dẫn</label>
+                    <input type="text" asp-for="Description" placeholder="Nhập đường dẫn Menu" ... class="form-control">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCity" class="form-label">Danh mục cha</label>
+                    <select class="form-control" id="ChooseCateParent" asp-for="ParrentId" asp-items="@ViewBag.ListParentMenu">
+                        <option value="0">hello</option>
+                    </select>
+                    <span asp-validation-for="ParrentId" class="text-danger"></span>
+                </div>
+                
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Thêm mới ngay</button>
+                    <a class="btn mx-3 btn-secondary" asp-action="Index" asp-controller="Menu" asp-area="Admin">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
