@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
     <!-- set the Compatible of your site -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- set the page title -->
 	<title>Botanical - HTML5 Ecommerce Template</title>
@@ -15,6 +16,7 @@
 	<link rel="stylesheet" href="~/client/css/bootstrap.css">
 	<!-- include the site fontawesome stylesheet -->
 	<link rel="stylesheet" href="~/client/css/fontawesome.css">
+	
 	<!-- include the site stylesheet -->
 	<link rel="stylesheet" href="~/client/css/style.css">
 	<!-- include theme plugins setting stylesheet -->
@@ -23,6 +25,10 @@
 	<link rel="stylesheet" href="~/client/css/color.css">
 	<!-- include theme responsive setting stylesheet -->
 	<link rel="stylesheet" href="~/client/css/responsive.css">
+	<link rel="stylesheet" href="~/client/css/Custom.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
 </head>
 <body>
 	<!-- pageWrapper -->
@@ -46,16 +52,150 @@
 	</div>
 	<!-- include jQuery library -->
 	<script src="~/client/js/jquery-3.4.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<!-- include bootstrap popper JavaScript -->
 	<script src="~/client/js/popper.min.js"></script>
 	<!-- include bootstrap JavaScript -->
 	<script src="~/client/js/bootstrap.min.js"></script>
 	<!-- include custom JavaScript -->
 	<script src="~/client/js/jqueryCustome.js"></script>
-
 	<script src="~/client/js/main.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#BestSellerCarousel").owlCarousel({
+				items: 5, // Number of cards shown in each slide
+				loop: true, // Continuously loop the carousel
+				margin: 20, // Space between cards
+				nav: true, // Show navigation buttons
+				autoPlay: true,
+				pagination: true,
+				paginationSpeed: 3000,
+				autoplayTimeout: 3000,
+				navText: ["<i class='fas fa-chevron-left'></i>", "<i class='fas fa-chevron-right'></i>"], // Custom navigation icons
+				responsive: {
+					0: {
+						items: 1 // Number of cards shown in the carousel for smaller screens
+					},
+					768: {
+						items: 2 // Number of cards shown in the carousel for medium screens
+					},
+					992: {
+						items: 4 // Number of cards shown in the carousel for large screens
+					}
+				}
+			});
+			$("#myCarousel").owlCarousel({
+				items: 5, // Number of cards shown in each slide
+				loop: true, // Continuously loop the carousel
+				margin: 20, // Space between cards
+				nav: false, // Show navigation buttons
+				autoPlay: true,
+				pagination: true,
+				paginationSpeed: 3000,
+				autoplayTimeout: 3000,
+				navText: ["<i class='fas fa-chevron-left'></i>", "<i class='fas fa-chevron-right'></i>"], // Custom navigation icons
+				responsive: {
+					0: {
+						items: 1 // Number of cards shown in the carousel for smaller screens
+					},
+					768: {
+						items: 2 // Number of cards shown in the carousel for medium screens
+					},
+					992: {
+						items: 3 // Number of cards shown in the carousel for large screens
+					}
+				}
+			});
 
-
+			$(".addcart-btn").on("click", function() {
+				var productid = $(this).data("productid");
+				$.ajax({
+					url: "/Cart/AddToCart",
+					type: "Post",
+					data: {
+						productid: productid,
+					},
+					success: function (data) {
+						if (data.status == 0) {
+							toastr.success("Đã thêm sản phẩm vào giỏ hàng");
+						} else {
+							toastr.error("Đang bị lỗi, vui lòng thử lại sau");
+						}
+					},
+				})
+			})
+			$(".delete-cart-item").on("click", function() {
+				var productid = $(this).data("productid");
+				$.ajax({
+					url: "/Cart/RemoveCart",
+					type: "Post",
+					data: {
+						productid: productid,
+					},
+					success: function (data) {
+						if (data.status == 0) {
+							$("#row-" + productid).remove();
+							if(data.cartnumber == 0) {
+								window.location.reload();
+							}
+							toastr.success("Đã xóa sản phẩm khỏi giỏ hàng");
+						} else {
+							toastr.error("Đang bị lỗi, vui lòng thử lại sau");
+						}
+					},
+				})
+			});
+			$(".btn-decrease").on("click", function () {
+				var productid = $(this).data("productid");
+				var quantity = +$("#input-"+productid).val();
+				if(quantity > 1) {
+					$("#input-" + productid).val(quantity - 1);
+					$.ajax({
+						url: "/Cart/DecreaseCount",
+						type: "Post",
+						data: {
+							productid: productid,
+						},
+						success: function (data) {
+							if (data.status == 0) {
+								$("#total-" + productid).text(data.totalprice);
+								$(".total-price").text(data.totalcart);
+								$(".total-checkout").text(data.totalcart);
+							//	toastr.success("Đã xóa sản phẩm khỏi giỏ hàng");
+							} else {
+								toastr.error("Đang bị lỗi, vui lòng thử lại sau");
+							}
+						},
+					})
+				}
+			});
+			$(".btn-increase").on("click", function () {
+				var productid = $(this).data("productid");
+				var quantity = +$("#input-" + productid).val();
+				if (quantity < 15) {
+					$("#input-" + productid).val(quantity + 1);
+					$.ajax({
+						url: "/Cart/IncreaseCount",
+						type: "Post",
+						data: {
+							productid: productid,
+						},
+						success: function (data) {
+							if (data.status == 0) {
+								$("#total-" + productid).text(data.totalprice);
+								$(".total-price").text(data.totalcart);
+								$(".total-checkout").text(data.totalcart);
+								//	toastr.success("Đã xóa sản phẩm khỏi giỏ hàng");
+							} else {
+								toastr.error("Đang bị lỗi, vui lòng thử lại sau");
+							}
+						},
+					})
+				}
+			});
+		});
+	</script>
 	@await RenderSectionAsync("Scripts", required : false);
 </body>
 </html>

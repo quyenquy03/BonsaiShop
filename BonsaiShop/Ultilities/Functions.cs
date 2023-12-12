@@ -10,7 +10,12 @@ namespace BonsaiShop.Ultilities
             string sTitle = type + "-" + SlugGenerator.SlugGenerator.GenerateSlug(title) + "-" + id.ToString() + ".html";
             return sTitle;
         }
-        public static string AliasLink(string tilte)
+		public static string UrlLink(string title, long id)
+		{
+			string sTitle =SlugGenerator.SlugGenerator.GenerateSlug(title) + "-" + id.ToString();
+			return sTitle;
+		}
+		public static string AliasLink(string tilte)
         {
             Random rnd = new Random();
             string sTitle = SlugGenerator.SlugGenerator.GenerateSlug(tilte);

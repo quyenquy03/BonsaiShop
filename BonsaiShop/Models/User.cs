@@ -25,15 +25,11 @@ public partial class User
 
     public DateTime? LastLogin { get; set; }
 
-    public int? IsActive { get; set; }
+    public bool? IsDeleted { get; set; }
+
+    public int? IsBlocked { get; set; }
 
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
-    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
-
-    public virtual AllCode? IsActiveNavigation { get; set; }
-
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
-    public virtual AllCode? Role { get; set; }
 }

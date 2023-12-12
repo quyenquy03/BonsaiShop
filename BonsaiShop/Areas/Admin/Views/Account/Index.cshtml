@@ -19,15 +19,12 @@
                 <div class="list-filter">
                     <span class="form-label d-block mb-1 mt-3">Lọc theo quyền người dùng</span>
                     <select class="form-control" id="ChooseRoles" asp-items="@ViewBag.listRoles" style="width: 250px" name="RoleID">
-                        <option value="0">Chọn tất cả</option>
                     </select>
 
                 </div>
                 <div class="list-filter mx-3">
                     <span class="form-label d-block mb-1 mt-3">Lọc theo trạng thái</span>
                     <select class="form-control" id="ChooseIsAcctive" asp-items="@ViewBag.listActiveStatus" style="width: 250px" name="states">
-                        <option value="0">Chọn tất cả</option>
-
                     </select>
                 </div>
             </div>
@@ -50,7 +47,7 @@
                         <th scope="col">UserName</th>
                         <th scope="col">Ngày sinh</th>
                         <th scope="col">Email</th>
-                        @*<th scope="col">Điện thoại</th>*@
+                        
                         <th scope="col">Phân quyền</th>
                         <th scope="col">Hoạt động</th>
                         <th scope="col">Chức năng</th>
@@ -71,10 +68,22 @@
                             <td class="tbl-collum">@item.UserName</td>
                             <td class="tbl-collum">@Functions.FormatDate(item.Birthday.ToString())</td>
                             <td class="tbl-collum">@item.Email</td>
-                            <td> @item.Role.Value </td>
-                            <td> @item.IsActiveNavigation.Value </td>
+                            @if(item.RoleId == 1) {
+                                <td> Quản trị viên </td>
+                            } else
+                            {
+                                <td>Khách hàng</td>
+                            }
+
+                            @if(item.IsBlocked == 1)
+                            {
+                                <td>Đang hoạt động</td>
+                            } else
+                            {
+                                <td>Đã bị khóa</td>
+                            }
                             <td>
-                                @if(item.IsActive == 5)
+                                @if(item.IsBlocked == 1)
                                 {
                                     <a class="btn btn-primary" onclick="DisplayUnBlockModal(@item.UserId)"><i class="bi bi-unlock-fill"></i></a>
                                 } else

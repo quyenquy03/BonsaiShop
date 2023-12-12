@@ -1,0 +1,109 @@
+﻿@model BonsaiShop.Models.Product
+@{
+    ViewData["Title"] = Model.ProductName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="left-sidebar-layout detail-section container-section">
+	<div class="container">
+		<div class="content-box">
+			<div class="row	">
+				<div class="col-xl-3 col-lg-3 col-md-12">
+					<partial name="~/Views/Shared/LeftSidebarProductPartialView.cshtml" />
+				</div>
+				<div class="col-xl-9 col-lg-9 col-md-12">
+					<div class="main-content-box">
+						<div class="breadcrumb-header">
+							<a href="">Trang chủ</a>
+							<span>></span>
+							<a href="">Sản phẩm</a>
+							<span>></span>
+							<a href="">Quần áo</a>
+						</div>
+					</div>
+
+					<div class="main-content-box mt-3">
+						<div class="row">
+							<div class="col-lg-5 col-xl-5 col-sm-12">
+								<div class="detail-left-box">
+									<img src="/images/@Model.ProductImage" class="detail-image w-100" />
+								</div>
+							</div>
+							<div class="col-lg-7 col-xl-7 col-sm-12">
+								<div class="detail-right-box text-center">
+									<h4 class="detail-product-name">@Model.ProductName</h4>
+									<div class="detail-product-price mb-2">
+										@if(Model.ProductDisCount == 0)
+										{
+											<span class="new-price">@String.Format("{0:0,0 đ}", Model.ProductPrice)</span>
+										} else
+										{
+											<span class="old-price">@String.Format("{0:0,0 đ}", Model.ProductPrice)</span>
+											<span class="new-price">@String.Format("{0:0,0 đ}", Model.ProductPrice - Model.ProductPrice * Model.ProductDisCount / 100)</span>
+										}
+									</div>
+									<p class="detail-product-desc truncate-text truncate-4-line">@Model.ProductDesc</p>
+									<ul class="list-unstyled detail-button-box d-flex justify-content-center m-0 mt-5">
+										<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart"></a></li>
+										<li class="mr-2 overflow-hidden"><a href="javascript:void(0);"> Mua ngay</a></li>
+										<li class="mr-2 overflow-hidden"><a data-productid="@Model.ProductId" class="addcart-btn icon-cart"></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="main-content-box mt-3">
+						<div class="product-detail">
+							<div class="product-detail-content">
+								@Html.Raw(Model.ProductDetail)
+							</div>
+						</div>
+					</div>
+
+					<div class="main-content-box mt-3">
+						<div class="product-feedback-form">
+							<h4 class="feedback-header text-center">Mời bạn đánh giá sản phẩm</h4>
+							<div class="feedback-rating">
+								<ul class="list-inline rating d-flex justify-content-center" style="height: 50px" title="Average Rating">
+									@for(var i = 1; i<=5; i++)
+									{
+										var color = "";
+										if(i <= 5)
+										{
+											color = "color : #ffcc00";
+										} else
+										{
+											color = "color : #ccc";
+										}
+										<li title="star-rating" id="@Model.ProductId-@i"
+											data-index="@i"
+											data-productid="@Model.ProductId"
+											data-rating="@i"
+											class="rating"
+											style="cursor:pointer; @color ; font-size: 40px; margin: 0 5px;"
+										> &#9733; </li>
+									}
+								</ul>
+							</div>
+							<div class="feedback-input row">
+								<div class="col-sm-0 col-lg-3 col-xl-3"></div>
+								<div class="col-sm-12 col-lg-6 col-xl-6">
+									<div class="form-group">
+										<textarea class="feedback-input-text" placeholder="Nhập đánh giá của bạn..." ></textarea>
+									</div>
+									<div class="text-center">
+										<button class="feedback-btn">Gửi phản hồi</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			@await Component.InvokeAsync("RelevantProduct",  new {ProductId = Model.ProductId, CategoryId = Model.CategoryId});
+		</div>
+	</div>
+</section>
+

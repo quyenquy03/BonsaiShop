@@ -15,13 +15,7 @@ public partial class Order
 
     public string? Phone { get; set; }
 
-    public long? ProvinceId { get; set; }
-
-    public long? DistrictId { get; set; }
-
-    public long? CommuneId { get; set; }
-
-    public long? ShippingId { get; set; }
+    public string? Address { get; set; }
 
     public decimal? TotalAmount { get; set; }
 
@@ -35,11 +29,13 @@ public partial class Order
 
     public DateTime? ModifiedDate { get; set; }
 
-    public long? OrderStatusId { get; set; }
+    public int? OrderStatus { get; set; }
+
+    public long? FeeShipId { get; set; }
+
+    public virtual FeeShip? FeeShip { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-    public virtual Shipping? Shipping { get; set; }
 
     public virtual User? User { get; set; }
 }

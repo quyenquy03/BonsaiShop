@@ -1,0 +1,39 @@
+﻿@using BonsaiShop.Ultilities;
+@model IList<BonsaiShop.Models.Product>
+<section class="featureSec container overflow-hidden pt-xl-12 pb-xl-9 pt-lg-10 pb-lg-4 pt-md-8 pb-md-2 pt-5">
+	<div class="row">
+		<!-- mainHeader -->
+		<header class="col-12 mainHeader mb-4 text-center">
+			<h1 class="headingIV playfair fwEblod mb-4">Sản phẩm có khuyến mãi</h1>
+			<span class="headerBorder d-block mb-5"><img src="~/client/images/hbdr.png" alt="Header Border" class="img-fluid img-bdr"></span>
+			<p>Mua ngay trong hôm nay để nhận được ưu đãi của chúng tôi </p>
+		</header>
+	</div>
+	<div id="BestSellerCarousel" class="row owl-carousel owl-nav-custom owl-theme my-3">
+		@foreach(var item in Model)
+		{
+			var url = Functions.UrlLink(item.ProductName, item.ProductId);
+			<div class="col-12 col-sm-12 col-lg-12 featureCol w-100 position-relative mb-6">
+				<div class="border">
+					<div class="imgHolder position-relative w-100 overflow-hidden">
+						<img src="~/images/@item.ProductImage" alt="image description" class="img-fluid w-100">
+						<ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
+							<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart d-block"></a></li>
+							<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="addcart-btn icon-cart d-block"></a></li>
+							<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-eye d-block"></a></li>
+							<li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
+						</ul>
+					</div>
+					<div class="text-center py-xl-5 py-sm-4 py-2 px-xl-2 px-1">
+						<span class="title d-block mb-2 truncate-text truncate-2-line"><a href="/san-pham/@url">@item.ProductName</a></span>
+						<span class="price d-block fwEbold"><del>@String.Format("{0:0,0 đ}", item.ProductPrice) </del> @String.Format("{0:0,0 đ}", item.ProductPrice - item.ProductPrice * item.ProductDisCount / 100)</span>
+						<span class="hotOffer green fwEbold text-uppercase text-white position-absolute d-block">Sale</span>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</section>
+@section Scripts {
+	
+}

@@ -12,4 +12,8 @@ public partial class Commune
     public string? CommuneType { get; set; }
 
     public long? DistrictId { get; set; }
+
+    public virtual District? District { get; set; }
+
+    public virtual ICollection<FeeShip> FeeShips { get; set; } = new List<FeeShip>();
 }

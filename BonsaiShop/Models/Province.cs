@@ -15,5 +15,5 @@ public partial class Province
 
     public virtual ICollection<District> Districts { get; set; } = new List<District>();
 
-    public virtual ICollection<Shipping> Shippings { get; set; } = new List<Shipping>();
+    public virtual ICollection<FeeShip> FeeShips { get; set; } = new List<FeeShip>();
 }

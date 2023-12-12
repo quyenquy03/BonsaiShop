@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Client\scss\Custom.scss" />
     <Content Remove="wwwroot\Client\scss\ErrorStyle.scss" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.69.3" />
+    <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="elFinder.NetCore" Version="1.3.6" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.22" />
@@ -26,6 +28,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
     <PackageReference Include="SlugGenerator" Version="2.0.2" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Admin\assets\vendor\toastr\toastr.js.map" />
+    <None Include="wwwroot\Admin\assets\vendor\toastr\toastr.min.js" />
     <None Include="wwwroot\Admin\lib\elFinder\.gitignore" />
     <None Include="wwwroot\Admin\lib\elFinder\Changelog" />
     <None Include="wwwroot\Admin\lib\elFinder\files\.gitkeep" />
@@ -263,7 +268,122 @@
     <None Include="wwwroot\Admin\lib\snote\summernote.js.map" />
     <None Include="wwwroot\Admin\lib\snote\summernote.min.js" />
     <None Include="wwwroot\Admin\lib\snote\summernote.min.js.map" />
+    <None Include="wwwroot\Client\scss\Custom.scss" />
     <None Include="wwwroot\Client\scss\ErrorStyle.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\.gitattributes" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\.gitignore" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\.travis.yml" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\CONTRIBUTING.md" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\dist\LICENSE" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\dist\owl.carousel.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\dist\owl.carousel.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\dist\README.md" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\js\app.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\js\foundation.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\owlcarousel\owl.carousel.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\owlcarousel\owl.carousel.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\owlcarousel\README.md" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\vendors\foundation.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\vendors\highlight.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\vendors\jquery.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\vendors\jquery.min.map" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs\assets\vendors\jquery.mousewheel.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\js\app.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\js\foundation.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\scss\custom.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\scss\demos.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\scss\docs.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\scss\docs.theme.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\scss\highlight.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\scss\_settings.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\vendors\foundation.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\vendors\highlight.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\vendors\jquery.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\vendors\jquery.min.map" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\assets\vendors\jquery.mousewheel.min.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\helpers\modulo.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\helpers\test.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\layouts\demos.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\layouts\docs.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\layouts\home.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\animate.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\autoheight.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\autoplay.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\autowidth.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\basic.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\center.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\demos.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\events.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\lazyLoad.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\merge.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\mousewheel.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\responsive.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\rtl.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\stagepadding.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\test.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\urlhashnav.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\demos\video.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\api-classes.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\api-events.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\api-options.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\dev-buildin-plugins.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\dev-external.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\dev-plugin-api.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\dev-styles.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\started-faq.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\started-installation.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\started-welcome.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\support-changelog.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\support-contact.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\docs\support-contributing.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\pages\index.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\footer.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\head.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\header.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\home-carousel.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\home-features.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\home-hero.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\home-teaser-text.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\javascripts.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\releated-docs.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\sidenav-docs.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\title.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\docs_src\templates\partials\vendors.hbs" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\Gruntfile.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\LICENSE" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\README.md" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\ROADMAP.md" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\.jscsrc" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\.jshintrc" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.animate.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.autoheight.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.autoplay.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.autorefresh.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.carousel.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.hash.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.lazyload.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.navigation.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.support.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.support.modernizr.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\js\owl.video.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\owl.carousel.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\owl.theme.default.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\owl.theme.green.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_animate.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_autoheight.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_core.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_lazyload.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_theme.default.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_theme.green.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_theme.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\src\scss\_video.scss" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\test\unit\autoplay.js" />
+    <None Include="wwwroot\OwlCarousel2-2.3.4\test\unit\core.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="wwwroot\Client\scss\Custom.scss" />
   </ItemGroup>
 
 </Project>

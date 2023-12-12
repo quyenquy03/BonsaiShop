@@ -1,0 +1,41 @@
+﻿.list-filter .search-item-box {
+    position: relative;
+}
+
+    .list-filter .search-item-box .search-item-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #ccc;
+        right: 0;
+        padding: 7px 10px;
+        border-top-right-radius: 7px;
+        border-bottom-right-radius: 7px;
+        cursor: pointer;
+    }
+    .list-filter .search-item-box .search-item-btn:hover {
+        background-color: #b6aeae;
+    }
+    .list-filter .search-item-box .search-item-btn:active {
+        background-color: #ccc;
+    }
+#toast-container > div {
+    opacity: 1 !important;
+}
+.truncate-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.truncate-2-line {
+    -webkit-line-clamp: 2;
+}
+
+.truncate-3-line {
+    -webkit-line-clamp: 3;
+}
+
+.truncate-4-line {
+    -webkit-line-clamp: 4;
+}

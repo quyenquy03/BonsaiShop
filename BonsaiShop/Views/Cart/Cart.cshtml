@@ -1,0 +1,119 @@
+﻿@using BonsaiShop.Ultilities;
+@model IList<BonsaiShop.Models.CartItem>
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="introBannerHolder d-flex justify-content-center w-100 bgCover" style="background-image: url('/images/feedback-banner.png');">
+	<div class="banner-overlay">
+		<div class="row">
+			<div class="col-12 pt-lg-23 pt-md-15 pt-sm-10 pt-6 text-center">
+				<h1 class="headingIV fwEbold playfair mb-4">Giỏ hàng của tôi</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="cartHolder cart-session container pt-xl-10 pb-xl-20 py-lg-20 py-md-10 py-10">
+	@if(Model.Count > 0)
+	{
+		decimal? total = 0;
+		<div class="row">
+			<div class="col-sm-12 col-lg-9 col-xl-9">
+				<div class="cart-left-box">
+					<div class="col-12 table-responsive hide-scrollbar-y mb-xl-10 mb-lg-10 mb-md-16 mb-10">
+					<!-- cartTable -->
+					<table class="table cartTable">
+						<thead>
+							<tr>
+								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 300px">Sản phẩm</th>
+								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 100px">Giá bán</th>
+								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 200px">Số lượng</th>
+								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 200px">Thành tiền</th>
+								<th scope="col" class="fwEbold border-top-0 text-center"></th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (Model.Count > 0)
+							{
+								foreach (var item in Model)
+								{
+										var url = Functions.UrlLink(item.product.ProductName, item.product.ProductId);
+										var price = @String.Format("{0:0,0 đ}", item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100);
+										var thanhtien = @String.Format("{0:0,0 đ}", (item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100) * item.quantity);
+										total += (item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100) * item.quantity;
+										
+									<tr class="align-items-center" id="row-@item.product.ProductId">
+										<td class=" border-top-0 border-bottom px-0 py-6" style="width: 300px">
+											<div class="d-flex align-items-center">
+												<div class="imgHolder">
+													<img src="~/images/@item.product.ProductImage" alt="image description" class="product-image img-fluid">
+												</div>
+													<span class="title pl-2" style="flex: 1;"><a href="/san-pham/@url">@item.product.ProductName</a></span>
+											</div>
+										</td>
+										<td class="fwEbold border-top-0 border-bottom px-0 py-6 text-center" style="width: 100px">@price</td>
+										<td class="border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px">
+											<div class="d-flex align-items-center quantity-item-box justify-content-center">
+													<span class="btn-decrease quantity-cart-btn" data-productid="@item.product.ProductId">-</span>
+													<input disabled class="quantity-item-input" id="input-@item.product.ProductId" value="@item.quantity" />
+													<span class="btn-increase quantity-cart-btn" data-productid="@item.product.ProductId">+</span>
+											</div>
+										</td>
+										@*<td class="border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px">
+											<input type="number" value="@item.quantity" placeholder="1">
+										</td>*@
+										<td class="fwEbold border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px" id="total-@item.product.ProductId">@thanhtien</td>
+										<td class="fwEbold border-top-0 border-bottom px-0 py-6"><a style="cursor:pointer" data-productid="@item.product.ProductId" class="fas fa-times delete-cart-item"></a></td>
+									</tr>
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-lg-3 col-xl-3">
+				<div class="cart-right-box">
+					<h5 class="cart-rightbox-header">Cộng giỏ hàng</h5>
+					<div class="d-flex justify-content-between title">
+						<span>Tạm tính</span>
+						<span class="cart-price total-price">@String.Format("{0:0,0 đ}",total)</span>
+					</div>
+					<div class="d-flex justify-content-between title">
+						<span>Tổng</span>
+						<span class="cart-price total-checkout">@String.Format("{0:0,0 đ}",total)</span>
+					</div>
+					<div class="text-center">
+						<button class="checkout-btn">Thanh toán</button>
+					</div>
+				</div>
+			</div>
+			<!-- table-responsive -->
+		
+		</div>
+	} else
+	{
+		<div class="container">
+			<div class="cart-empty-box row">
+				<div class="col-sm-0 col-xl-3 col-lg-3"></div>
+				<div class="col-sm-12 col-lg-6 col-xl-6">
+					<img class="w-100" src="~/images/cart-empty.png" />
+					<p class="text-center cart-empty-title">Chưa có sản phẩm nào trong giỏ hàng</p>
+					<div class="text-center">
+						<a asp-action="Index" asp-controller="Home" class="btn btn-back-home">Quay lại cửa hàng</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			
+		}
+	</script>
+}

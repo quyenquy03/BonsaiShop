@@ -15,15 +15,9 @@ public partial class BonsaiShopContext : DbContext
     {
     }
 
-    public virtual DbSet<AllCode> AllCodes { get; set; }
-
     public virtual DbSet<Blog> Blogs { get; set; }
 
     public virtual DbSet<BlogComment> BlogComments { get; set; }
-
-    public virtual DbSet<Cart> Carts { get; set; }
-
-    public virtual DbSet<CartDetail> CartDetails { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
 
@@ -32,6 +26,8 @@ public partial class BonsaiShopContext : DbContext
     public virtual DbSet<Contact> Contacts { get; set; }
 
     public virtual DbSet<District> Districts { get; set; }
+
+    public virtual DbSet<FeeShip> FeeShips { get; set; }
 
     public virtual DbSet<Menu> Menus { get; set; }
 
@@ -43,8 +39,6 @@ public partial class BonsaiShopContext : DbContext
 
     public virtual DbSet<Province> Provinces { get; set; }
 
-    public virtual DbSet<Shipping> Shippings { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,37 +47,28 @@ public partial class BonsaiShopContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AllCode>(entity =>
-        {
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-            entity.Property(e => e.KeyCode)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.Type).HasMaxLength(50);
-            entity.Property(e => e.Value).HasMaxLength(50);
-        });
-
         modelBuilder.Entity<Blog>(entity =>
         {
             entity.Property(e => e.BlogId).HasColumnName("BlogID");
-            entity.Property(e => e.Alias).HasMaxLength(250);
-            entity.Property(e => e.BlogName).HasMaxLength(250);
+            entity.Property(e => e.BlogDesc).HasMaxLength(1000);
+            entity.Property(e => e.BlogDetail).HasColumnType("ntext");
+            entity.Property(e => e.BlogImage).HasMaxLength(1000);
+            entity.Property(e => e.BlogName).HasMaxLength(1000);
+            entity.Property(e => e.BlogSlug).HasMaxLength(1000);
+            entity.Property(e => e.BlogViewCount).HasDefaultValueSql("((0))");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Description).HasMaxLength(50);
-            entity.Property(e => e.Detail).HasColumnType("ntext");
-            entity.Property(e => e.Image).HasMaxLength(50);
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            entity.Property(e => e.SeoDescription).HasMaxLength(150);
-            entity.Property(e => e.SeoKeyword).HasMaxLength(150);
-            entity.Property(e => e.SeoTitle).HasMaxLength(150);
+            entity.Property(e => e.SeoDescription).HasMaxLength(1000);
+            entity.Property(e => e.SeoKeyword).HasMaxLength(1000);
+            entity.Property(e => e.SeoTitle).HasMaxLength(1000);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Blogs)
                 .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Blogs_Categories");
         });
 
@@ -94,6 +79,8 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.CommentId).HasColumnName("CommentID");
             entity.Property(e => e.BlogId).HasColumnName("BlogID");
             entity.Property(e => e.Detail).HasMaxLength(250);
+            entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Levels).HasDefaultValueSql("((1))");
             entity.Property(e => e.ParrentId).HasColumnName("ParrentID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -101,64 +88,24 @@ public partial class BonsaiShopContext : DbContext
                 .HasForeignKey(d => d.BlogId)
                 .HasConstraintName("FK_BlogComments_Blogs");
 
-            entity.HasOne(d => d.IsActiveNavigation).WithMany(p => p.BlogComments)
-                .HasForeignKey(d => d.IsActive)
-                .HasConstraintName("FK_BlogComments_AllCodes");
-
             entity.HasOne(d => d.User).WithMany(p => p.BlogComments)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_BlogComments_Users");
         });
 
-        modelBuilder.Entity<Cart>(entity =>
-        {
-            entity.Property(e => e.CartId).HasColumnName("CartID");
-            entity.Property(e => e.CreateAt).HasColumnType("datetime");
-            entity.Property(e => e.Status).HasColumnName("status");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Carts)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_Carts_Users");
-        });
-
-        modelBuilder.Entity<CartDetail>(entity =>
-        {
-            entity.HasNoKey();
-
-            entity.Property(e => e.CartId).HasColumnName("CartID");
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
-            entity.HasOne(d => d.Cart).WithMany()
-                .HasForeignKey(d => d.CartId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CartDetails_Carts");
-
-            entity.HasOne(d => d.Product).WithMany()
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CartDetails_Products");
-        });
-
         modelBuilder.Entity<Category>(entity =>
         {
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.Alias).HasMaxLength(50);
-            entity.Property(e => e.CategoryName).HasMaxLength(50);
+            entity.Property(e => e.Alias).HasMaxLength(500);
+            entity.Property(e => e.CategoryName).HasMaxLength(500);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Description).HasMaxLength(150);
+            entity.Property(e => e.Description).HasMaxLength(1000);
             entity.Property(e => e.Detail).HasColumnType("ntext");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.ParentCateId).HasColumnName("ParentCateID");
-            entity.Property(e => e.SeoDescription).HasMaxLength(150);
-            entity.Property(e => e.SeoKeyword).HasMaxLength(150);
-            entity.Property(e => e.SeoTitle).HasMaxLength(150);
-            entity.Property(e => e.TypeId).HasColumnName("TypeID");
-
-            entity.HasOne(d => d.Type).WithMany(p => p.Categories)
-                .HasForeignKey(d => d.TypeId)
-                .HasConstraintName("FK_Categories_AllCodes");
+            entity.Property(e => e.SeoDescription).HasMaxLength(500);
+            entity.Property(e => e.SeoKeyword).HasMaxLength(500);
+            entity.Property(e => e.SeoTitle).HasMaxLength(500);
         });
 
         modelBuilder.Entity<Commune>(entity =>
@@ -171,6 +118,10 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.CommuneName).HasMaxLength(50);
             entity.Property(e => e.CommuneType).HasMaxLength(50);
             entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
+
+            entity.HasOne(d => d.District).WithMany(p => p.Communes)
+                .HasForeignKey(d => d.DistrictId)
+                .HasConstraintName("FK_Commune_Districts");
         });
 
         modelBuilder.Entity<Contact>(entity =>
@@ -201,12 +152,35 @@ public partial class BonsaiShopContext : DbContext
                 .HasConstraintName("FK_Districts_Provinces");
         });
 
+        modelBuilder.Entity<FeeShip>(entity =>
+        {
+            entity.HasKey(e => e.FeeShipId).HasName("PK_Shippings");
+
+            entity.Property(e => e.CommuneId).HasColumnName("CommuneID");
+            entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
+            entity.Property(e => e.ProvinceId).HasColumnName("ProvinceID");
+            entity.Property(e => e.ShipPrice).HasColumnType("decimal(18, 0)");
+
+            entity.HasOne(d => d.Commune).WithMany(p => p.FeeShips)
+                .HasForeignKey(d => d.CommuneId)
+                .HasConstraintName("FK_FeeShips_Commune");
+
+            entity.HasOne(d => d.District).WithMany(p => p.FeeShips)
+                .HasForeignKey(d => d.DistrictId)
+                .HasConstraintName("FK_FeeShips_Districts");
+
+            entity.HasOne(d => d.Province).WithMany(p => p.FeeShips)
+                .HasForeignKey(d => d.ProvinceId)
+                .HasConstraintName("FK_FeeShips_Provinces");
+        });
+
         modelBuilder.Entity<Menu>(entity =>
         {
             entity.Property(e => e.MenuId).HasColumnName("MenuID");
             entity.Property(e => e.Alias).HasMaxLength(50);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Description).HasMaxLength(1000);
+            entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
             entity.Property(e => e.MenuName).HasMaxLength(50);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.ParrentId).HasColumnName("ParrentID");
@@ -215,29 +189,25 @@ public partial class BonsaiShopContext : DbContext
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
+            entity.Property(e => e.Address).HasMaxLength(100);
             entity.Property(e => e.Code)
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.CommuneId).HasColumnName("CommuneID");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
             entity.Property(e => e.FullName).HasMaxLength(50);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
             entity.Property(e => e.Phone)
                 .HasMaxLength(11)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.ProvinceId).HasColumnName("ProvinceID");
-            entity.Property(e => e.ShippingId).HasColumnName("ShippingID");
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.TotalPayment).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.Shipping).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.ShippingId)
-                .HasConstraintName("FK_Orders_Shippings");
+            entity.HasOne(d => d.FeeShip).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.FeeShipId)
+                .HasConstraintName("FK_Orders_FeeShips");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
@@ -263,16 +233,21 @@ public partial class BonsaiShopContext : DbContext
         modelBuilder.Entity<Product>(entity =>
         {
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.Alias).HasMaxLength(100);
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Description).HasMaxLength(100);
-            entity.Property(e => e.Detail).HasColumnType("ntext");
-            entity.Property(e => e.Image).HasMaxLength(50);
+            entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsBestSeller).HasDefaultValueSql("((0))");
+            entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.PriceSale).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.ProductName).HasMaxLength(100);
+            entity.Property(e => e.ProductDesc).HasMaxLength(1000);
+            entity.Property(e => e.ProductDetail).HasColumnType("ntext");
+            entity.Property(e => e.ProductDisCount).HasDefaultValueSql("((0))");
+            entity.Property(e => e.ProductImage).HasMaxLength(500);
+            entity.Property(e => e.ProductName).HasMaxLength(500);
+            entity.Property(e => e.ProductPrice)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.ProductSlug).HasMaxLength(500);
+            entity.Property(e => e.ProductViewCount).HasDefaultValueSql("((0))");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
@@ -289,18 +264,6 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.ProvinceType).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Shipping>(entity =>
-        {
-            entity.Property(e => e.ShippingId).HasColumnName("ShippingID");
-            entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
-            entity.Property(e => e.ProvinceId).HasColumnName("ProvinceID");
-            entity.Property(e => e.ShipPrice).HasColumnType("decimal(18, 0)");
-
-            entity.HasOne(d => d.Province).WithMany(p => p.Shippings)
-                .HasForeignKey(d => d.ProvinceId)
-                .HasConstraintName("FK_Shippings_Provinces");
-        });
-
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.UserId).HasColumnName("UserID");
@@ -308,6 +271,8 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.Birthday).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(50);
+            entity.Property(e => e.IsBlocked).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             entity.Property(e => e.LastLogin).HasColumnType("datetime");
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Phone)
@@ -316,14 +281,6 @@ public partial class BonsaiShopContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.UserName).HasMaxLength(50);
-
-            entity.HasOne(d => d.IsActiveNavigation).WithMany(p => p.UserIsActiveNavigations)
-                .HasForeignKey(d => d.IsActive)
-                .HasConstraintName("FK_Users_AllCodes");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.UserRoles)
-                .HasForeignKey(d => d.RoleId)
-                .HasConstraintName("FK_Users_AllCodes1");
         });
 
         OnModelCreatingPartial(modelBuilder);

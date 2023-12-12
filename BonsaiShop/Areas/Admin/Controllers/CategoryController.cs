@@ -18,26 +18,34 @@ namespace BonsaiShop.Areas.Admin.Controllers
         {
             _context = context;
         }
+        public class CategoryType
+        {
+            public int Id { get; set; }
+            public string? Name { get; set; }
+        }
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult ListCatePost()
         {
-            var listCatePost = _context.Categories.AsNoTracking().Where(m => m.Type.KeyCode == "catepost").Include(m => m.Type).ToList();
+            var listCatePost = _context.Categories.AsNoTracking().Where(m => m.CategoryType == 1).ToList();
             return View(listCatePost);
         }
         public IActionResult ListCatePro()
         {
-            var listCatePost = _context.Categories.AsNoTracking().Where(m => m.Type.KeyCode == "catepro").Include(m => m.Type).ToList();
+            var listCatePost = _context.Categories.AsNoTracking().Where(m => m.CategoryType == 2).ToList();
             return View(listCatePost);
         }
         public async Task<IActionResult> CreateNewCate()
         {
-            var ParentCategories = _context.Categories.Where(m => m.IsActive == true && m.Levels == 1).ToList();
+            var ParentCategories = await _context.Categories.Where(m => m.IsActive == true && m.Levels == 1).ToListAsync();
             ViewBag.ListParentCategories = new SelectList(ParentCategories, "CategoryId", "CategoryName");
-            var typeCategory = _context.AllCodes.Where(m => m.Type == "CATEGORIES").ToList();
-            ViewBag.ListTypeCategory = new SelectList(typeCategory.ToList(), "Id", "Value");
+            
+            var listType = new List<CategoryType>();
+            listType.Add(new CategoryType { Id = 1, Name = "Danh mục bài viết" });
+            listType.Add(new CategoryType { Id = 2, Name = "Danh mục sản phẩm" });
+            ViewBag.ListTypeCategory = new SelectList(listType.ToList(), "Id", "Name");
             return View();
         }
 
@@ -65,14 +73,18 @@ namespace BonsaiShop.Areas.Admin.Controllers
                     {
                         cate.Levels = 1;
                     }
-                    _context.Add(cate);
+                    _context.Categories.Add(cate);
                     _context.SaveChanges();
                     return RedirectToAction(nameof(ListCatePost));
                 }
                 var ParentCategories = _context.Categories.Where(m => m.IsActive == true && m.Levels == 1).ToList();
                 ViewBag.ListParentCategories = new SelectList(ParentCategories, "CategoryId", "CategoryName");
-                var typeCategory = _context.AllCodes.Where(m => m.Type == "CATEGORIES").ToList();
-                ViewBag.ListTypeCategory = new SelectList(typeCategory.ToList(), "Id", "Value");
+                
+                var listType = new List<CategoryType>();
+                listType.Add(new CategoryType { Id = 1, Name = "Danh mục bài viết" });
+                listType.Add(new CategoryType { Id = 2, Name = "Danh mục sản phẩm" });
+                ViewBag.ListTypeCategory = new SelectList(listType.ToList(), "Id", "Name");
+                
                 return View("CreateNewCate", cate);
             }
             catch
@@ -80,19 +92,20 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 return NotFound();
             }
         }
-        public IActionResult LoadCateParent(int cateTypeId, int? ParentCateID)
+        public IActionResult LoadCateParent(int CateTypeID, int? ParentCateID)
         {
-            var listCateParent = _context.Categories.Where(m => m.IsActive == true && m.TypeId == cateTypeId).ToList();
+            var listCateParent = _context.Categories.Where(m => m.IsActive == true && m.CategoryType == CateTypeID && m.Levels == 1).ToList();
             string content = "";
-            if(ParentCateID == 0)
+            if (ParentCateID == 0)
             {
                 content += string.Format("<option value ='0' selected='true'>Khong co danh muc cha</ option >");
-            } else
+            }
+            else
             {
                 content += string.Format("<option value ='0'>Khong co danh muc cha</ option >");
             }
-            
-            foreach(var item in listCateParent)
+
+            foreach (var item in listCateParent)
             {
                 if (ParentCateID == item.CategoryId)
                 {
@@ -102,7 +115,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 {
                     content += string.Format("<option value ='{0}'>{1}</ option >", item.CategoryId, item.CategoryName);
                 }
-                
+
             }
             return Json(new
             {
@@ -125,10 +138,12 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                var ParentCategories = _context.Categories.Where(m => m.IsActive == true && m.Levels == 1).ToList();
+                var ParentCategories = await _context.Categories.Where(m => m.IsActive == true && m.Levels == 1).ToListAsync();
                 ViewBag.ListParentCategories = new SelectList(ParentCategories, "CategoryId", "CategoryName");
-                var typeCategory = _context.AllCodes.Where(m => m.Type == "CATEGORIES").ToList();
-                ViewBag.ListTypeCategory = new SelectList(typeCategory.ToList(), "Id", "Value", CateByID.TypeId);
+                var listType = new List<CategoryType>();
+                listType.Add(new CategoryType { Id = 1, Name = "Danh mục bài viết" });
+                listType.Add(new CategoryType { Id = 2, Name = "Danh mục sản phẩm" });
+                ViewBag.ListTypeCategory = new SelectList(listType.ToList(), "Id", "Name", CateByID.CategoryType);
                 return View(CateByID);
             }
             catch
@@ -139,11 +154,11 @@ namespace BonsaiShop.Areas.Admin.Controllers
 
         [HttpPost]
         public async Task<IActionResult> EditCate(Category cate)
-        {   
+        {
             if (cate == null) return NotFound();
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     cate.Alias = Functions.AliasLink(cate.CategoryName);
                     if (cate.ParentCateId != 0)
@@ -160,8 +175,10 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 }
                 var ParentCategories = _context.Categories.Where(m => m.IsActive == true && m.Levels == 1).ToList();
                 ViewBag.ListParentCategories = new SelectList(ParentCategories, "CategoryId", "CategoryName");
-                var typeCategory = _context.AllCodes.Where(m => m.Type == "CATEGORIES").ToList();
-                ViewBag.ListTypeCategory = new SelectList(typeCategory.ToList(), "Id", "Value", cate.TypeId);
+                var listType = new List<CategoryType>();
+                listType.Add(new CategoryType { Id = 1, Name = "Danh mục bài viết" });
+                listType.Add(new CategoryType { Id = 2, Name = "Danh mục sản phẩm" });
+                ViewBag.ListTypeCategory = new SelectList(listType.ToList(), "Id", "Name", cate.CategoryType);
                 return View(cate);
             }
             catch (Exception ex)
@@ -169,6 +186,6 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 return NotFound();
             }
         }
-
+       
     }
 }

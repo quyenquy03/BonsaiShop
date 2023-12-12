@@ -15,7 +15,7 @@ public partial class Contact
 
     public string? Message { get; set; }
 
-    public bool? IsRead { get; set; }
+    public int? IsRead { get; set; }
 
     public long? CreatedBy { get; set; }
 

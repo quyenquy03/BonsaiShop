@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BonsaiShop.Models;
 using Microsoft.Extensions.Options;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ builder.Services.AddSession(cfg => {                    // Đăng ký dịch v�
     cfg.Cookie.HttpOnly = true;
     cfg.Cookie.IsEssential = true;
 });
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,7 +32,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseNotyf();
 app.UseRouting();
 
 app.UseAuthorization();

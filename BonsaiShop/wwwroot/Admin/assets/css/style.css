@@ -52,6 +52,9 @@ h6 {
   }
 }
 
+
+
+
 /*--------------------------------------------------------------
 # Page Title
 --------------------------------------------------------------*/
@@ -1349,6 +1352,7 @@ button, input {
   font-size: 13px;
   color: #012970;
 }
+
 .table-body .nav-link:not(.collapsed) .bi-chevron-right {
     transform: rotate(90deg);
 }

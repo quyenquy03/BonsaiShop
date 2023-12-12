@@ -21,7 +21,5 @@ public partial class BlogComment
 
     public virtual Blog? Blog { get; set; }
 
-    public virtual AllCode? IsActiveNavigation { get; set; }
-
     public virtual User? User { get; set; }
 }

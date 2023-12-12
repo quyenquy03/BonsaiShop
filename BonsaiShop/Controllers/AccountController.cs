@@ -85,10 +85,10 @@ namespace BonsaiShop.Controllers
                     return View(user);
                 }
 
-                user.IsActive = 5;
-                user.RoleId = _context.AllCodes.Where(m => m.Type == "ROLES" && m.KeyCode == "customer").Select(m => m.Id).FirstOrDefault();
+                user.IsBlocked = 1;
+                user.RoleId = 2;
                 user.Avatar = "avatar-default.jpg";
-                user.Password = HashPassword.MD5Password("123123");
+                user.Password = HashPassword.MD5Password(user.Password);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Login");
