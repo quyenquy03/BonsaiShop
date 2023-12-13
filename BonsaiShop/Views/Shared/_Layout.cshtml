@@ -36,19 +36,10 @@
 		<!-- header -->
 		@await Component.InvokeAsync("HeaderComponent")
 		<!-- main -->
-		<main>
-			@RenderBody();
+		<main class="pb-10" style="background: #f9f9f9;">
+			@RenderBody()
 		</main>
-		<!-- footer -->
-		<footer id="footer" class="overflow-hidden bg-dark">
-			<div class="container">
-				<div class="row">
-					<div class="col-12 copyRightHolder v-II text-center pt-md-3 pb-md-4 py-2">
-						<p class="mb-0">Coppyright 2019 by <a href="javascript:void(0);">Botanical Store</a> - All right reserved</p>
-					</div>
-				</div>
-			</div>
-		</footer>
+			@await Html.PartialAsync("_FooterPartialView")
 	</div>
 	<!-- include jQuery library -->
 	<script src="~/client/js/jquery-3.4.1.min.js"></script>
@@ -125,6 +116,23 @@
 					},
 				})
 			})
+			$(".favourite-btn").on("click", function () {
+				var productid = $(this).data("productid");
+				$.ajax({
+					url: "/Product/AddToFavouritePorduct",
+					type: "Post",
+					data: {
+						productid: productid,
+					},
+					success: function (data) {
+						if (data.status == 0) {
+							toastr.success(data.message);
+						} else {
+							toastr.error(data.message);
+						}
+					},
+				})
+			})
 			$(".delete-cart-item").on("click", function() {
 				var productid = $(this).data("productid");
 				$.ajax({
@@ -194,8 +202,39 @@
 					})
 				}
 			});
+			$('.choose').on('change', function () {
+                var id = $(this).val();
+                var action = $(this).data('name');
+                var result = '';
+                if(action == "province") {
+                    result = "districts";
+                } else if (action == "district") {
+                    result = "commune"
+                }
+
+                $.ajax({
+                    url: "/Admin/FeeShip/ChooseLocation",
+                    type: "Post",
+                    data: {
+                        id: id,
+                        action : action
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            $('#' + result).html(data.content);
+                        }
+                    },
+                })
+            });
+			$(".goto-login").on("click", function() {
+				alert("Bạn phải đăng nhập trước khi thanh toán")
+			});
 		});
 	</script>
-	@await RenderSectionAsync("Scripts", required : false);
+	<script>
+		document.querySelectorAll('[rel="prev"]')[0].innerHTML = "<"
+		document.querySelectorAll('[rel="next"]')[0].innerHTML = ">"
+	</script>
+	@await RenderSectionAsync("Scripts", required : false)
 </body>
 </html>

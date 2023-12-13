@@ -39,3 +39,9 @@
 .truncate-4-line {
     -webkit-line-clamp: 4;
 }
+.add-feeship-box {
+    padding-top: 20px;
+}
+    .add-feeship-box .btn-add-feeship {
+        width: 100%;
+    }

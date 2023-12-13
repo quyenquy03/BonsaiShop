@@ -1,11 +1,12 @@
-﻿@model IList<BonsaiShop.Models.Category>
+﻿@using BonsaiShop.Ultilities;
+@model IList<BonsaiShop.Models.Category>
 
 <div class="category-box">
 	<h4 class="sidebar-header-title text-center">Danh mục</h4>
 	<ul class="list-category sidebar_nav">
 		@foreach (var item in Model)
 		{
-		var url = "/products?categoryName=" + item.CategoryName;
+			var url = "/danh-muc/" + Functions.UrlLink(item.CategoryName, item.CategoryId);
 		<li>
 			<a href="@url" class="active">
 				<span class="menu-text">@item.CategoryName</span>

@@ -9,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BonsaiShopContext>(options => options.UseSqlServer(connection));
 
+/*var mailsettings = builder.Configuration.GetSection("MailSettings");
+builder.Services.Configure<MailSettings> (mailsettings);*/
+
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddSassCompiler();

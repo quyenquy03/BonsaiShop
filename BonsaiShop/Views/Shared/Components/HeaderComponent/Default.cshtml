@@ -1,4 +1,5 @@
-﻿<header id="header" class="position-relative">
+﻿@using BonsaiShop.Ultilities;
+<header id="header" class="position-relative">
 	<!-- headerHolderCol -->
 	<div class="headerHolderCol py-2">
 		<div class="container">
@@ -53,7 +54,7 @@
 				<div class="col-6 col-sm-2">
 					<!-- mainLogo -->
 					<div class="logo">
-						<a href="home.html"><img src="~/Client/images/LogoBonsaiShop.jpg" alt="Botanical" class="img-fluid"></a>
+						<a href="/"><img src="~/Client/images/LogoBonsaiShop.jpg" alt="Botanical" class="img-fluid"></a>
 					</div>
 				</div>
 				<div class="col-6 col-sm-7 col-lg-8 static-block">
@@ -70,21 +71,19 @@
 							<div class="collapse navbar-collapse" id="navbarNav">
 								<ul class="navbar-nav mx-auto  d-inline-block">
 									<li class="nav-item">
-										<a class="d-block" href="about-us.html">Trang chủ</a>
+										<a class="d-block" href="/">Trang chủ</a>
 									</li>
 									<li class="nav-item">
-										<a class="d-block" href="about-us.html">Giới thiệu</a>
+										<a class="d-block" href="/gioi-thieu">Giới thiệu</a>
 									</li>
-									<li class="nav-item active dropdown">
+									<li class="nav-item dropdown">
 										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sản phẩm</a>
 										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
-											<li class="d-block mx-0"><a href="home.html">Cây cảnh văn phòng</a></li>
-											<li class="d-block mx-0"><a href="home2.html">Cây cảnh trong nhà</a></li>
-											<li class="d-block mx-0"><a href="home3.html">Cây cảnh để bàn</a></li>
-											<li class="d-block mx-0"><a href="home3.html">Cây cảnh phong thủy</a></li>
-											<li class="d-block mx-0"><a href="home3.html">Cây cảnh sân vườn</a></li>
-											<li class="d-block mx-0"><a href="home3.html">Cây cảnh ban công</a></li>
-											<li class="d-block mx-0"><a href="home3.html">Cây cảnh thủy sinh</a></li>
+											@foreach (var item in ViewBag.ListCategoryProduct)
+											{
+												var url = Functions.UrlLink(item.CategoryName, item.CategoryId);
+												<li class="d-block mx-0"><a href="/danh-muc/@url">@item.CategoryName</a></li>
+											}
 										</ul>
 									</li>
 									<li class="nav-item dropdown">
@@ -98,13 +97,15 @@
 									<li class="nav-item dropdown">
 										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kiến thức cây cảnh</a>
 										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
-											<li class="d-block mx-0"><a href="blog.html">Cẩm nang cây cảnh</a></li>
-											<li class="d-block mx-0"><a href="blog-detail.html">Phong thủy cây cảnh</a></li>
-											<li class="d-block mx-0"><a href="blog-detail.html">Chăm sóc cây cảnh</a></li>
+											@foreach (var item in ViewBag.ListCategoryPost)
+											{
+												var url = Functions.UrlLink(item.CategoryName, item.CategoryId);
+												<li class="d-block mx-0"><a href="/danh-muc/@url">@item.CategoryName</a></li>
+											}
 										</ul>
 									</li>
 									<li class="nav-item">
-										<a class="d-block" href="about-us.html">Liên hệ</a>
+										<a class="d-block" href="/lien-he">Liên hệ</a>
 									</li>
 								</ul>
 							</div>

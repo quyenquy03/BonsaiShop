@@ -20,78 +20,132 @@
 	{
 		decimal? total = 0;
 		<div class="row">
-			<div class="col-sm-12 col-lg-9 col-xl-9">
+			<div class="col-sm-0 col-lg-1 col-xl-1"></div>
+			<div class="col-sm-12 col-lg-10 col-xl-10">
 				<div class="cart-left-box">
-					<div class="col-12 table-responsive hide-scrollbar-y mb-xl-10 mb-lg-10 mb-md-16 mb-10">
-					<!-- cartTable -->
-					<table class="table cartTable">
-						<thead>
-							<tr>
-								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 300px">Sản phẩm</th>
-								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 100px">Giá bán</th>
-								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 200px">Số lượng</th>
-								<th scope="col" class="fwEbold border-top-0 text-center" style="width: 200px">Thành tiền</th>
-								<th scope="col" class="fwEbold border-top-0 text-center"></th>
-							</tr>
-						</thead>
-						<tbody>
-							@if (Model.Count > 0)
-							{
-								foreach (var item in Model)
+					<div class="col-12 table-responsive hide-scrollbar-y">
+						<table class="table cartTable">
+							<thead>
+								<tr>
+									<th scope="col" class="fwEbold border-top-0 text-center" style="width: 300px">Sản phẩm</th>
+									<th scope="col" class="fwEbold border-top-0 text-center" style="width: 100px">Giá bán</th>
+									<th scope="col" class="fwEbold border-top-0 text-center" style="width: 200px">Số lượng</th>
+									<th scope="col" class="fwEbold border-top-0 text-center" style="width: 200px">Thành tiền</th>
+									<th scope="col" class="fwEbold border-top-0 text-center"></th>
+								</tr>
+							</thead>
+							<tbody>
+								@if (Model.Count > 0)
 								{
-										var url = Functions.UrlLink(item.product.ProductName, item.product.ProductId);
-										var price = @String.Format("{0:0,0 đ}", item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100);
-										var thanhtien = @String.Format("{0:0,0 đ}", (item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100) * item.quantity);
-										total += (item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100) * item.quantity;
+									foreach (var item in Model)
+									{
+											var url = Functions.UrlLink(item.product.ProductName, item.product.ProductId);
+											var price = @String.Format("{0:0,0 đ}", item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100);
+											var thanhtien = @String.Format("{0:0,0 đ}", (item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100) * item.quantity);
+											total += (item.product.ProductPrice - item.product.ProductPrice * item.product.ProductDisCount / 100) * item.quantity;
 										
-									<tr class="align-items-center" id="row-@item.product.ProductId">
-										<td class=" border-top-0 border-bottom px-0 py-6" style="width: 300px">
-											<div class="d-flex align-items-center">
-												<div class="imgHolder">
-													<img src="~/images/@item.product.ProductImage" alt="image description" class="product-image img-fluid">
+										<tr class="align-items-center" id="row-@item.product.ProductId">
+											<td class=" border-top-0 border-bottom px-0 py-6" style="width: 300px">
+												<div class="d-flex align-items-center">
+													<div class="imgHolder">
+														<img src="~/images/@item.product.ProductImage" alt="image description" class="product-image img-fluid">
+													</div>
+														<span class="title pl-2" style="flex: 1;"><a href="/san-pham/@url">@item.product.ProductName</a></span>
 												</div>
-													<span class="title pl-2" style="flex: 1;"><a href="/san-pham/@url">@item.product.ProductName</a></span>
-											</div>
-										</td>
-										<td class="fwEbold border-top-0 border-bottom px-0 py-6 text-center" style="width: 100px">@price</td>
-										<td class="border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px">
-											<div class="d-flex align-items-center quantity-item-box justify-content-center">
-													<span class="btn-decrease quantity-cart-btn" data-productid="@item.product.ProductId">-</span>
-													<input disabled class="quantity-item-input" id="input-@item.product.ProductId" value="@item.quantity" />
-													<span class="btn-increase quantity-cart-btn" data-productid="@item.product.ProductId">+</span>
-											</div>
-										</td>
-										@*<td class="border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px">
-											<input type="number" value="@item.quantity" placeholder="1">
-										</td>*@
-										<td class="fwEbold border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px" id="total-@item.product.ProductId">@thanhtien</td>
-										<td class="fwEbold border-top-0 border-bottom px-0 py-6"><a style="cursor:pointer" data-productid="@item.product.ProductId" class="fas fa-times delete-cart-item"></a></td>
-									</tr>
+											</td>
+											<td class="fwEbold border-top-0 border-bottom px-0 py-6 text-center" style="width: 100px">@price</td>
+											<td class="border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px">
+												<div class="d-flex align-items-center quantity-item-box justify-content-center">
+														<span class="btn-decrease quantity-cart-btn" data-productid="@item.product.ProductId">-</span>
+														<input disabled class="quantity-item-input" id="input-@item.product.ProductId" value="@item.quantity" />
+														<span class="btn-increase quantity-cart-btn" data-productid="@item.product.ProductId">+</span>
+												</div>
+											</td>
+											@*<td class="border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px">
+												<input type="number" value="@item.quantity" placeholder="1">
+											</td>*@
+											<td class="fwEbold border-top-0 border-bottom px-0 py-6 text-center" style="width: 200px" id="total-@item.product.ProductId">@thanhtien</td>
+											<td class="fwEbold border-top-0 border-bottom px-0 py-6"><a style="cursor:pointer" data-productid="@item.product.ProductId" class="fas fa-times delete-cart-item"></a></td>
+										</tr>
+									}
 								}
-							}
-						</tbody>
-					</table>
-				</div>
-				</div>
-			</div>
-			<div class="col-sm-12 col-lg-3 col-xl-3">
-				<div class="cart-right-box">
-					<h5 class="cart-rightbox-header">Cộng giỏ hàng</h5>
-					<div class="d-flex justify-content-between title">
-						<span>Tạm tính</span>
+							</tbody>
+						</table>
+					</div>
+					
+					<div class="d-flex cart-total-price justify-content-center title">
+						<span class="title">Tổng giỏ hàng : </span>
 						<span class="cart-price total-price">@String.Format("{0:0,0 đ}",total)</span>
 					</div>
-					<div class="d-flex justify-content-between title">
-						<span>Tổng</span>
-						<span class="cart-price total-checkout">@String.Format("{0:0,0 đ}",total)</span>
-					</div>
-					<div class="text-center">
-						<button class="checkout-btn">Thanh toán</button>
+				</div>
+			</div>
+		</div>
+		<div class="row checkout-session mt-10">
+			<div class="col-sm-0 col-lg-1 col-xl-1"></div>
+			<div class="col-sm-12 col-lg-10 col-xl-10">
+				<div class="cart-left-box" style="padding: 20px">
+					<h5 class="cart-rightbox-header checkout-title text-center">Thông tin nhận hàng</h5>
+					<div class="customer-infomation-form">
+						<form class="" asp-action="CheckOut" asp-controller="Cart" method="post">
+							<div class="row mt-3">
+								<div class="col-sm-12 col-lg-6 col-xl-6">
+									<div class="form-group">
+										<label class="form-label">Họ và tên</label>
+										<input class="form-control" name="FullName" placeholder="Nhập họ và tên người nhận" />
+									</div>
+								</div>
+								<div class="col-sm-12 col-lg-6 col-xl-6">
+									<div class="form-group">
+										<label class="form-label">Số điện thoại</label>
+										<input class="form-control" name="Phone" placeholder="Nhập số điện thoại người nhận" />
+									</div>
+								</div>
+								<div class="col-sm-12 col-lg-4 col-xl-4">
+									<div class="form-group">
+										<label class="form-lable">Tỉnh - Thành phố</label>
+										<select class="form-control choose" name="province" data-name="province" id="province" asp-items="@ViewBag.Provinces">
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-12 col-lg-4 col-xl-4">
+									<div class="form-group">
+										<label class="form-lable">Quận - Huyện</label>
+										<select class="form-control choose" name="districts" data-name="district" id="districts">
+											<option value="0">---Chọn quận huyện---</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-12 col-lg-4 col-xl-4">
+									<div class="form-group">
+										<label class="form-lable">Khối - Phường - Thị xã</label>
+										<select class="form-control" name="commune" data-name="commune" id="commune">
+											<option value="0">------Chọn thị xã------</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-sm-12 col-lg-12 col-xl-12">
+									<div class="form-group">
+										<label class="form-label">Thông tin địa chỉ chi tiết</label>
+										<input class="form-control" name="Address" placeholder="Số nhà, đường, quận, huyện, ..." />
+									</div>
+								</div>
+								<div class="col-sm-0 col-xl-4 col-sm-4"></div>
+								
+								<div class="col-sm-12 col-lg-4 col-xl-4">
+								@if(ViewBag.UserId == null)
+								{
+									<input type="button" class="checkout-btn goto-login" value="Đi đến thanh toán" />
+								} else
+								{
+									<input type="submit" class="checkout-btn" value="Đi đến thanh toán" />
+								}
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-			<!-- table-responsive -->
-		
 		</div>
 	} else
 	{

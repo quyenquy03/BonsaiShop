@@ -1,4 +1,5 @@
-﻿@{
+﻿@using BonsaiShop.Ultilities;
+@{
     ViewData["Title"] = "Trang chủ";
 }
 
@@ -37,8 +38,41 @@
 	</div>
 </div>
 <!-- featureSec -->
-@await Component.InvokeAsync("BestSellerProduct");
-
+@*@await Component.InvokeAsync("BestSellerProduct");*@
+<section class="featureSec container overflow-hidden pt-xl-12 pb-xl-9 pt-lg-10 pb-lg-4 pt-md-8 pb-md-2 pt-5">
+	<div class="row">
+		<!-- mainHeader -->
+		<header class="col-12 mainHeader mb-4 text-center">
+			<h1 class="headingIV playfair fwEblod mb-4">Sản phẩm có khuyến mãi</h1>
+			<span class="headerBorder d-block mb-5"><img src="~/client/images/hbdr.png" alt="Header Border" class="img-fluid img-bdr"></span>
+			<p>Mua ngay trong hôm nay để nhận được ưu đãi của chúng tôi </p>
+		</header>
+	</div>
+	<div id="BestSellerCarousel" class="row owl-carousel owl-nav-custom owl-theme my-3">
+		@foreach (var item in ViewBag.ListBestSellerProduct)
+		{
+			var url = Functions.UrlLink(item.ProductName, item.ProductId);
+			<div class="col-12 col-sm-12 col-lg-12 featureCol w-100 position-relative mb-6">
+				<div class="border">
+					<div class="imgHolder position-relative w-100 overflow-hidden">
+						<img src="~/images/@item.ProductImage" alt="image description" class="img-fluid w-100">
+						<ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
+							<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="icon-heart favourite-btn d-block"></a></li>
+							<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="addcart-btn icon-cart d-block"></a></li>
+							<li class="mr-2 overflow-hidden"><a href="/san-pham/@url" class="icon-eye d-block"></a></li>
+							<li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
+						</ul>
+					</div>
+					<div class="text-center py-xl-5 py-sm-4 py-2 px-xl-2 px-1">
+						<span class="title d-block mb-2 truncate-text truncate-2-line"><a href="/san-pham/@url">@item.ProductName</a></span>
+						<span class="price d-block fwEbold"><del>@String.Format("{0:0,0 đ}", item.ProductPrice) </del> @String.Format("{0:0,0 đ}", item.ProductPrice - item.ProductPrice * item.ProductDisCount / 100)</span>
+						<span class="hotOffer green fwEbold text-uppercase text-white position-absolute d-block">Sale</span>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</section>
 <div class="contactListBlock container overflow-hidden py-5">
 	<div class="row">
 		<div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0">
@@ -84,7 +118,43 @@
 	</div>
 </div>
 <!-- categorySecBlock -->
-@await Component.InvokeAsync("NewProduct");
+@*@await Component.InvokeAsync("NewProduct")*@
+
+<section class="featureSec container overflow-hidden pt-xl-11 pb-xl-18 pt-lg-10 pb-lg-20 pt-md-8 pb-md-16 pt-5 pb-5">
+	<div class="row">
+		<!-- mainHeader -->
+		<header class="col-12 mainHeader mb-4 text-center">
+			<h1 class="headingIV playfair fwEblod mb-4">Sản phẩm nổi bật</h1>
+			<span class="headerBorder d-block mb-5"><img src="~/client/images/hbdr.png" alt="Header Border" class="img-fluid img-bdr"></span>
+			<p>Những sản phẩm được khách hàng yêu thích nhất của chúng tôi </p>
+		</header>
+	</div>
+	<div class="row">
+		@foreach (var item in ViewBag.ListNewProduct)
+		{
+			var url = Functions.UrlLink(item.ProductName, item.ProductId);
+				<div class="col-12 col-sm-6 col-lg-3 featureCol position-relative mb-6">
+					<div class="border">
+						<div class="imgHolder position-relative w-100 overflow-hidden">
+							<img src="~/images/@item.ProductImage" alt="image description" class="img-fluid w-100">
+							<ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
+								<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart d-block"></a></li>
+								<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="addcart-btn icon-cart d-block"></a></li>
+								<li class="mr-2 overflow-hidden"><a href="/san-pham/@url" class="icon-eye d-block"></a></li>
+								<li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
+							</ul>
+						</div>
+						<div class="text-center py-xl-5 py-sm-4 py-2 px-xl-2 px-1">
+							<span class="title d-block mb-2"><a href="/san-pham/@url">@item.ProductName</a></span>
+							<span class="price d-block fwEbold mb-1">@String.Format("{0:0,0 đ}", item.ProductPrice) </span>
+							<span class="hotOffer fwEbold text-uppercase text-white position-absolute d-block">Hot</span>
+						</div>
+					</div>
+				</div>
+		}
+	</div>
+</section>
+
 <!-- featureSec -->
 <section class="feedback-container white-bg container-section" style="background-image: url('/images/feedback-banner.png');">
 	<div class="overlay"></div>
@@ -208,55 +278,5 @@
 </section>
 
 <!-- latestSec -->
-@await Component.InvokeAsync("HotBlog");
-<!-- footerHolder -->
-<aside class="footerHolder overflow-hidden bg-lightGray pt-xl-23 pb-xl-8 pt-lg-10 pb-lg-8 pt-md-12 pb-md-8 pt-10">
-	<div class="container">
-		<div class="row">
-			<div class="col-12 col-sm-6 col-lg-4 mb-lg-0 mb-4">
-				<h3 class="headingVI fwEbold text-uppercase mb-7">Contact Us</h3>
-				<ul class="list-unstyled footerContactList mb-3">
-					<li class="mb-3 d-flex flex-nowrap pr-xl-20 pr-0"><span class="icon icon-place mr-3"></span> <address class="fwEbold m-0">Address: London Oxford Street, 012 United Kingdom.</address></li>
-					<li class="mb-3 d-flex flex-nowrap"><span class="icon icon-phone mr-3"></span> <span class="leftAlign">Phone : <a href="javascript:void(0);">(+032) 3456 7890</a></span></li>
-					<li class="email d-flex flex-nowrap"><span class="icon icon-email mr-2"></span> <span class="leftAlign">Email:  <a href="javascript:void(0);">Botanicalstore@gmail.com</a></span></li>
-				</ul>
-				<ul class="list-unstyled followSocailNetwork d-flex flex-nowrap">
-					<li class="fwEbold mr-xl-11 mr-md-8 mr-3">Follow  us:</li>
-					<li class="mr-xl-6 mr-md-5 mr-2"><a href="javascript:void(0);" class="fab fa-facebook-f"></a></li>
-					<li class="mr-xl-6 mr-md-5 mr-2"><a href="javascript:void(0);" class="fab fa-twitter"></a></li>
-					<li class="mr-xl-6 mr-md-5 mr-2"><a href="javascript:void(0);" class="fab fa-pinterest"></a></li>
-					<li class="mr-2"><a href="javascript:void(0);" class="fab fa-google-plus-g"></a></li>
-				</ul>
-			</div>
-			<div class="col-12 col-sm-6 col-lg-3 pl-xl-14 mb-lg-0 mb-4">
-				<h3 class="headingVI fwEbold text-uppercase mb-6">Information</h3>
-				<ul class="list-unstyled footerNavList">
-					<li class="mb-1"><a href="javascript:void(0);">New Products</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">Top Sellers</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">Our Blog</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">About Our Shop</a></li>
-					<li><a href="javascript:void(0);">Privacy policy</a></li>
-				</ul>
-			</div>
-			<div class="col-12 col-sm-6 col-lg-3 pl-xl-12 mb-lg-0 mb-4">
-				<h3 class="headingVI fwEbold text-uppercase mb-7">My Account</h3>
-				<ul class="list-unstyled footerNavList">
-					<li class="mb-1"><a href="javascript:void(0);">My account</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">Discount</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">Orders history</a></li>
-					<li><a href="javascript:void(0);">Personal information</a></li>
-				</ul>
-			</div>
-			<div class="col-12 col-sm-6 col-lg-2 pl-xl-18 mb-lg-0 mb-4">
-				<h3 class="headingVI fwEbold text-uppercase mb-5">PRODUCTS</h3>
-				<ul class="list-unstyled footerNavList">
-					<li class="mb-2"><a href="javascript:void(0);">Delivery</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">Legal notice</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">Prices drop</a></li>
-					<li class="mb-2"><a href="javascript:void(0);">New products</a></li>
-					<li><a href="javascript:void(0);">Best sales</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</aside>
+@await Component.InvokeAsync("HotBlog")
+

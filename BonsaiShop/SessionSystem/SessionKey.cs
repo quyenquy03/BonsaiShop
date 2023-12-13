@@ -6,6 +6,9 @@
         public static string FULLNAME = "FULLNAME";
         public static string ROLEID = "ROLEID";
         public static string USERID = "USERID";
-        public static string CART_SESSION = "CART_SESSION";
-    }
+
+        public static string CARTKEY = "CARTKEY";
+        public static string RECENTPRODUCT = "RECENTPRODUCT";
+        public static string FAVOURITEPRODUCT = "FAVOURITEPRODUCT";
+	}
 }

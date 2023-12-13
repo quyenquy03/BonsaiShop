@@ -16,11 +16,11 @@
 				<div class="col-xl-9 col-lg-9 col-md-12">
 					<div class="main-content-box">
 						<div class="breadcrumb-header">
-							<a href="">Trang chủ</a>
+							<a href="/">Trang chủ</a>
 							<span>></span>
 							<a href="">Sản phẩm</a>
 							<span>></span>
-							<a href="">Quần áo</a>
+							<a href="">@ViewBag.CategoryName</a>
 						</div>
 					</div>
 
@@ -43,7 +43,7 @@
 											<ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
 												<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart d-block"></a></li>
 												<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="addcart-btn icon-cart d-block"></a></li>
-												<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-eye d-block"></a></li>
+												<li class="mr-2 overflow-hidden"><a href="/san-pham/@url" class="icon-eye d-block"></a></li>
 												<li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
 											</ul>
 										</div>
@@ -55,12 +55,16 @@
 									</div>
 								</div>
 							}
+							
+						</div>
+						@if(ViewBag.PageCount > 1)
+						{
 							<div aria-label="Page navigation example" class="text-center mt-3 align-items-center">
 								<ul class="pagination text-center d-inline-block">
-									<pager class="pager-container" list="@Model" asp-route-id="@ViewBag.CategoryId" asp-controller="Product" asp-action="ProductByCategory" />
+									<pager class="pager-container" list="@Model" />
 								</ul>
 							</div>
-						</div>
+						}
 					</section>
 
 					@*<div class="main-content-box mt-3">

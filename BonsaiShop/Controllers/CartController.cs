@@ -1,6 +1,11 @@
 ﻿using BonsaiShop.Models;
+using BonsaiShop.SessionSystem;
+using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
+using MimeKit;
 using Newtonsoft.Json;
 
 namespace BonsaiShop.Controllers
@@ -8,11 +13,15 @@ namespace BonsaiShop.Controllers
     public class CartController : Controller
     {
         private readonly BonsaiShopContext _context;
-        public CartController(BonsaiShopContext context)
-        {
-            _context = context;
-        }
-        public const string CARTKEY = "cart";
+		private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+		public CartController(BonsaiShopContext context, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
+		{
+			_context = context;
+			_webHostEnvironment = webHostEnvironment;
+            _httpContextAccessor = httpContextAccessor;
+		}
+		public const string CARTKEY = "cart";
 
         // Lấy cart từ Session (danh sách CartItem)
         List<CartItem> GetCartItems()
@@ -51,7 +60,6 @@ namespace BonsaiShop.Controllers
                 }
             }
             return String.Format("{0:0,0 đ}", total);
-
 		}
 
         public IActionResult Index()
@@ -211,14 +219,153 @@ namespace BonsaiShop.Controllers
         [Route("/gio-hang", Name = "cart")]
         public IActionResult Cart()
         {
-            return View(GetCartItems());
+			var UserId = HttpContext.Session.GetInt32(SessionKey.USERID);
+			var listProvince = _context.Provinces.ToList();
+			ViewBag.Provinces = new SelectList(listProvince.ToList(), "ProvinceId", "ProvinceName");
+            ViewBag.UserId = UserId;
+			return View(GetCartItems());
+        }
+        [HttpPost]
+        [Route("/thanh-toan")]
+        public IActionResult CheckOut(string FullName, string Phone, int province, int districts, int commune, string Address)
+        {
+
+            if (FullName == null) TempData["FullName"] = "Họ tên không được để trống";
+            if (Phone == null) TempData["Phone"] = "Số điện thoại khôgn được để trống";
+            if (districts == 0) TempData["districts"] = "Bạn chưa chọn quận - huyện";
+            if (commune == 0) TempData["commune"] = "Bạn chưa chọn thị xã";
+            if (Address == null) TempData["Address"] = "Địa chỉ không được để trống";
+
+            if (FullName == null || Phone == null || districts == 0 || commune == 0 || Address == null)
+            {
+				var listProvince = _context.Provinces.ToList();
+				ViewBag.Provinces = new SelectList(listProvince.ToList(), "ProvinceId", "ProvinceName");
+                return RedirectToAction("Cart");
+            }
+			var UserId = HttpContext.Session.GetInt32(SessionKey.USERID);
+            if(UserId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+			var feeshipId = 0;
+            decimal? feeshipPrice = 20000;
+			var feeship = _context.FeeShips.Where(m => m.DistrictId == districts && m.ProvinceId == province && m.CommuneId == commune).FirstOrDefault();
+			if (feeship != null)
+			{
+				feeshipId = Convert.ToInt32(feeship.FeeShipId);
+                feeshipPrice = feeship.ShipPrice;
+			}
+            var provinceName = _context.Provinces.Where(m => m.ProvinceId == province).Select(m => m.ProvinceName).FirstOrDefault();
+            var districtName = _context.Districts.Where(m => m.DistrictId == districts).Select(m => m.DistrictName).FirstOrDefault();
+            var communeName = _context.Communes.Where(m => m.CommuneId == commune).Select(m => m.CommuneName).FirstOrDefault();
+			Random ran = new Random();
+			int number = ran.Next(10000);
+			var order = new Order();
+
+            order.FullName = FullName;
+            order.Address = string.Format("{0} - {1} - {2} - {3}", Address, provinceName, districtName, communeName);
+            order.Phone = Phone;
+            order.UserId = UserId;
+            order.CreatedBy = UserId;
+            order.ModifiedBy = UserId;
+            order.CreatedDate = DateTime.Now;
+            order.ModifiedDate = DateTime.Now;
+            order.FeeShipId = feeshipId;
+            order.Code = "DONHANG-" + number.ToString();
+            
+            ViewBag.ShipPrice = feeshipPrice;
+            ViewBag.ListCart = GetCartItems();
+            ViewBag.ProvinceName = provinceName;
+            ViewBag.DistrictName = districtName;
+            ViewBag.CommuneName = communeName;
+            ViewBag.Address = Address;
+			return View(order);
         }
 
-        [Route("/checkout")]
-        public IActionResult CheckOut()
+        void SendConfirmMail(Order order)
         {
-            // Xử lý khi đặt hàng
-            return View(GetCartItems());
+            var user = _context.Users.Where( m=> m.UserId == order.UserId && m.IsBlocked == 1 && m.IsDeleted == false ).FirstOrDefault();  
+            var feeship = _context.FeeShips.Where(m => m.FeeShipId == order.FeeShipId).FirstOrDefault();
+            decimal? shipPrice = 25000;
+            if(feeship != null )
+            {
+                shipPrice = feeship.ShipPrice;
+            }
+            var cart = GetCartItems();
+            var content = "";
+            foreach(var cartitem in cart)
+            {
+                var total = String.Format("{0:0,0 đ}", (cartitem.product.ProductPrice - cartitem.product.ProductPrice * cartitem.product.ProductDisCount / 100) * cartitem.quantity);
+                var price = String.Format("{0:0,0 đ}", (cartitem.product.ProductPrice - cartitem.product.ProductPrice * cartitem.product.ProductDisCount / 100));
+                content += string.Format("<tr> <td style='padding: 5px;'><a href='/'>{1}</a></td> <td style='padding: 5px;'>{2}</td> <td style='padding: 5px;'>{3}</td><td style='padding: 5px;'>{0}</td></tr>",total, cartitem.product.ProductName, price, cartitem.quantity);
+            }
+            var linkConfirm = _httpContextAccessor?.HttpContext?.Request.Scheme + "://" + _httpContextAccessor?.HttpContext?.Request.Host + "/confirm-buy-product?orderId=" + order.OrderId;
+			using (var client = new SmtpClient())
+			{
+				client.Connect("smtp.gmail.com", 587);
+				client.Authenticate("ta2k3quyen@gmail.com", "xnxt lspv mynw uenl");
+                var bodyBuiler = new BodyBuilder();
+				var path = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() + "EmailTemplate" + Path.DirectorySeparatorChar.ToString() + "ConfirmOrder.html";
+				string HtmlBody = "";
+				using (StreamReader streamReader = System.IO.File.OpenText(path))
+				{
+					HtmlBody = streamReader.ReadToEnd();
+				}
+				string messageBody = string.Format(HtmlBody, 
+                    user.FullName,
+                    order.CreatedDate,
+                    order.FullName,
+                    order.Address,
+                    order.Phone,
+                    user.Email,
+                    order.CreatedDate,
+					content,
+					order.TotalAmount,
+					shipPrice,
+                    order.TotalPayment,
+					linkConfirm
+					);
+				bodyBuiler.HtmlBody = messageBody;
+				var message = new MimeMessage
+				{
+					Body = bodyBuiler.ToMessageBody()
+				};
+
+				message.From.Add(new MailboxAddress("Bonsaishop", "ta2k3quyen@gmail.com"));
+				message.To.Add(new MailboxAddress(user.FullName, user.Email));
+				message.Subject = "Xác nhận đặt hàng";
+				client.Send(message);
+				client.Disconnect(true);
+			}
+		}
+
+        public IActionResult ConfirmCheckout(Order order)
+        {
+            if(order == null)
+            {
+                return RedirectToAction("CheckOut");
+            }
+
+            var cart = GetCartItems();
+            if(cart.Count > 0)
+            {
+                var newitem = _context.Orders.Add(order);
+				_context.SaveChanges();
+                var id = newitem.Entity.OrderId;
+				foreach (var item in cart)
+                {
+                    var orderItem = new OrderDetail();
+                    orderItem.ProductId = item.product.ProductId;
+                    orderItem.Quantity = item.quantity;
+                    orderItem.Price = item.product.ProductPrice * (100 - item.product.ProductDisCount) / 100;
+                    orderItem.OrderId = id;
+                    _context.OrderDetails.Add(orderItem);
+				    _context.SaveChanges();
+                }
+                SendConfirmMail(order);
+                ClearCart();
+			}
+			return RedirectToAction("Index", "Order");
         }
 
         /*public bool Order(string name, string phone, string address)

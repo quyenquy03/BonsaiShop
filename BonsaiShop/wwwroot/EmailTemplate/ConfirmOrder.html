@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: center;">
+        <div style="width: 600px; background-color: #f4f0f0; padding: 20px;">
+            <div style="text-align: center;">
+                <img src="https://ci5.googleusercontent.com/proxy/axmtZqwKej_TFL7EGxQpdXZ1BhL185alB9PdVba5bUBa3-mIAutAGA6R18yh59_mxYSbDian9hLrc6XXGSuV6K4t64QPknjC_GnIPKZl4XYqS6Ie4YaD=s0-d-e1-ft#https://themewagon.com/wp-content/uploads/2021/04/logo-for-email.png" alt="">
+            </div>
+            <h4 style="text-align: center; margin: 20px 0; font-size: 25px;">Xác nhận đơn hàng</h4>
+            <div class="content-box">
+                <p> <span style="padding: 0 12px;"></span>Xin chào {0}</p>
+                <p>
+                    <span style="padding: 0 12px;"></span>Email này được gửi đến từ <span style="font-weight: 600;">DemoShop</span> để xác nhận thông tin đặt hàng của bạn. Vào lúc
+                    <span style="font-weight: 600;"> {1} </span>
+                    bạn đã đặt hàng tại website <span style="font-weight: 600;">DemoShop.com</span> của chúng tôi. Để hoàn thành đơn hàng, vui lòng xác nhận thông tin của bạn là chính xác.
+                    Thông tin đặt hàng của bạn:
+                </p>
+                <ul style="margin-left: 30px;">
+                    <li>Họ và tên: <span style="font-weight: 600;">{2}</span></li>
+                    <li>Địa chỉ: <span style="font-weight: 600;">{3}</span></li>
+                    <li>Số điện thoại: <span style="font-weight: 600;">{4}</span></li>
+                    <li>Email: <span style="font-weight: 600;">{5}</span></li>
+                    <li>Ngày đặt hàng: <span style="font-weight: 600;">{6}</span></li>
+                </ul>
+            </div>
+            <div class="order-box">
+                <h4 class="order-header" style="text-align: center; font-size: 17px; font-weight: 600; font-style: italic; margin-top: 20px;">Thông tin đơn hàng</h4>
+                <table style="text-align: center; width: 100%; margin-top: 10px;" cellspacing="0" border="1">
+                    <tr>
+                        <th style="padding: 5px;">Tên sản phẩm</th>
+                        <th style="padding: 5px;">Đơn giá</th>
+                        <th style="padding: 5px;">Số lượng</th>
+                        <th style="padding: 5px;">Thành tiền</th>
+                    </tr>
+                    {7}
+                    <tr>
+                        <td colspan="3">Tổng đơn hàng</td>
+                        <td style="padding: 5px;">600.000</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="display: flex; flex-direction: column !important; align-items: center !important; margin-top: 30px;">
+                <div style="list-style: none; width: 400px; padding: 20px; border: 1px dashed #000; border-radius: 10px;">
+                    <table>
+                        <tr>
+                            <td style="padding: 5px;">Tổng đơn hàng</td>
+                            <td style="padding: 5px;">: {8}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Phí vận chuyển</td>
+                            <td style="padding: 5px;">: {9}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Mã giảm giá</td>
+                            <td style="padding: 5px;">: Không có</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Số tiền giảm</td>
+                            <td style="padding: 5px;">: 0 đ</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Tổng thanh toán</td>
+                            <td style="padding: 5px;">: {10}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Hình thức thanh toán</td>
+                            <td style="padding: 5px;">: Thanh toán khi nhận hàng</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="confirm" style="text-align: center;margin-top: 20px;">
+                    <a href="{11}" style="padding: 10px;
+                        width: 170px;
+                        margin: 20px;
+                        border-radius: 5px;
+                        outline: none;
+                        border: 1px solid #000;
+                        cursor: pointer;
+                        color: #fff;
+                        font-size: 15px;
+                        opacity: 0.7;
+                        background-color: #8100ff;">
+                        Xác nhận đơn hàng
+                    </a>
+                    <button style="padding: 10px;
+                        width: 170px;
+                        margin: 20px;
+                        border-radius: 5px;
+                        outline: none;
+                        border: 1px solid #000;
+                        cursor: pointer;
+                        color: #fff;
+                        font-size: 15px;
+                        opacity: 0.7;
+                        background-color: #f40a1d;">
+                        Hủy đơn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

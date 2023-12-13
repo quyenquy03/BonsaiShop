@@ -1,4 +1,5 @@
-﻿<div class="sidebar-box product-one-col">
+﻿@using BonsaiShop.SessionSystem;
+<div class="sidebar-box product-one-col">
 	<div class="search-box">
 		<div class="search-input">
 			<input class="search-text" placeholder="Nhập thông tin tìm kiếm..." />
@@ -9,144 +10,11 @@
 	@await Component.InvokeAsync("ProductCategory")
 
 	<div class="product-box">
-		<h4 class="sidebar-header-title text-center">Sản phẩm nổi bật</h4>
-		<div class="product-list">
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/images/Products/cay-trau-ba-4364.jpg" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/images/Products/cay-trau-ba-4364.jpg" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/images/Products/cay-trau-ba-4364.jpg" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/images/Products/cay-trau-ba-4364.jpg" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/images/Products/cay-trau-ba-4364.jpg" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="read-more-btn">
-				<a href="" class="">Xem Thêm</a>
-			</div>
-		</div>
-
+		<h4 class="sidebar-header-title text-center">Sản phẩm yêu thích</h4>
+		@await Component.InvokeAsync("ProductSession", SessionKey.FAVOURITEPRODUCT)
 	</div>
-	<div class="product-box">
+	@*<div class="product-box">
 		<h4 class="sidebar-header-title text-center">Sản phẩm vừa xem</h4>
-		<div class="product-list">
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/img/digital-chair.png" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/img/digital-chair.png" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/img/digital-chair.png" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/img/digital-chair.png" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-			<div class="product-item">
-				<div class="product-image">
-					<a href=""><img src="/img/digital-chair.png" style="width: 100%" /></a>
-				</div>
-				<div class="product-info">
-					<h4 class="product-name"><a href="">ten san pham ten san pham ten san pham</a></h4>
-					<div class="price">
-						<span class="product-old-price">120.000 d</span>
-						<span class="product-new-price">100.000 d</span>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="read-more-btn">
-				<a href="" class="">Xem Thêm</a>
-			</div>
-		</div>
-	</div>
+		@await Component.InvokeAsync("ProductSession", SessionKey.RECENTPRODUCT)
+	</div>*@
 </div>

@@ -189,9 +189,9 @@ public partial class BonsaiShopContext : DbContext
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.Address).HasMaxLength(100);
+            entity.Property(e => e.Address).HasMaxLength(500);
             entity.Property(e => e.Code)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -204,10 +204,6 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.TotalPayment).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.FeeShip).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.FeeShipId)
-                .HasConstraintName("FK_Orders_FeeShips");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
