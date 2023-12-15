@@ -41,7 +41,7 @@
 										<div class="imgHolder position-relative w-100 overflow-hidden">
 											<img src="~/images/@item.ProductImage" alt="image description" class="img-fluid w-100">
 											<ul class="list-unstyled postHoverLinskList d-flex justify-content-center m-0">
-												<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" class="icon-heart d-block"></a></li>
+												<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="icon-heart favourite-btn d-block"></a></li>
 												<li class="mr-2 overflow-hidden"><a href="javascript:void(0);" data-productid="@item.ProductId" class="addcart-btn icon-cart d-block"></a></li>
 												<li class="mr-2 overflow-hidden"><a href="/san-pham/@url" class="icon-eye d-block"></a></li>
 												<li class="overflow-hidden"><a href="javascript:void(0);" class="icon-arrow d-block"></a></li>
@@ -57,14 +57,11 @@
 							}
 							
 						</div>
-						@if(ViewBag.PageCount > 1)
-						{
-							<div aria-label="Page navigation example" class="text-center mt-3 align-items-center">
-								<ul class="pagination text-center d-inline-block">
-									<pager class="pager-container" list="@Model" />
-								</ul>
-							</div>
-						}
+						<div aria-label="Page navigation example" class="text-center mt-3 align-items-center">
+							<ul class="pagination text-center d-inline-block">
+								<pager class="pager-container" list="@Model" />
+							</ul>
+						</div>
 					</section>
 
 					@*<div class="main-content-box mt-3">

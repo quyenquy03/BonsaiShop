@@ -691,3 +691,60 @@
     padding: 0.3rem 0.6rem;
     border-radius: 5px;
 }
+.contact-page {
+    .banner-top-box {
+        background-position: 50% 50%;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        position: relative;
+
+        .banner-content {
+            padding: 99px 0;
+            font-size: 40px;
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+
+        .bg-fill {
+            position: absolute;
+            background-color: rgb(0 0 0 / 50%);
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 0;
+        }
+    }
+
+    .infor-box {
+        background-color: #fff;
+        padding-top: 20px;
+
+        .info-item {
+            text-align: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .image-box img {
+            width: 100px;
+        }
+
+        .info-header {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .info-title {
+            font-style: italic;
+            font-family: 'Font Awesome 5 Free';
+        }
+    }
+
+    .contact-box {
+        padding: 30px 10px;
+    }
+}

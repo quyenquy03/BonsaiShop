@@ -52,6 +52,10 @@
 	<!-- include custom JavaScript -->
 	<script src="~/client/js/jqueryCustome.js"></script>
 	<script src="~/client/js/main.js"></script>
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+    @await Component.InvokeAsync("Notyf")
+
 	<script>
 		$(document).ready(function () {
 			$("#BestSellerCarousel").owlCarousel({
@@ -116,6 +120,7 @@
 					},
 				})
 			})
+
 			$(".favourite-btn").on("click", function () {
 				var productid = $(this).data("productid");
 				$.ajax({

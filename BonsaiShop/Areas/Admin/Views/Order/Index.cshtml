@@ -1,0 +1,89 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<BonsaiShop.Models.Order>
+@{
+	int currentPage = ViewBag.currentPage;
+	ViewData["Title"] = "Danh sach nguoi dung " + currentPage;
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="cartHolder cart-session order-session checkout-session container pt-xl-10 pb-xl-20 py-lg-20 py-md-10 py-10">
+	@if (Model.Count > 0)
+	{
+		<div class="list-order">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">STT</th>
+						<th scope="col">Mã đơn hàng</th>
+						<th scope="col">Người nhận</th>
+						<th scope="col" class="text-center">Điện thoại</th>
+						<th scope="col" class="text-center">Tổng thanh toán</th>
+						<th scope="col" class="text-center">Trạng thái đơn hàng</th>
+						<th scope="col" class="text-center">Chức năng</th>
+					</tr>
+				</thead>
+				<tbody>
+					@{
+						var i = 1;
+					}
+					@foreach (var item in Model)
+					{
+						<tr>
+							<th scope="row">@(i++)</th>
+							<td>@item.Code</td>
+							<td>@item.FullName</td>
+							<td class="text-center">@item.Phone</td>
+							<td class="text-center">@item.TotalPayment</td>
+							@if (item.OrderStatus == 1)
+							{
+								<td class="text-center">Chưa xác nhận</td>
+							}
+							else if (item.OrderStatus == 2)
+							{
+								<td class="text-center">Đang chờ duyệt</td>
+							}
+							else if (item.OrderStatus == 3)
+							{
+								<td class="text-center">Đang giao hàng</td>
+							}
+							else if (item.OrderStatus == 4)
+							{
+								<td class="text-center">Đã thanh toán</td>
+							}
+							<td class="text-center">
+								<div class="order-action-box">
+									<button><i class="fa fa-eye"></i></button>
+									<button><i class="fa fa-trash"></i></button>
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	}
+	else
+	{
+		<div class="container">
+			<div class="cart-empty-box row">
+				<div class="col-sm-0 col-xl-3 col-lg-3"></div>
+				<div class="col-sm-12 col-lg-6 col-xl-6">
+					<img class="w-100" src="~/images/cart-empty.png" />
+					<p class="text-center cart-empty-title">Chưa có sản phẩm nào trong giỏ hàng</p>
+					<div class="text-center">
+						<a asp-action="Index" asp-controller="Home" class="btn btn-back-home">Quay lại cửa hàng</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+</div>
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+
+		}
+	</script>
+}

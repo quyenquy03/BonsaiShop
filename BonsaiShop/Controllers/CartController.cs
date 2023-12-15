@@ -1,4 +1,5 @@
-﻿using BonsaiShop.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using BonsaiShop.Models;
 using BonsaiShop.SessionSystem;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
@@ -15,11 +16,14 @@ namespace BonsaiShop.Controllers
         private readonly BonsaiShopContext _context;
 		private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IHttpContextAccessor _httpContextAccessor;
-		public CartController(BonsaiShopContext context, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor)
+		private readonly INotyfService _notyf;
+
+		public CartController(BonsaiShopContext context, IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor, INotyfService notyf)
 		{
 			_context = context;
 			_webHostEnvironment = webHostEnvironment;
             _httpContextAccessor = httpContextAccessor;
+            _notyf = notyf;
 		}
 		public const string CARTKEY = "cart";
 
@@ -281,7 +285,6 @@ namespace BonsaiShop.Controllers
             ViewBag.Address = Address;
 			return View(order);
         }
-
         void SendConfirmMail(Order order)
         {
             var user = _context.Users.Where( m=> m.UserId == order.UserId && m.IsBlocked == 1 && m.IsDeleted == false ).FirstOrDefault();  
@@ -341,32 +344,40 @@ namespace BonsaiShop.Controllers
 
         public IActionResult ConfirmCheckout(Order order)
         {
-            if(order == null)
+            try
             {
-                return RedirectToAction("CheckOut");
-            }
+				if (order == null)
+				{
+					return RedirectToAction("CheckOut");
+				}
 
-            var cart = GetCartItems();
-            if(cart.Count > 0)
+				var cart = GetCartItems();
+				if (cart.Count > 0)
+				{
+					var newitem = _context.Orders.Add(order);
+					_context.SaveChanges();
+					var id = newitem.Entity.OrderId;
+					foreach (var item in cart)
+					{
+						var orderItem = new OrderDetail();
+						orderItem.ProductId = item.product.ProductId;
+						orderItem.Quantity = item.quantity;
+						orderItem.Price = item.product.ProductPrice * (100 - item.product.ProductDisCount) / 100;
+						orderItem.OrderId = id;
+						_context.OrderDetails.Add(orderItem);
+						_context.SaveChanges();
+					}
+					SendConfirmMail(order);
+					ClearCart();
+				}
+                _notyf.Success("Đã đặt hàng thành công, kiểm tra email để xác nhận");
+				return RedirectToAction("Index", "Order");
+			} catch
             {
-                var newitem = _context.Orders.Add(order);
-				_context.SaveChanges();
-                var id = newitem.Entity.OrderId;
-				foreach (var item in cart)
-                {
-                    var orderItem = new OrderDetail();
-                    orderItem.ProductId = item.product.ProductId;
-                    orderItem.Quantity = item.quantity;
-                    orderItem.Price = item.product.ProductPrice * (100 - item.product.ProductDisCount) / 100;
-                    orderItem.OrderId = id;
-                    _context.OrderDetails.Add(orderItem);
-				    _context.SaveChanges();
-                }
-                SendConfirmMail(order);
-                ClearCart();
+                _notyf.Error("Website đang bị lỗi, vui lòng chờ");
+				return RedirectToAction("Cart");
 			}
-			return RedirectToAction("Index", "Order");
-        }
+		}
 
         /*public bool Order(string name, string phone, string address)
         {
