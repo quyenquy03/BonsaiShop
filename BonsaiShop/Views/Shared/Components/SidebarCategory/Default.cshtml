@@ -1,0 +1,35 @@
+﻿@using BonsaiShop.Ultilities;
+@model IList<BonsaiShop.Models.Category>
+
+@{
+	var slug = "danh-muc";
+	var all = "";
+	if(ViewBag.type == "product")
+	{
+		slug = "/danh-muc-san-pham/";
+		all = slug + "tat-ca-san-pham-0";
+	} else
+	{
+		slug = "/danh-muc-bai-viet/";
+		all = slug + "tat-ca-bai-viet-0";
+	}
+}
+<div class="category-box">
+	<h4 class="sidebar-header-title text-center">Danh mục</h4>
+	<ul class="list-category sidebar_nav">
+		@foreach (var item in Model)
+		{
+			var url = slug + Functions.UrlLink(item.CategoryName, item.CategoryId);
+		<li>
+			<a href="@url" class="active">
+				<span class="menu-text">@item.CategoryName</span>
+			</a>
+		</li>
+		}
+		<li>
+			<a href="@all" class="active">
+				<span class="menu-text">Tất cả danh mục</span>
+			</a>
+		</li>
+	</ul>
+</div>

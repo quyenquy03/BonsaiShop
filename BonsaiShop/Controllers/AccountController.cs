@@ -84,7 +84,6 @@ namespace BonsaiShop.Controllers
                 if (user.UserName == null || checkUserName != null || user.FullName == null || user.Password == null || user.Email == null || AgainPass == null || user.Password.Trim() != AgainPass.Trim()) {
                     return View(user);
                 }
-
                 user.IsBlocked = 1;
                 user.RoleId = 2;
                 user.Avatar = "avatar-default.jpg";

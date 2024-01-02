@@ -1,6 +1,5 @@
 ﻿using BonsaiShop.Extension;
 using BonsaiShop.Models;
-using BonsaiShop.Models.Authentication;
 using BonsaiShop.Ultilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

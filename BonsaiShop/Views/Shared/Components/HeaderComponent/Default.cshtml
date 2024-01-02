@@ -83,7 +83,7 @@
 											@foreach (var item in ViewBag.ListCategoryProduct)
 											{
 												var url = Functions.UrlLink(item.CategoryName, item.CategoryId);
-												<li class="d-block mx-0"><a href="/danh-muc/@url">@item.CategoryName</a></li>
+												<li class="d-block mx-0"><a href="/danh-muc-san-pham/@url">@item.CategoryName</a></li>
 											}
 										</ul>
 									</li>
@@ -101,7 +101,7 @@
 											@foreach (var item in ViewBag.ListCategoryPost)
 											{
 												var url = Functions.UrlLink(item.CategoryName, item.CategoryId);
-												<li class="d-block mx-0"><a href="/danh-muc/@url">@item.CategoryName</a></li>
+												<li class="d-block mx-0"><a href="/danh-muc-bai-viet/@url">@item.CategoryName</a></li>
 											}
 										</ul>
 									</li>

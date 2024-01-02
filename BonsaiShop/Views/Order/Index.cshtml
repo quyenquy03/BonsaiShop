@@ -60,10 +60,13 @@
 							{
 								<td class="text-center">Đã thanh toán</td>
 							}
+							else if (item.OrderStatus == 5)
+							{
+								<td class="text-center">Đã hủy</td>
+							}
 							<td class="text-center">
 								<div class="order-action-box">
-									<button><i class="fa fa-eye"></i></button>
-									<button><i class="fa fa-trash"></i></button>
+									<a asp-action="OrderDetail" asp-controller="Order" asp-route-orderId="@item.OrderId"><i class="fa fa-eye"></i></a>
 								</div>
 							</td>
 						</tr>

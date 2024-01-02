@@ -748,3 +748,41 @@
         padding: 30px 10px;
     }
 }
+.jcf-btn-inc,
+.jcf-btn-dec {
+    display: none;
+}
+.blog-detail-content {
+    height: 1000px;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.comment-input-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.comment-item .comment-avt {
+    width: 70px !important;
+    border-radius: 5px;
+}
+
+.comment-item .comment-name {
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+}
+
+.comment-item .comment-content-box {
+    padding: 0 10px;
+}
+
+.comment-item {
+    padding: 10px;
+}

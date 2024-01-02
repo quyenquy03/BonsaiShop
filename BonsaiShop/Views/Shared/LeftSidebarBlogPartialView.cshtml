@@ -1,0 +1,17 @@
+﻿@using BonsaiShop.SessionSystem;
+<div class="sidebar-box product-one-col">
+	<div class="search-box">
+		<div class="search-input">
+			<input class="search-text" placeholder="Nhập thông tin tìm kiếm..." />
+			<span class="search-icon"><i class="fa fa-search"></i></span>
+		</div>
+	</div>
+
+	@await Component.InvokeAsync("SidebarCategory", "post")
+
+	<div class="product-box">
+		<h4 class="sidebar-header-title text-center">Sản phẩm yêu thích</h4>
+		@await Component.InvokeAsync("HotBlog", "blog")
+	</div>
+	
+</div>

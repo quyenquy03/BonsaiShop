@@ -278,5 +278,16 @@
 </section>
 
 <!-- latestSec -->
-@await Component.InvokeAsync("HotBlog")
+<section class="latestSec container overflow-hidden pt-xl-23 pb-xl-17 pt-lg-20 pb-lg-4 pt-md-16 pb-md-2 pt-10">
+	<div class="row">
+		<!-- mainHeader -->
+		<header class="col-12 mainHeader mb-4 text-center">
+			<h1 class="headingIV playfair fwEblod mb-4">Bài viết nổi bật</h1>
+			<span class="headerBorder d-block mb-5"><img src="~/client/images/hbdr.png" alt="Header Border" class="img-fluid img-bdr"></span>
+			<p>Những bài viết chia sẻ kiến thức chăm sóc cây cảnh </p>
+		</header>
+	</div>
+
+	@await Component.InvokeAsync("HotBlog")
+</section>
 

@@ -83,21 +83,30 @@ namespace BonsaiShop.Controllers
 			return View(product);
 		}
 
-		[Route("/danh-muc/{slug}-{id:long}", Name = "ProductByCategory")]
-		public IActionResult ProductByCategory(long id, int? page)
+		[Route("/danh-muc-san-pham/{slug}-{id:long}", Name = "ProductByCategory")]
+		public IActionResult ProductByCategory(long id, int? page, string? searchinput)
 		{
 			var pageNumber = page == null || page <= 0 ? 1 : page.Value;
 			var pageSize = 9;
-
 			List<Product> listProduct = new List<Product>();
-			listProduct = _context.Products.OrderByDescending(m => m.ProductViewCount).Where(m => m.CategoryId == id && m.IsActive == true && m.IsDeleted == false).ToList();
+
+			listProduct = _context.Products.Where(m => m.IsActive == true && m.IsDeleted == false).ToList();
+			ViewBag.CategoryName = "Tất cả sản phẩm";
+			if( searchinput != null && searchinput?.Trim() != "")
+			{
+				id = 0;
+				listProduct = listProduct.Where(m => m.ProductName.Contains(searchinput)).ToList();
+				ViewBag.SearchInput = searchinput;
+			}
+			if (id != 0)
+			{
+				listProduct = listProduct.Where(m => m.CategoryId == id).ToList();
+				var category = _context.Categories.Where(m => m.CategoryId == id).FirstOrDefault();
+				ViewBag.CategoryName = category?.CategoryName;
+			}
+
 			PagedList<Product> models = new PagedList<Product>(listProduct.AsQueryable(), pageNumber, pageSize);
 			ViewBag.currentPage = pageNumber;
-			var category = _context.Categories.Where(m => m.CategoryId == id).FirstOrDefault();
-			ViewBag.CategoryName = category.CategoryName;
-
-			double PageCount = listProduct.Count() / pageSize;
-			ViewBag.PageNumber = Math.Ceiling(PageCount);
 			return View(models);
 		}
 		public IActionResult AddToFavouritePorduct(int productid)
