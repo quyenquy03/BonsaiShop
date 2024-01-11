@@ -20,27 +20,28 @@
                 <div class="col-md-6">
                     <label for="inputEmail5" class="form-label">Tên tài khoản</label>
                     <input type="text" asp-for="UserName" placeholder="NguyenTaQuyen..." class="form-control">
-                     <span asp-validation-for="UserName" class="text-danger"></span>
+                    <span class="text-danger">@TempData["UserNameRequired"]</span>
+                    <span class="text-danger">@TempData["UserNameExists"]</span>
                 </div>
                 <div class="col-md-6">
                     <label for="inputName5" class="form-label">Họ và tên</label>
                     <input type="text" asp-for="FullName" placeholder="Nguyễn Tạ Quyền..." class="form-control">
-                    <span asp-validation-for="FullName" class="text-danger"></span>
+                    <span class="text-danger">@TempData["FullNameRequired"]</span>
                 </div>
                 <div class="col-md-4">
                     <label for="inputName5" class="form-label">Ngày sinh</label>
                     <input type="date" value="@CurrentDay" class="form-control" asp-for="Birthday">
-                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                    <span class="text-danger">@TempData["BirhdayRequired"]</span>
                 </div>
                 <div class="col-md-4">
                     <label for="inputAddress5" class="form-label">Email</label>
                     <input type="text" class="form-control" asp-for="Email" placeholder="quyen@gmail.com">
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span class="text-danger">@TempData["EmailRequired"]</span>
                 </div>
                 <div class="col-md-4">
                     <label for="inputAddress2" class="form-label">Điện thoại</label>
                     <input type="text" class="form-control" asp-for="Phone" placeholder="0867168266">
-                    <span asp-validation-for="Phone" class="text-danger"></span>
+                    <span class="text-danger">@TempData["PhoneRequired"]</span>
                 </div>
                 <div class="col-md-6">
                     <label for="inputCity" class="form-label">Phân quyền</label>

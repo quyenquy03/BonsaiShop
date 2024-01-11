@@ -66,7 +66,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     cate.Alias = Functions.AliasLink(cate.CategoryName);
-                    DateTime currentDate = new DateTime();
+                    /*DateTime currentDate = new DateTime();*/
                     cate.IsActive = true;
                     if (cate.ParentCateId != 0)
                     {
@@ -184,7 +184,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 ViewBag.ListTypeCategory = new SelectList(listType.ToList(), "Id", "Name", cate.CategoryType);
                 return View(cate);
             }
-            catch (Exception ex)
+            catch
             {
                 return NotFound();
             }

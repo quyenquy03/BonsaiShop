@@ -105,10 +105,10 @@ namespace BonsaiShop.Controllers
 				foreach (var item in listCommentByPost)
 				{
 					data += "<div class='comment-item d-flex mt-2'>";
-					data += "<img class='comment-avt' src='/images/" + item.User.Avatar + "' />";
+					data += "<img class='comment-avt' src='/images/" + item?.User?.Avatar + "' />";
 					data += "<div class='comment-content-box'>";
-					data += "<h4 class='comment-name mb-0'>" + item.User.FullName + "</h4>";
-					data += "<p class='comment-detail mb-0'>" + item.Detail + "</p>";
+					data += "<h4 class='comment-name mb-0'>" + item?.User?.FullName + "</h4>";
+					data += "<p class='comment-detail mb-0'>" + item?.Detail + "</p>";
 					data += "</div> </div>";
 				}
 				return Json(new

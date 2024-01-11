@@ -219,7 +219,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 return NotFound();
             }
         }
-        public async Task<IActionResult> Delete(int IdToDelete)
+        public async Task<IActionResult> Delete(int? IdToDelete)
         {
             if (IdToDelete == null)
             {
@@ -263,7 +263,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> KhoiPhuc(int IdKhoiPhuc)
+        public async Task<IActionResult> KhoiPhuc(int? IdKhoiPhuc)
         {
             if (IdKhoiPhuc == null)
             {
@@ -307,7 +307,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> UpdateBestSeller(int IdToUpdate)
+        public async Task<IActionResult> UpdateBestSeller(int? IdToUpdate)
         {
             if (IdToUpdate == null)
             {
@@ -345,7 +345,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
             }
 
         }
-        public async Task<IActionResult> UpdateActiveStatus(int IdToUpdate)
+        public async Task<IActionResult> UpdateActiveStatus(int? IdToUpdate)
         {
             if (IdToUpdate == null)
             {

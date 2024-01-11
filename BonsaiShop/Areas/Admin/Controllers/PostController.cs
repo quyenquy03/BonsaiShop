@@ -110,7 +110,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
         {
             var EditBlogById = _context.Blogs.Where(m => m.BlogId == id && m.IsDeleted == false).FirstOrDefault();
             var listCategory = _context.Categories.Where(m => m.CategoryType == 1 && m.IsActive == true).ToList();
-            ViewBag.ListCategory = new SelectList(listCategory.AsQueryable(), "CategoryId", "CategoryName", EditBlogById.CategoryId);
+            ViewBag.ListCategory = new SelectList(listCategory.AsQueryable(), "CategoryId", "CategoryName", EditBlogById?.CategoryId);
             return View(EditBlogById);
         }
 
@@ -162,7 +162,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 return NotFound();
             }
         }
-        public async Task<IActionResult> Delete(int IdToDelete)
+        public async Task<IActionResult> Delete(int? IdToDelete)
         {
             if (IdToDelete == null)
             {
@@ -246,7 +246,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 });
             }
         }
-        public async Task<IActionResult> UpdateActiveStatus(int IdToUpdate)
+        public async Task<IActionResult> UpdateActiveStatus(int? IdToUpdate)
         {
             if (IdToUpdate == null)
             {

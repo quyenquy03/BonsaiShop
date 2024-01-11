@@ -1,4 +1,5 @@
-﻿using BonsaiShop.Extension;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using BonsaiShop.Extension;
 using BonsaiShop.Models;
 using BonsaiShop.Models.Authentication;
 using BonsaiShop.Ultilities;
@@ -14,9 +15,11 @@ namespace BonsaiShop.Areas.Admin.Controllers
 	public class AccountController : Controller
 	{
 		private readonly BonsaiShopContext _context;
-		public AccountController(BonsaiShopContext context)
+		private readonly INotyfService _notyf;
+		public AccountController(BonsaiShopContext context, INotyfService notyf)
 		{
 			_context = context;
+			_notyf = notyf;
 		}
 		public class ListRole
 		{
@@ -114,30 +117,36 @@ namespace BonsaiShop.Areas.Admin.Controllers
             }
             try
             {
-
-                if (ModelState.IsValid)
+                var checkUserName = _context.Users.Where(m => m.UserName == user.UserName).FirstOrDefault();
+                if (user.UserName == null) { TempData["UserNameRequired"] = "Vui lòng nhập tài khoản của bạn"; }
+                if (user.FullName == null) { TempData["FullNameRequired"] = "Vui lòng nhập họ và tên của bạn"; }
+                if (user.Email == null) { TempData["EmailRequired"] = "Vui lòng nhập Email của bạn"; }
+                if (user.Phone == null) { TempData["PhoneRequired"] = "Vui lòng nhập số điện thoại của bạn"; }
+                if (checkUserName != null) { TempData["UserNameExists"] = "Tài khoản này đã được sử dụng"; }
+                if (user?.UserName == null || user.Phone == null || checkUserName != null || user.FullName == null || user.Email == null )
                 {
-                    if (avatar != null)
-                    {
-                        string extension = Path.GetExtension(avatar.FileName);
-                        string image = Extension.Extensions.ToUrlFriendly(user.FullName) + extension;
-                        user.Avatar = await Functions.UploadFile(avatar, @"Users", image.ToLower());
-                        user.Avatar = "Users/" + user.Avatar;
-                    }
-                    if (string.IsNullOrEmpty(user.Avatar)) user.Avatar = "avatar-default.jpg";
-                    user.IsBlocked = 1;
-					user.IsDeleted = false;
-                    user.Password = HashPassword.MD5Password("123123");
-                    _context.Users.Add(user);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    var roles = new List<ListRole>();
+                    roles.Add(new ListRole { RoleId = 2, RoleName = "Khách hàng" });
+                    roles.Add(new ListRole { RoleId = 1, RoleName = "Quản trị viên" });
+                    ViewBag.listRoles = new SelectList(roles.ToList(), "RoleId", "RoleName");
+                    _notyf.Warning("Vui lòng kiểm tra lại thông tin");
+                    return View(user);
                 }
-
-                var listRole = new List<ListRole>();
-                listRole.Add(new ListRole { RoleId = 2, RoleName = "Khách hàng" });
-                listRole.Add(new ListRole { RoleId = 1, RoleName = "Quản trị viên" });
-                ViewBag.listRoles = new SelectList(listRole.ToList(), "RoleId", "RoleName",  user.RoleId);
-                return View(user);
+                if (avatar != null)
+                {
+                    string extension = Path.GetExtension(avatar.FileName);
+                    string image = Extension.Extensions.ToUrlFriendly(user.FullName) + extension;
+                    user.Avatar = await Functions.UploadFile(avatar, @"Users", image.ToLower());
+                    user.Avatar = "Users/" + user.Avatar;
+                }
+                if (string.IsNullOrEmpty(user.Avatar)) user.Avatar = "avatar-default.jpg";
+                user.IsBlocked = 1;
+                user.IsDeleted = false;
+                user.Password = HashPassword.MD5Password("123123");
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+				_notyf.Success("Thêm mới người dùng thành công");
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -180,32 +189,40 @@ namespace BonsaiShop.Areas.Admin.Controllers
 			}
 			try
 			{
-				if (ModelState.IsValid)
-				{
-					if (avatar != null)
-					{
-						string extension = Path.GetExtension(avatar.FileName);
-						string image = Extensions.ToUrlFriendly(user.FullName) + extension;
-						user.Avatar = await Functions.UploadFile(avatar, @"Users", image.ToLower());
-						user.Avatar = "Users/" + user.Avatar;
-					}
-					else
-					{
-						user.Avatar = OldAvatar;
-					}
-					_context.Update(user);
-					await _context.SaveChangesAsync();
-					return RedirectToAction(nameof(Index));
-				}
-                var listRole = new List<ListRole>();
-                listRole.Add(new ListRole { RoleId = 2, RoleName = "Khách hàng" });
-                listRole.Add(new ListRole { RoleId = 1, RoleName = "Quản trị viên" });
-                ViewBag.listRoles = new SelectList(listRole.ToList(), "RoleId", "RoleName", user.RoleId);
-                return View(user);
-			}
+                if (user.UserName == null) { TempData["UserNameRequired"] = "Vui lòng nhập tài khoản của bạn"; }
+                if (user.Phone == null) { TempData["PhoneRequired"] = "Vui lòng nhập số điện thoại của bạn"; }
+                if (user.FullName == null) { TempData["FullNameRequired"] = "Vui lòng nhập họ và tên của bạn"; }
+                if (user.Email == null) { TempData["EmailRequired"] = "Vui lòng nhập Email của bạn"; }
+                if (user?.UserName == null || user.FullName == null || user.Phone == null || user.Email == null)
+                {
+                    var roles = new List<ListRole>();
+                    roles.Add(new ListRole { RoleId = 2, RoleName = "Khách hàng" });
+                    roles.Add(new ListRole { RoleId = 1, RoleName = "Quản trị viên" });
+                    ViewBag.listRoles = new SelectList(roles.ToList(), "RoleId", "RoleName");
+                    _notyf.Warning("Vui lòng kiểm tra lại thông tin");
+                    return View(user);
+                }
+                if (avatar != null)
+                {
+                    string extension = Path.GetExtension(avatar.FileName);
+                    string image = Extensions.ToUrlFriendly(user.FullName) + extension;
+                    user.Avatar = await Functions.UploadFile(avatar, @"Users", image.ToLower());
+                    user.Avatar = "Users/" + user.Avatar;
+                }
+                else
+                {
+                    user.Avatar = OldAvatar;
+                }
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+                _notyf.Success("Cập nhật người dùng thành công");
+                return RedirectToAction(nameof(Index));
+            }
 			catch
 			{
-				return NotFound();
+                _notyf.Error("Đang bị lỗi, vui lòng kiểm tra lại");
+                return NotFound();
+
 			}
 		}
 		public async Task<IActionResult> Delete(long? UserID)
@@ -250,7 +267,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
 			}
 		}
 
-		public async Task<IActionResult> Block(long UserID)
+		public async Task<IActionResult> Block(long? UserID)
 		{
 			if (UserID == null)
 			{

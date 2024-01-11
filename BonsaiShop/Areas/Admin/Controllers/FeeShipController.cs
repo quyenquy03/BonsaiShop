@@ -127,7 +127,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
                     var i =1;
                     foreach (var item in listFeeship)
                     {
-                        data += string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>{2}</td> <td>{3}</td>  <td> <input style='width: 100px' value='{4}' class='shipprice-input' /></td> <td> <button class='btn px-2 text-white btn-danger'> <i class='tf-icons bx bx-trash'></i> </button> </td> </tr>", i++, item.Province.ProvinceName, item.District.DistrictName, item.Commune.CommuneName, item.ShipPrice);
+                        data += string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>{2}</td> <td>{3}</td>  <td> <input style='width: 100px' value='{4}' class='shipprice-input' /></td> <td> <button class='btn px-2 text-white btn-danger'> <i class='tf-icons bx bx-trash'></i> </button> </td> </tr>", i++, item?.Province?.ProvinceName, item?.District?.DistrictName, item?.Commune?.CommuneName, item?.ShipPrice);
                     }
                 }
                 return Json(new
