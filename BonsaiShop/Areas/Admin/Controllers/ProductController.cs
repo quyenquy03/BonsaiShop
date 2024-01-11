@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BonsaiShop.Models;
+using BonsaiShop.Models.Authentication;
 using BonsaiShop.Ultilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,8 @@ using static BonsaiShop.Areas.Admin.Controllers.AccountController;
 namespace BonsaiShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication]
+
     public class ProductController : Controller
     {
         private readonly BonsaiShopContext _context;
@@ -379,6 +382,47 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 });
             }
 
+        }
+        public async Task<IActionResult> DeletePernament(long? IdToDelete)
+        {
+            if (IdToDelete == null)
+            {
+                return new JsonResult(new
+                {
+                    message = "Can not find id",
+                    status = 1
+                });
+            }
+            try
+            {
+                var item = await _context.Products.FindAsync(IdToDelete);
+                if (item == null)
+                {
+                    return new JsonResult(new
+                    {
+                        message = "Can not find user",
+                        status = 1
+                    });
+                }
+                else
+                {
+                    _context.Products.Remove(item);
+                    _context.SaveChanges();
+                    return new JsonResult(new
+                    {
+                        message = "Success",
+                        status = 0
+                    });
+                }
+            }
+            catch
+            {
+                return new JsonResult(new
+                {
+                    message = "Error from server",
+                    status = 1
+                });
+            }
         }
     }
 }

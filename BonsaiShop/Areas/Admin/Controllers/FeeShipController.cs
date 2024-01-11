@@ -1,4 +1,5 @@
 ﻿using BonsaiShop.Models;
+using BonsaiShop.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,9 @@ using System;
 namespace BonsaiShop.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	public class FeeShipController : Controller
+    
+
+    public class FeeShipController : Controller
 	{
 		private readonly BonsaiShopContext _context;
 		public FeeShipController(BonsaiShopContext context)
@@ -62,7 +65,8 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 });
             }
 		}
-		public IActionResult AddFeeship(int provinceid, int districtsid, int communeid, int shipprice)
+        [AdminAuthentication]
+        public IActionResult AddFeeship(int provinceid, int districtsid, int communeid, int? shipprice)
 		{
 			try
 			{
@@ -111,7 +115,8 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 });
             }
 		}
-		public IActionResult LoadFeeship()
+        [AdminAuthentication]
+        public IActionResult LoadFeeship()
 		{
             try
             {
@@ -138,6 +143,48 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 {
                     status = 1,
                     message = "error from server"
+                });
+            }
+        }
+        [AdminAuthentication]
+        public async Task<IActionResult> DeletePernament(long? IdToDelete)
+        {
+            if (IdToDelete == null)
+            {
+                return new JsonResult(new
+                {
+                    message = "Can not find id",
+                    status = 1
+                });
+            }
+            try
+            {
+                var item = await _context.FeeShips.FindAsync(IdToDelete);
+                if (item == null)
+                {
+                    return new JsonResult(new
+                    {
+                        message = "Can not find item",
+                        status = 1
+                    });
+                }
+                else
+                {
+                    _context.FeeShips.Remove(item);
+                    _context.SaveChanges();
+                    return new JsonResult(new
+                    {
+                        message = "Success",
+                        status = 0
+                    });
+                }
+            }
+            catch
+            {
+                return new JsonResult(new
+                {
+                    message = "Error from server",
+                    status = 1
                 });
             }
         }

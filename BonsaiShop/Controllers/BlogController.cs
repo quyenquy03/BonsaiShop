@@ -88,7 +88,7 @@ namespace BonsaiShop.Controllers
 				});
 			}
 		}
-		public IActionResult LoadComment(int postid)
+		public IActionResult LoadComment(int? postid)
 		{
 			try
 			{

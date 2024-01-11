@@ -81,8 +81,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="TourIdToDelete" />
-                    Bạn có chắc chắn muốn xóa bài viết này không?
+                    <input type="hidden" id="IdToDelete" />
+                    Bạn có chắc chắn muốn xóa vĩnh viễn bài viết này không?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
@@ -126,9 +126,9 @@
         $(document).ready(function () {
             $("#btnConfirmDelete").on("click", function () {
                 let IdToDelete = $("#IdToDelete").val();
-                let UrlHandle = "/Admin/Post/Delete";
+                let UrlHandle = "/Admin/Post/DeletePernament";
 
-                /* $.ajax({
+                $.ajax({
                     url: UrlHandle,
                     type: "Post",
                     data: {
@@ -137,13 +137,12 @@
                     success: function (data) {
                         if (data.status == 0) {
                             $("#deleteModal").modal("hide");
-                            window.location.reload();
+                            $("#row-" + IdToDelete).remove();
+                            toastr.success('Xóa thành công');
                         } else {
-                            // $("#deleteModal").modal("hide");
-                            // window.location.reload();
                         }
                     },
-                })*/
+                })
             });
             $("#XacNhanKhoiPhuc").on("click", function () {
                 let IdKhoiPhuc = $("#IdKhoiPhuc").val();

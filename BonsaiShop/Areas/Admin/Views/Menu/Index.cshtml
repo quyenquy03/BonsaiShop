@@ -180,12 +180,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Xác nhận xóa người dùng</h5>
+                    <h5 class="modal-title">Xác nhận menu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="UserIdToDelete" />
-                    Bạn có chắc chắn muốn xóa người dùng này không?
+                    <input type="hidden" id="IdToDelete" />
+                    Bạn có chắc chắn muốn xóa vĩnh viễn menu này không?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
@@ -194,48 +194,37 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="BlockAccModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="UserIdToBlock" />
-                    Bạn có chắc chắn muốn khóa tài khoản người dùng này không?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
-                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="UnBlockAccModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="UserIdToBlock" />
-                    Bạn có chắc chắn muốn mở khóa cho tài khoản này không?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
-                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </section>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
         $(document).ready(function(){
+            function DisplayDeleteModal(id) {
+                $("#IdToDelete").val(id);
+                $("#deleteModal").modal("show");
+            }
+            $("#btnConfirmDelete").on("click", function () {
+                let IdToDelete = $("#IdToDelete").val();
+                let UrlHandle = "/Admin/Menu/DeletePernament";
+
+                $.ajax({
+                    url: UrlHandle,
+                    type: "Post",
+                    data: {
+                        IdToDelete: IdToDelete,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            $("#deleteModal").modal("hide");
+                            $("#row-" + IdToDelete).remove();
+                            toastr.success('Xóa thành công');
+                        } else {
+                        }
+                    },
+                })
+            });
             $(".MenuNameRequired").hide();
             $(".DescriptionRequired").hide();
             $(".btn-addnew").click(function(){

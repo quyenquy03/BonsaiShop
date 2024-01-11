@@ -786,3 +786,70 @@
 .comment-item {
     padding: 10px;
 }
+
+.avt-box {
+    width: fit-content;
+}
+
+.avt-box .image-preview {
+    height: 200px;
+    object-fit: cover;
+}
+
+.modal-info-image {
+    height: 200px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.modal-info-image .car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.profile-page .account-profile .avatrSrc {
+    width: 120px;
+    height: 120px;
+}
+
+.account-profile #remove_pro_pic {
+    position: absolute;
+    background-color: #8231D3;
+    color: #fff;
+    border: 4px solid #fff;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3 ease;
+    font-size: 14px;
+}
+
+.account-profile #remove_pro_pic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-profile .pro_img_wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 300px;
+    position: relative;
+}
+
+.account-profile #remove_pro_pic svg {
+    width: 16px;
+}
+.form-control,
+.form-control:focus {
+    background: #eefff8;
+}
+.form-control:disabled
+{
+    background: #e9ecef !important;
+}

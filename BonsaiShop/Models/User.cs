@@ -29,6 +29,8 @@ public partial class User
 
     public int? IsBlocked { get; set; }
 
+    public string? ConfirmCode { get; set; }
+
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

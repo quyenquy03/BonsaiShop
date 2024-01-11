@@ -34,7 +34,7 @@
 							<td>@item.Code</td>
 							<td>@item.FullName</td>
 							<td class="text-center">@item.Phone</td>
-							<td class="text-center">@item.TotalPayment</td>
+							<td class="text-center">@String.Format("{0:0,0 đ}",item.TotalPayment)</td>
 							@if (item.OrderStatus == 1)
 							{
 								<td class="text-center">Chưa xác nhận</td>
@@ -51,10 +51,14 @@
 							{
 								<td class="text-center">Đã thanh toán</td>
 							}
+							else if (item.OrderStatus == 5)
+							{
+								<td class="text-center">Đã hủy</td>
+							}
 							<td class="text-center">
 								<div class="order-action-box">
-									<button><i class="fa fa-eye"></i></button>
-									<button><i class="fa fa-trash"></i></button>
+									<a asp-action="Details" asp-route-orderId="@item.OrderId" asp-controller="Order" asp-area="Admin" class="btn btn-info"><i class="fa fa-eye"></i></a>
+									<button class="btn btn-warning"><i class="fa fa-trash"></i></button>
 								</div>
 							</td>
 						</tr>

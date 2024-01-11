@@ -1,0 +1,136 @@
+﻿@model BonsaiShop.Models.User;
+@{
+    ViewData["Title"] = "Trang cá nhân";
+}
+<div class="container-xl profile-page">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <div class="d-flex align-items-center justify-content-center user-member__title my-3">
+                <h4 class="fw-600">Thông tin cá nhân</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center m-0 pb-3">
+        <div class="col-lg-6">
+            <form asp-action="UpdateProfile" class="w-100" id="create-user-form" enctype="multipart/form-data"
+                  asp-controller="Account" method="POST">
+                @Html.AntiForgeryToken()
+                <div class="card p-3">
+                    <div class="">
+                        <div class="account-profile justify-content-center d-flex align-items-center mb-4 ">
+                            <div class="ap-img pro_img_wrapper">
+                                <input id="file-upload" name="avatar"
+                                       onchange="document.getElementById('imagePreview').src=window.URL.createObjectURL(this.files[0])"
+                                       type="file" accept="image/png, image/jpeg, image/jpg, image/webp, image/heic"
+                                       class="d-none upload-avatar-input form-info">
+                                <label for="file-upload">
+                                    @if (@Model.Avatar != null)
+                                    {
+                                        <img class="dm-upload-avatar avatrSrc ap-img__main rounded-circle wh-120 bg-lighter d-flex"
+                                         src="~/images/@Model.Avatar" id="imagePreview" alt="profile">
+                                    }
+                                    else
+                                    {
+                                        <img class="dm-upload-avatar avatrSrc ap-img__main rounded-circle wh-120 bg-lighter d-flex"
+                                         src="~/images/avatar-default.jpg" id="imagePreview" alt="profile">
+                                    }
+                                    <span id="remove_pro_pic">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round" class="svg replaced-svg">
+                                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                                            </path>
+                                            <circle cx="12" cy="13" r="4"></circle>
+                                        </svg>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="ap-nameAddress pb-3 text-center">
+                            <h5 class="ap-nameAddress__title">@Model.FullName</h5>
+                            <p class="ap-nameAddress__subTitle fs-14 m-0">
+                                @if (Model.RoleId == 1)
+                                {
+                                    <span class="user-point">Quản trị viên</span>
+                                } else {
+                                    <span class="user-point">Người dùng hệ thống</span>
+                                }
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <div class="edit-profile__body">
+                        <div class="row d-flex justify-content-start">
+                            <div class="col-lg-12 col-sm-12 p-10">
+                                <input type="text" hidden asp-for="UserId" />
+                                <input type="text" hidden asp-for="RoleId" />
+                                <input type="text" hidden asp-for="Password" />
+                                <input type="text" hidden asp-for="IsBlocked" />
+                                <input type="text" hidden asp-for="UserName" />
+                                
+                                <input type="text" hidden name="OldAvatar" value="@Model.Avatar" />
+                                <div class="form-group">
+                                    <label>Địa chỉ E-mail</label>
+                                    <input type="email" asp-for="Email" class="form-control form-info" id="email"
+                                           placeholder="Nhập e-mail">
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ và tên</label>
+                                    <input type="text" asp-for="FullName" class="form-control form-info" id="first-name"
+                                           placeholder="Vui lòng nhập họ và tên lót">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày sinh</label>
+                                    <input type="date" value="@Model.Birthday.ToString("yyyy'-'MM'-'dd")" class="form-control form-info" id="birthday" asp-for="Birthday">
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại</label>
+                                    <input type="tel" asp-for="Phone" class="form-control form-info" id="phone-number"
+                                           placeholder="Nhập số điện thoại">
+                                </div>
+                            </div>
+                        </div>
+                        <div asp-validation-summary="ModelOnly" id="form-message"
+                             class="text-center text-danger error-message text-small">
+                        </div>
+                    </div>
+                    <div class="button-group pt-3 pb-5 d-flex flex-row justify-content-center">
+                        <button type="button" class="btn btn-lg btn-update-profile btn-primary rounded-pill shadow2">
+                            Cập nhật thông tin
+                        </button>
+                        <div class="update-profile-btn-box  d-none flex-row justify-content-center"
+                             style="display: flex">
+                            <button type="submit" class="btn btn-lg btn-primary rounded-pill shadow2">
+                                Lưu lại
+                            </button>
+                            <button type="button" class="btn btn-lg btn-cancel btn-danger rounded-pill ml-3 shadow2">
+                                Hủy bỏ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.form-info').attr('disabled', 'disabled');
+            $(".btn-update-profile").on("click", function () {
+                $(".update-profile-btn-box").removeClass('d-none');
+                $(this).hide();
+                $('.form-info').removeAttr('disabled', 'disabled');
+            })
+            $(".btn-cancel").on("click", function () {
+                $(".update-profile-btn-box").addClass('d-none');
+                $(".btn-update-profile").show();
+                $('.form-info').attr('disabled', 'disabled');
+            })
+        });
+    </script>
+    <script>
+
+    </script>
+}

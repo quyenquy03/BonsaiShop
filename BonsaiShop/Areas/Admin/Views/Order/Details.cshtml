@@ -1,0 +1,156 @@
+﻿@model BonsaiShop.Models.Order;
+
+@{
+	var total = 0;
+}
+
+<div class="container">
+	<div class="row mt-3">
+		<div class="col-sm-12 col-md-8">
+			<div class="card">
+				<div class="card-body pt-3">
+					<h4 class="text-center">Thông tin khách hàng</h4>
+					<div class="customer-info row">
+						<div class="col-sm-0 col-md-2"></div>
+						<div class="col-sm-12 col-md-8">
+							<div class="d-flex justify-content-between">
+								<span>Họ và tên</span>
+								<span>@Model.FullName</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span>Email</span>
+								<span>@Model.User?.Email</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span>Số điện thoại</span>
+								<span>@Model.Phone</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span>Ngày đặt hàng</span>
+								<span>@Model.CreatedDate</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span>Ngày đặt hàng</span>
+								<span>@Model.CreatedDate</span>
+							</div>
+							<div class="d-flex justify-content-between">
+								<span>Địa chỉ nhận hàng</span>
+								<span>@Model.Address</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-body pt-3">
+					<table class="table">
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">Sản phẩm</th>
+								<th scope="col" class="text-center">Số lượng</th>
+								<th scope="col" class="text-center">Đơn giá</th>
+								<th scope="col" class="text-center">Thành tiền</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							@foreach (var item in ViewBag.OrderDetail)
+							{
+								var price = item.Quantity * item.Price;
+								total += price;
+								<tr>
+									<td scope="col">@item.Product.ProductName</td>
+									<td scope="col" class="text-center">@item.Quantity</td>
+									<td scope="col" class="text-center">@item.Price?.ToString("#,00# VNĐ") </td>
+									<td scope="col" class="text-center">@price.ToString("#,00# VNĐ")</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-4">
+			<div class="card">
+				<div class="card-body pt-3">
+					<h4 class="text-center">Thông tin đơn hàng</h4>
+					<div class="customer-info">
+						<div class="d-flex justify-content-between">
+							<span>Tổng đơn hàng</span>
+							<span>@total.ToString("#,00# đ")</span>
+						</div>
+						<div class="d-flex justify-content-between">
+							<span>Mã giảm giá</span>
+							<span>Không dùng</span>
+						</div>
+						<div class="d-flex justify-content-between">
+							<span>Số tiền giảm</span>
+							<span> 0 đ</span>
+						</div>
+						<div class="d-flex justify-content-between">
+							<span>Phí vận chuyển</span>
+							<span>30.000 đ</span>
+						</div>
+						@{
+							var tong = total + 30000;
+						}
+						<div class="d-flex justify-content-between">
+							<span>Tổng thanh toán</span>
+							<span>@tong.ToString("#,00# đ")</span>
+						</div>
+						<div class="d-flex justify-content-between">
+							<span>Trạng thái</span>
+							@if (Model.OrderStatus == 1)
+							{
+								<span>Chưa xác nhận</span>
+							}
+							else if (Model.OrderStatus == 2)
+							{
+								<span>Đang chờ duyệt</span>
+							}
+							else if (Model.OrderStatus == 3)
+							{
+								<span>Đã giao hàng</span>
+							}
+							else if (Model.OrderStatus == 4)
+							{
+								<span>Đã thanh toán</span>
+							}
+							else if (Model.OrderStatus == 5)
+							{
+								<span>Đã hủy</span>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mt-3">
+				<div class="row">
+					<div class="col-12">
+						@if (Model.OrderStatus <= 2)
+						{
+							<a asp-action="ChangeOrderStatus" asp-controller="Order" asp-route-id="@Model.OrderId" asp-route-type="duyet" class="w-100 btn btn-success">Duyệt đơn</a>
+						}
+					</div>
+				</div>
+			</div>
+			<div class="mt-3">
+				<div class="row">
+					<div class="col-6">
+						@if (Model.OrderStatus <= 2)
+						{
+							<a asp-action="ChangeOrderStatus" asp-controller="Order" asp-route-id="@Model.OrderId" asp-route-type="huy" class="w-100 btn btn-danger">Hủy đơn</a>
+						}
+						else
+						{
+							<button disabled class="w-100 btn btn-danger">Hủy đơn</button>
+						}
+					</div>
+					<div class="col-6">
+						<a asp-action="Index" asp-controller="Order" asp-area="Admin" class="w-100 btn btn-info">Quay lại</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

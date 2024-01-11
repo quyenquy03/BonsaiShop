@@ -42,7 +42,7 @@ namespace BonsaiShop.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
-		public IActionResult OrderDetail(int orderId)
+		public IActionResult OrderDetail(int? orderId)
 		{
 			if (orderId == null)
 			{

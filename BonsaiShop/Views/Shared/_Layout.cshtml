@@ -102,7 +102,6 @@
 					}
 				}
 			});
-
 			$(".addcart-btn").on("click", function() {
 				var productid = $(this).data("productid");
 				$.ajax({
@@ -120,7 +119,6 @@
 					},
 				})
 			})
-
 			$(".favourite-btn").on("click", function () {
 				var productid = $(this).data("productid");
 				$.ajax({
@@ -159,6 +157,7 @@
 					},
 				})
 			});
+
 			$(".btn-decrease").on("click", function () {
 				var productid = $(this).data("productid");
 				var quantity = +$("#input-"+productid).val();

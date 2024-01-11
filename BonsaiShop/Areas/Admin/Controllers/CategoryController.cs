@@ -1,5 +1,6 @@
 ﻿using BonsaiShop.Extension;
 using BonsaiShop.Models;
+using BonsaiShop.Models.Authentication;
 using BonsaiShop.Ultilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,8 @@ using PagedList.Core;
 namespace BonsaiShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication]
+
     public class CategoryController : Controller
     {
         private readonly BonsaiShopContext _context;
@@ -51,7 +54,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNewCate(Category cate)
+        public IActionResult CreateNewCate(Category cate)
         {
 
             if (cate == null)
@@ -98,11 +101,11 @@ namespace BonsaiShop.Areas.Admin.Controllers
             string content = "";
             if (ParentCateID == 0)
             {
-                content += string.Format("<option value ='0' selected='true'>Khong co danh muc cha</ option >");
+                content += string.Format("<option value ='0' selected='true'>Không có danh mục cha</ option >");
             }
             else
             {
-                content += string.Format("<option value ='0'>Khong co danh muc cha</ option >");
+                content += string.Format("<option value ='0'>Không có danh mục cha</ option >");
             }
 
             foreach (var item in listCateParent)
@@ -124,7 +127,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
             });
         }
 
-        public async Task<IActionResult> EditCate(long id)
+        public async Task<IActionResult> EditCate(long? id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -186,6 +189,84 @@ namespace BonsaiShop.Areas.Admin.Controllers
                 return NotFound();
             }
         }
-       
+        public async Task<IActionResult> UpdateActiveStatus(int? IdToUpdate)
+        {
+            if (IdToUpdate == null)
+            {
+                return new JsonResult(new
+                {
+                    message = "Error",
+                    status = 1
+                });
+            }
+            try
+            {
+                var ItemById = await _context.Categories.Where(m => m.CategoryId == IdToUpdate).FirstOrDefaultAsync();
+                if (ItemById == null) return Json(new
+                {
+                    status = 2,
+                    message = "Cannot find Item"
+                });
+                ItemById.IsActive = !ItemById.IsActive;
+                _context.Categories.Update(ItemById);
+                _context.SaveChanges();
+                return Json(new
+                {
+                    status = 0,
+                    currentValue = ItemById.IsActive,
+                    message = "Success"
+                });
+            }
+            catch
+            {
+                return Json(new
+                {
+                    status = 3,
+                    message = "Error from server"
+                });
+            }
+
+        }
+        public async Task<IActionResult> DeletePernament(long? IdToDelete)
+        {
+            if (IdToDelete == null)
+            {
+                return new JsonResult(new
+                {
+                    message = "Can not find id",
+                    status = 1
+                });
+            }
+            try
+            {
+                var item = await _context.Categories.FindAsync(IdToDelete);
+                if (item == null)
+                {
+                    return new JsonResult(new
+                    {
+                        message = "Can not find user",
+                        status = 1
+                    });
+                }
+                else
+                {
+                    _context.Categories.Remove(item);
+                    _context.SaveChanges();
+                    return new JsonResult(new
+                    {
+                        message = "Success",
+                        status = 0
+                    });
+                }
+            }
+            catch
+            {
+                return new JsonResult(new
+                {
+                    message = "Error from server",
+                    status = 1
+                });
+            }
+        }
     }
 }

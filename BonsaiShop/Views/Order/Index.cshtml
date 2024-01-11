@@ -43,7 +43,7 @@
 							<td>@item.Code</td>
 							<td>@item.FullName</td>
 							<td class="text-center">@item.Phone</td>
-							<td class="text-center">@item.TotalPayment</td>
+							<td class="text-center">@String.Format("{0:0,0 đ}",item.TotalPayment)</td>
 							@if(item.OrderStatus == 1)
 							{
 								<td class="text-center">Chưa xác nhận</td>

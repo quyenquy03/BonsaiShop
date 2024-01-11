@@ -1,5 +1,6 @@
 ﻿using BonsaiShop.Extension;
 using BonsaiShop.Models;
+using BonsaiShop.Models.Authentication;
 using BonsaiShop.Ultilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using PagedList.Core;
 namespace BonsaiShop.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[AdminAuthentication]
 	public class AccountController : Controller
 	{
 		private readonly BonsaiShopContext _context;
@@ -144,7 +146,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
         }
 
 
-		public async Task<IActionResult> Edit(long id)
+		public async Task<IActionResult> Edit(long? id)
 		{
 			if (id == null || _context.Users == null)
 			{
@@ -206,7 +208,7 @@ namespace BonsaiShop.Areas.Admin.Controllers
 				return NotFound();
 			}
 		}
-		public async Task<IActionResult> Delete(long UserID)
+		public async Task<IActionResult> Delete(long? UserID)
 		{
 			if (UserID == null)
 			{

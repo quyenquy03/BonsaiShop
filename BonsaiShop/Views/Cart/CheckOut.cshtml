@@ -166,6 +166,9 @@
 						<input hidden asp-for="@Model.FullName" />
 						<input hidden asp-for="@Model.Phone" />
 						<input hidden asp-for="@Model.Address" />
+						<input hidden value="@ViewBag.ProvinceName" name="province" />
+						<input hidden value="@ViewBag.DistrictName" name="district" />
+						<input hidden value="@ViewBag.CommuneName" name="commune" />
 						<input hidden asp-for="@Model.TotalAmount" value="@total" />
 						<input hidden asp-for="@Model.TotalPayment" value="@(total + ViewBag.ShipPrice)" />
 						<input hidden asp-for="@Model.CreatedBy" />

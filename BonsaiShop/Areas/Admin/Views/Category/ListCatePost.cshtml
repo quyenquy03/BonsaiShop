@@ -59,7 +59,20 @@
                                 <div class="table-cell text-center"><span>@subitem.Count</span></div>
                             </div>
                             <div class="col-1">
-                                <div class="table-cell text-center"><span>@item.IsActive</span></div>
+                                @*<div class="table-cell text-center"><span>@item.IsActive</span></div>*@
+                                <div class="table-cell text-center">
+                                    <div class="switch m-r-10">
+                                        @if (item.IsActive == true)
+                                        {
+                                            <input type="checkbox" class="ChangeBestSeller" id="Active-@item.CategoryId" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="ChangeBestSeller" id="Active-@item.CategoryId">
+                                        }
+                                        <label class="ChangeActiveStatusButton" data-id="@item.CategoryId" data-currentvalue="@item.IsActive"></label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-2">
                                 <div class="table-cell text-center">
@@ -88,8 +101,22 @@
                                         <div class="col-2">
                                             <div class="table-cell text-center"><span>0</span></div>
                                         </div>
+                                        
                                         <div class="col-1">
-                                            <div class="table-cell text-center"><span>@SItem.IsActive</span></div>
+                                            @*<div class="table-cell text-center"><span>@SItem.IsActive</span></div>*@
+                                            <div class="table-cell text-center">
+                                                <div class="switch m-r-10">
+                                                    @if (item.IsActive == true)
+                                                    {
+                                                        <input type="checkbox" class="ChangeBestSeller" id="Active-@SItem.CategoryId" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="ChangeBestSeller" id="Active-@SItem.CategoryId">
+                                                    }
+                                                    <label class="ChangeActiveStatusButton" data-id="@SItem.CategoryId" data-currentvalue="@SItem.IsActive"></label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-2">
                                             <div class="table-cell text-center">
@@ -110,24 +137,6 @@
         </div>
     </div>
     
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Xác nhận xóa người dùng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="UserIdToDelete" />
-                    Bạn có chắc chắn muốn xóa người dùng này không?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
-                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">Xác nhận</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="BlockAccModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -165,4 +174,78 @@
         </div>
     </div>
 </section>
+<div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa danh mục bài viết</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="IdToDelete" />
+                    Bạn có chắc chắn muốn xóa vĩnh viễn danh mục này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnConfirmDelete").on("click", function () {
+                let IdToDelete = $("#IdToDelete").val();
+                let UrlHandle = "/Admin/Category/DeletePernament";
 
+                $.ajax({
+                    url: UrlHandle,
+                    type: "Post",
+                    data: {
+                        IdToDelete: IdToDelete,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            $("#deleteModal").modal("hide");
+                            toastr.success('Xóa thành công');
+                            window.location.reload();
+                        } else {
+                        }
+                    },
+                })
+            });
+            $(".ChangeActiveStatusButton").on("click", function () {
+                var IdToUpdate = $(this).data("id");
+                $.ajax({
+                    url: "/Admin/Category/UpdateActiveStatus",
+                    type: "Get",
+                    data: {
+                        IdToUpdate: IdToUpdate,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            if (data.currentValue == true) {
+                                $('#Active-' + IdToUpdate).prop('checked', true);
+                                toastr.success("Đã cho danh mục hiển thị");
+                            } else {
+                                $('#Active-' + IdToUpdate).prop('checked', false);
+                                toastr.success("Đã cho danh mục không hiển thị");
+                            }
+                        } else {
+                            toastr.success("Đang bị lỗi, vui lòng quay lại sau");
+                        }
+                    },
+                })
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        function DisplayDeleteModal(id) {
+            $("#IdToDelete").val(id);
+            $("#deleteModal").modal("show");
+        }
+    </script>
+}

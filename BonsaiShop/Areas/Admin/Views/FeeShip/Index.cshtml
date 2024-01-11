@@ -70,10 +70,52 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="UnBlockAccModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận khóa người dùng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="UserIdToBlock" />
+                    Bạn có chắc chắn muốn mở khóa cho tài khoản này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" class="btnConfirmBlock btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @section Scripts {
     <script>
+        function DisplayDeleteModal(id) {
+            $("#IdToDelete").val(id);
+            $("#deleteModal").modal("show");
+        }
         $(document).ready(function () {
+            $("#btnConfirmDelete").on("click", function () {
+                let IdToDelete = $("#IdToDelete").val();
+                let UrlHandle = "/Admin/FeeShip/DeletePernament";
+
+                $.ajax({
+                    url: UrlHandle,
+                    type: "Post",
+                    data: {
+                        IdToDelete: IdToDelete,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            $("#deleteModal").modal("hide");
+                            LoadFeeship()
+                            toastr.success('Xóa thành công');
+                        } else {
+                        }
+                    },
+                })
+            });
             $('.choose').on('change', function () {
                 var id = $(this).val();
                 var action = $(this).data('name');

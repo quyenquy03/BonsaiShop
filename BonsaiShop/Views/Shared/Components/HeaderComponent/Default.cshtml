@@ -23,15 +23,18 @@
 							<li class="m-0 account-menu-box">
 								<a class="account-box" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" aria-expanded="false">
 									<div class="account-name">
-										<img class="user-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhTerIDLYs9-VCb8Qnu9zYClaPokcFDtmiqQ&usqp=CAU" alt="">
+										<img class="user-avatar" src="~/images/@ViewBag.Avatar" alt="">
 										<div class="user-name">
 											<span>@ViewBag.FullName</span>
 										</div>
 									</div>
 								</a>
 								<div class="dropdown-menu account-menu pl-4 pr-4 border-0">
-									<a class="dropdown-item" href="javascript:void(0);">Thông tin cá nhân</a>
-									<a class="dropdown-item" href="javascript:void(0);">Cài đặt tài khoản</a>
+									<a class="dropdown-item" href="/trang-ca-nhan">Trang cá nhân</a>
+									@if(ViewBag.RoleId == 1)
+									{
+										<a class="dropdown-item" href="/Admin">Trang quản trị</a>
+									}
 									<a class="dropdown-item" href="/don-hang">Đơn hàng của tôi</a>
 									<a class="dropdown-item" asp-action="Logout" asp-controller="Account">Đăng xuất</a>
 								</div>
@@ -90,8 +93,8 @@
 									<li class="nav-item dropdown">
 										<a class="dropdown-toggle d-block" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dịch vụ</a>
 										<ul class="list-unstyled text-capitalize dropdown-menu mt-0 py-0">
-											<li class="d-block mx-0"><a href="shop.html">Cho thuê cây cảnh</a></li>
-											<li class="d-block mx-0"><a href="shop-detail.html">Chăm sóc cây cảnh</a></li>
+											<li class="d-block mx-0"><a href="/dich-vu/cho-thue-cay-canh">Cho thuê cây cảnh</a></li>
+											<li class="d-block mx-0"><a href="/dich-vu/cham-soc-cay-canh">Chăm sóc cây cảnh</a></li>
 										</ul>
 									</li>
 									

@@ -69,6 +69,7 @@ public partial class BonsaiShopContext : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.Blogs)
                 .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Blogs_Categories");
         });
 
@@ -86,10 +87,12 @@ public partial class BonsaiShopContext : DbContext
 
             entity.HasOne(d => d.Blog).WithMany(p => p.BlogComments)
                 .HasForeignKey(d => d.BlogId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_BlogComments_Blogs");
 
             entity.HasOne(d => d.User).WithMany(p => p.BlogComments)
                 .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_BlogComments_Users");
         });
 
@@ -146,10 +149,6 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.DistricType).HasMaxLength(50);
             entity.Property(e => e.DistrictName).HasMaxLength(50);
             entity.Property(e => e.ProvinceId).HasColumnName("ProvinceID");
-
-            entity.HasOne(d => d.Province).WithMany(p => p.Districts)
-                .HasForeignKey(d => d.ProvinceId)
-                .HasConstraintName("FK_Districts_Provinces");
         });
 
         modelBuilder.Entity<FeeShip>(entity =>
@@ -163,14 +162,17 @@ public partial class BonsaiShopContext : DbContext
 
             entity.HasOne(d => d.Commune).WithMany(p => p.FeeShips)
                 .HasForeignKey(d => d.CommuneId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_FeeShips_Commune");
 
             entity.HasOne(d => d.District).WithMany(p => p.FeeShips)
                 .HasForeignKey(d => d.DistrictId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_FeeShips_Districts");
 
             entity.HasOne(d => d.Province).WithMany(p => p.FeeShips)
                 .HasForeignKey(d => d.ProvinceId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_FeeShips_Provinces");
         });
 
@@ -189,7 +191,7 @@ public partial class BonsaiShopContext : DbContext
         modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
-            entity.Property(e => e.Address).HasMaxLength(500);
+            entity.Property(e => e.Address).HasMaxLength(1000);
             entity.Property(e => e.Code)
                 .HasMaxLength(20)
                 .IsUnicode(false)
@@ -207,6 +209,7 @@ public partial class BonsaiShopContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Orders_Users");
         });
 
@@ -219,10 +222,12 @@ public partial class BonsaiShopContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderDetails_Orders");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OrderDetails_Products");
         });
 
@@ -247,6 +252,7 @@ public partial class BonsaiShopContext : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Products_Categories");
         });
 
@@ -265,6 +271,10 @@ public partial class BonsaiShopContext : DbContext
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Avatar).HasMaxLength(100);
             entity.Property(e => e.Birthday).HasColumnType("datetime");
+            entity.Property(e => e.ConfirmCode)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(50);
             entity.Property(e => e.IsBlocked).HasDefaultValueSql("((1))");

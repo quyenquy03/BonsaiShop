@@ -267,7 +267,7 @@ namespace BonsaiShop.Controllers
 			var order = new Order();
 
             order.FullName = FullName;
-            order.Address = string.Format("{0} - {1} - {2} - {3}", Address, provinceName, districtName, communeName);
+            order.Address = string.Format("{0} - {1} - {2} - {3}", Address, communeName, districtName, provinceName);
             order.Phone = Phone;
             order.UserId = UserId;
             order.CreatedBy = UserId;
@@ -315,12 +315,12 @@ namespace BonsaiShop.Controllers
 					HtmlBody = streamReader.ReadToEnd();
 				}
 				string messageBody = string.Format(HtmlBody, 
-                    user.FullName,
+                    user?.FullName,
                     order.CreatedDate,
                     order.FullName,
                     order.Address,
                     order.Phone,
-                    user.Email,
+                    user?.Email,
                     order.CreatedDate,
 					content,
 					order.TotalAmount,
@@ -335,14 +335,14 @@ namespace BonsaiShop.Controllers
 				};
 
 				message.From.Add(new MailboxAddress("Bonsaishop", "ta2k3quyen@gmail.com"));
-				message.To.Add(new MailboxAddress(user.FullName, user.Email));
+				message.To.Add(new MailboxAddress(user?.FullName, user?.Email));
 				message.Subject = "Xác nhận đặt hàng";
 				client.Send(message);
 				client.Disconnect(true);
 			}
 		}
 
-        public IActionResult ConfirmCheckout(Order order)
+        public IActionResult ConfirmCheckout(Order order, string? province, string? district, string? commune)
         {
             try
             {
@@ -354,6 +354,7 @@ namespace BonsaiShop.Controllers
 				var cart = GetCartItems();
 				if (cart.Count > 0)
 				{
+                    order.Address = order.Address+", " + commune + ", " + district + ", " + province;
 					var newitem = _context.Orders.Add(order);
 					_context.SaveChanges();
 					var id = newitem.Entity.OrderId;
@@ -378,60 +379,5 @@ namespace BonsaiShop.Controllers
 				return RedirectToAction("Cart");
 			}
 		}
-
-        /*public bool Order(string name, string phone, string address)
-        {
-            // Xử lý khi đặt hàng thành công
-            try
-            {
-                var cart = GetCartItems();
-                if (cart.IsNullOrEmpty())
-                {
-                    return false;
-                }
-                int totalAmount = 0;
-                foreach (var item in cart)
-                {
-                    if (item.product.PriceSale == 0)
-                    {
-                        totalAmount += item.quantity * (int)item.product.Price;
-                    }
-                    else
-                    {
-                        totalAmount += item.quantity * (int)item.product.PriceSale;
-                    }
-                }
-                var order = new TbOrder();
-                order.CustomerName = name;
-                order.Phone = phone;
-                order.Address = address;
-                order.TotalAmount = totalAmount;
-                order.OrderStatusId = 1;
-                order.CreatedDate = DateTime.Now;
-                _context.TbOrders.Add(order);
-                _context.SaveChanges();
-                int orderId = order.OrderId;
-                foreach (var item in cart)
-                {
-                    var orderDetail = new TbOrderDetail();
-                    orderDetail.OrderId = orderId;
-                    orderDetail.ProductId = item.product.ProductId;
-                    orderDetail.Price = item.product.Price;
-                    orderDetail.Quantity = item.quantity;
-                    _context.TbOrderDetails.Add(orderDetail);
-                    _context.SaveChanges();
-                }
-                ClearCart();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-*/
-        //------------------
-
-        
     }
 }

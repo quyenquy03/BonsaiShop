@@ -13,7 +13,5 @@ public partial class Province
 
     public string? ProvinceSlug { get; set; }
 
-    public virtual ICollection<District> Districts { get; set; } = new List<District>();
-
     public virtual ICollection<FeeShip> FeeShips { get; set; } = new List<FeeShip>();
 }

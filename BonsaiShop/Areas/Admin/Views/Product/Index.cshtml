@@ -69,44 +69,44 @@
                                     <div style="width: 250px; word-wrap: break-word;" class="truncate-text truncate-4-line">@item.ProductDesc</div>
                                 </td>
                                 <td style="white-space: normal">
-                                    <div style="width: 200px; word-wrap: break-word;">@item.Category.CategoryName</div>
+                                    <div style="width: 200px; word-wrap: break-word;">@item?.Category?.CategoryName</div>
                                 </td>
                                 
-                                <td>@item.ProductPrice</td>
-                                <td>@item.ProductDisCount %</td>
+                                <td>@item?.ProductPrice</td>
+                                <td>@item?.ProductDisCount %</td>
                                 <td>
                                     <div class="table-cell text-center">
                                         <div class="switch m-r-10">
-                                            @if (item.IsBestSeller == true)
+                                            @if (item?.IsBestSeller == true)
                                             {
                                                 <input type="checkbox" class="ChangeBestSeller"  id="BestSeller-@item.ProductId" checked>
                                             }
                                             else
                                             {
-                                                <input type="checkbox" class="ChangeBestSeller" id="BestSeller-@item.ProductId">
+                                                <input type="checkbox" class="ChangeBestSeller" id="BestSeller-@item?.ProductId">
                                             }
-                                            <label class="ChangeBestSellerButton" data-ProductId="@item.ProductId" data-currentvalue="@item.IsBestSeller"></label>
+                                            <label class="ChangeBestSellerButton" data-ProductId="@item?.ProductId" data-currentvalue="@item?.IsBestSeller"></label>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-cell text-center">
                                         <div class="switch m-r-10">
-                                            @if (item.IsActive == true)
+                                            @if (item?.IsActive == true)
                                             {
                                                 <input type="checkbox" class="ChangeBestSeller" id="Active-@item.ProductId" checked>
                                             }
                                             else
                                             {
-                                                <input type="checkbox" class="ChangeBestSeller" id="Active-@item.ProductId">
+                                                <input type="checkbox" class="ChangeBestSeller" id="Active-@item?.ProductId">
                                             }
-                                            <label class="ChangeActiveStatusButton" data-ProductId="@item.ProductId" data-currentvalue="@item.IsActive"></label>
+                                            <label class="ChangeActiveStatusButton" data-ProductId="@item?.ProductId" data-currentvalue="@item?.IsActive"></label>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <a class="btn px-2 text-white btn-warning" asp-action="EditProduct" asp-controller="Product" asp-route-id="@item.ProductId"><i class="tf-icons bx bx-pen"></i></a>
-                                    <button class="btn px-2 text-white btn-danger" onclick="DisplayDeleteModal(@item.ProductId)"> <i class="tf-icons bx bx-trash"></i> </button>
+                                    <a class="btn px-2 text-white btn-warning" asp-action="EditProduct" asp-controller="Product" asp-route-id="@item?.ProductId"><i class="tf-icons bx bx-pen"></i></a>
+                                    <button class="btn px-2 text-white btn-danger" onclick="DisplayDeleteModal(@item?.ProductId)"> <i class="tf-icons bx bx-trash"></i> </button>
                                 </td>
                             </tr>
                         }

@@ -24,7 +24,17 @@ namespace BonsaiShop.Controllers
 		{
 			return View();
 		}
-		[HttpPost]
+        [Route("/gioi-thieu")]
+        public IActionResult Introduce()
+		{
+			return View();
+		}
+        [Route("/dich-vu/{slug}")]
+        public IActionResult Service()
+        {
+            return View();
+        }
+        [HttpPost]
 		public IActionResult SendRequest(Contact contact)
 		{
 			if (contact == null)
